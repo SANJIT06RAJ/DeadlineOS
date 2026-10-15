@@ -19,7 +19,7 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Local database files
+# Local databases
 *.db
 *.sqlite
 *.sqlite3
