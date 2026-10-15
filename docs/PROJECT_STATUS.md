@@ -118,3 +118,30 @@ Useful URLs:
 - Avoid unnecessary rewrites, overengineering, and paid services.
 - At the end of each session, provide updated `PROJECT_STATUS.md` content.
 - Keep `ROADMAP.md` stable unless intentionally revised.
+
+### Current Progress — 16 October 2026
+
+**Day 1: Foundation setup — Complete**
+
+**Day 2: Backend and database foundations — Complete**
+
+Completed:
+
+- Created `backend/requirements.txt` with FastAPI, Uvicorn and pytest.
+- Created `backend/app/database.py` with a SQLite connection helper.
+- Created the `assignments` and `subtasks` tables.
+- Enabled SQLite foreign-key enforcement.
+- Added cascading deletion for subtasks when an assignment is deleted.
+- Created `backend/tests/test_database.py`.
+- Verified all 4 database tests pass using pytest.
+
+Database tests cover:
+
+1. Table creation.
+2. Valid assignment–subtask relationships.
+3. Rejection of invalid assignment IDs.
+4. Cascading deletion of subtasks.
+
+**Next step:** Continue the roadmap by reviewing the remaining Week 1 foundation topics and confirming the next unfinished task before starting new implementation work.
+
+**Last verified:** `backend\.venv\Scripts\python.exe -m pytest backend\tests -v` — 4 passed.
