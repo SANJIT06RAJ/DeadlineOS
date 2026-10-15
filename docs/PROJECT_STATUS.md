@@ -1,147 +1,213 @@
 # PROJECT_STATUS — DeadlineOS
 
-_Last updated: Thursday, 15 October 2026_
+_Last updated: Friday, 16 October 2026_
 
-## Environment
+## 1. Environment
 
-- Windows PC
+- OS: Windows
 - Project directory: `C:\Users\kefztv\Desktop\DeadlineOS`
 - Git: `2.55.0.windows.2`
 - Python: `3.13.0`
 - Node.js: `v24.18.0`
 - npm: `11.16.0`
 - VS Code: `1.141.2`
+- Python virtual environment: `backend\.venv`
+- Backend: FastAPI + Uvicorn
+- Database: SQLite
+- Automated testing: pytest
 
-## Completed Work
+## 2. Project Goal
+
+DeadlineOS is an academic task and deadline management application for tracking assignments, due dates, subtasks, and progress.
+
+Planned future features include deadline reminders, a React dashboard, Docker, CI/CD, security improvements, and optional AI-assisted document extraction. AI-extracted information must be reviewed and confirmed by the user before saving.
+
+## 3. Completed Work History
+
+### Day 1 — Thursday, 15 October 2026: Foundation Setup
 
 - [x] Checked the development tools.
-- [x] Created the correct Git repository at `C:\Users\kefztv\Desktop\DeadlineOS`.
+- [x] Created the Git repository at the correct project directory.
 - [x] Removed an accidentally created `.git` folder from the Desktop root.
-- [x] Created `README.md`, `.gitignore`, and `docs/PROJECT_PLAN.md`.
-- [x] Created `backend/app`, `backend/tests`, and `frontend` folders.
-- [x] Created project virtual environment at `backend\.venv`.
-- [x] Installed FastAPI and `uvicorn[standard]` in the virtual environment.
+- [x] Created `README.md`.
+- [x] Created `.gitignore`.
+- [x] Created `docs/PROJECT_PLAN.md`.
+- [x] Created `backend/app`, `backend/tests`, and `frontend`.
+- [x] Created the Python virtual environment at `backend\.venv`.
+- [x] Installed FastAPI and `uvicorn[standard]`.
 - [x] Created `backend/app/__init__.py`.
-- [x] Created `backend/app/main.py` containing a FastAPI app and `GET /` and `GET /health` endpoints.
+- [x] Created `backend/app/main.py`.
+- [x] Added `GET /` and `GET /health` endpoints.
 - [x] Started the backend at `http://127.0.0.1:8000`.
-- [x] Verified `/health` returns `{"status":"healthy"}`.
-- [x] Created initial Git commit `0b0d2f8`.
-- [x] Created backend commit `a704806`, message `feat: add initial FastAPI backend`.
-- [x] Confirmed `git status` shows a clean working tree.
+- [x] Verified that `/health` returns `{"status":"healthy"}`.
+- [x] Created initial commit `0b0d2f8`.
+- [x] Created backend commit `a704806` — `feat: add initial FastAPI backend`.
 - [x] Reviewed basic pip, FastAPI, REST API, and foreign-key concepts.
 
-## Current Database Design
+### Day 2 — Friday, 16 October 2026: SQLite and Automated Tests
 
-Recorded in `docs/PROJECT_PLAN.md`:
+- [x] Created `backend/requirements.txt` containing FastAPI, Uvicorn, and pytest.
+- [x] Verified installed dependencies.
+- [x] Created `backend/app/database.py`.
+- [x] Configured a SQLite database at `backend/deadlineos.db`.
+- [x] Enabled SQLite foreign-key enforcement.
+- [x] Created the `assignments` table.
+- [x] Created the `subtasks` table.
+- [x] Added a foreign-key relationship from subtasks to assignments.
+- [x] Added cascading deletion of subtasks when an assignment is deleted.
+- [x] Created `backend/tests/test_database.py`.
+- [x] Verified all four database tests pass.
+- [x] Removed the temporary `backend/check_db.py` verification script.
+- [x] Committed the database work as `f45ebd1` — `feat: add SQLite database and tests`.
+- [x] Successfully pushed the commit to `origin/master`.
 
-- **Assignment:** `id`, `title`, optional `description`, `due_date`, `status` (`pending`, `in_progress`, `completed`), `created_at`.
-- **Subtask:** `id`, `assignment_id` (foreign key), `title`, `is_completed`.
-- One assignment can have many subtasks.
-
-## Known Project Structure
-
-```text
-DeadlineOS/
-├── .gitignore
-├── README.md
-├── docs/
-│   └── PROJECT_PLAN.md
-├── backend/
-│   ├── .venv/
-│   ├── app/
-│   │   ├── __init__.py
-│   │   └── main.py
-│   └── tests/
-└── frontend/
-```
-
-## Current Progress
-
-- Day 1 foundation setup is complete.
-- Day 2 backend/database foundations are in progress.
-- `backend/requirements.txt` has **not** been verified as created.
-- SQLite connection, models, table creation, and pytest tests are **not** assumed to be implemented.
-- Last confirmed command output:
-
-  ```text
-  On branch master
-  nothing to commit, working tree clean
-  ```
-
-## Unfinished Tasks
-
-- [ ] `backend/requirements.txt`
-- [ ] SQLite connection
-- [ ] Database models and table creation
-- [ ] pytest tests
-- [ ] Remaining Week 1 items (see `ROADMAP.md`); schedule to be adjusted based on verified progress
-
-## Exact Next Step
-
-Create `backend/requirements.txt` with:
-
-```text
-fastapi
-uvicorn[standard]
-```
-
-Then run these commands from `C:\Users\kefztv\Desktop\DeadlineOS`:
-
-```powershell
-backend\.venv\Scripts\python.exe -m pip install -r backend\requirements.txt
-backend\.venv\Scripts\python.exe -m pip show fastapi uvicorn
-```
-
-Wait for the terminal output to be shared. Verify the dependencies before proceeding to the SQLite connection.
-
-## Useful Command to Start the Backend
-
-```powershell
-backend\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir backend --reload
-```
-
-Useful URLs:
-
-- http://127.0.0.1:8000/
-- http://127.0.0.1:8000/health
-- http://127.0.0.1:8000/docs
-
-## Operating Rules
-
-- Read both files before continuing the roadmap.
-- Follow the date-based roadmap, but never fake progress to match a date.
-- Prioritise unfinished tasks and adjust the schedule when necessary.
-- Work one step at a time; keep explanations concise.
-- Give exact paths, filenames, commands, and complete code where necessary.
-- Do not mark a task complete until confirmed or verified by output.
-- Debug shared errors before moving forward.
-- Avoid unnecessary rewrites, overengineering, and paid services.
-- At the end of each session, provide updated `PROJECT_STATUS.md` content.
-- Keep `ROADMAP.md` stable unless intentionally revised.
-
-### Current Progress — 16 October 2026
-
-**Day 1: Foundation setup — Complete**
-
-**Day 2: Backend and database foundations — Complete**
-
-Completed:
-
-- Created `backend/requirements.txt` with FastAPI, Uvicorn and pytest.
-- Created `backend/app/database.py` with a SQLite connection helper.
-- Created the `assignments` and `subtasks` tables.
-- Enabled SQLite foreign-key enforcement.
-- Added cascading deletion for subtasks when an assignment is deleted.
-- Created `backend/tests/test_database.py`.
-- Verified all 4 database tests pass using pytest.
-
-Database tests cover:
+#### Verified database tests
 
 1. Table creation.
 2. Valid assignment–subtask relationships.
 3. Rejection of invalid assignment IDs.
 4. Cascading deletion of subtasks.
 
-**Next step:** Continue the roadmap by reviewing the remaining Week 1 foundation topics and confirming the next unfinished task before starting new implementation work.
+Last verified command:
 
-**Last verified:** `backend\.venv\Scripts\python.exe -m pytest backend\tests -v` — 4 passed.
+`backend\.venv\Scripts\python.exe -m pytest backend\tests -v`
+
+Result: **4 passed**.
+
+## 4. Current Database Design
+
+Defined in `docs/PROJECT_PLAN.md`.
+
+### Assignments
+
+- `id`: integer primary key.
+- `title`: required text.
+- `description`: optional text.
+- `due_date`: optional date/time text.
+- `status`: `pending`, `in_progress`, or `completed`.
+- `created_at`: creation timestamp.
+
+### Subtasks
+
+- `id`: integer primary key.
+- `assignment_id`: required foreign key referencing `assignments.id`.
+- `title`: required text.
+- `is_completed`: integer boolean (`0` or `1`).
+
+One assignment can have multiple subtasks. Deleting an assignment cascades to its subtasks.
+
+## 5. Known Project Structure
+
+```text
+DeadlineOS/
+├── .gitignore
+├── README.md
+├── ROADMAP.md
+├── docs/
+│   ├── PROJECT_PLAN.md
+│   └── PROJECT_STATUS.md
+├── backend/
+│   ├── .venv/
+│   ├── requirements.txt
+│   ├── deadlineos.db
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── main.py
+│   │   └── database.py
+│   └── tests/
+│       └── test_database.py
+└── frontend/
+```
+
+Note: `backend/deadlineos.db` is generated by the database connection. Verify the local file and `.gitignore` rules before committing database files.
+
+## 6. Current Progress
+
+- [x] Day 1: Foundation setup.
+- [x] Day 2: SQLite connection, tables, relationships, and database tests.
+- [ ] Day 3: Python functions, classes, exceptions, type hints, virtual environments, and package management.
+- [ ] Remaining Week 1 foundation topics.
+- [ ] Backend CRUD API and subsequent roadmap tasks.
+
+The schedule follows `ROADMAP.md`, but unfinished work takes priority over the calendar. Do not mark future tasks complete without evidence.
+
+## 7. Unfinished Tasks and Next Step
+
+### Immediate next task
+
+Continue Week 1 with Python practice on Saturday, 17 October 2026:
+
+- Review functions and type hints.
+- Practise classes and exceptions.
+- Understand virtual environments and package management.
+- Apply the concepts in a small practical exercise related to DeadlineOS.
+
+Do not start the next task until the current progress and any outstanding work have been checked.
+
+### Remaining Week 1 topics
+
+- [ ] Git branches, pull requests, and merge-conflict practice.
+- [ ] Python fundamentals review.
+- [ ] SQL joins, grouping, constraints, and indexes.
+- [ ] HTTP, status codes, JSON, headers, validation, and authentication concepts.
+- [ ] Linux/CLI fundamentals.
+- [ ] Architecture review, MVP definition, and GitHub issues.
+
+Some topics may already be familiar; assess them rather than repeating beginner lessons unnecessarily.
+
+## 8. Useful Commands
+
+### Start the backend
+
+```powershell
+backend\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir backend --reload
+```
+
+### Run database tests
+
+```powershell
+$env:PYTHONPATH = "backend"
+backend\.venv\Scripts\python.exe -m pytest backend\tests -v
+```
+
+### Check Git status
+
+```powershell
+git status
+```
+
+### Check recent commits
+
+```powershell
+git log -5 --oneline
+```
+
+### Useful local URLs
+
+- `http://127.0.0.1:8000/`
+- `http://127.0.0.1:8000/health`
+- `http://127.0.0.1:8000/docs`
+
+## 9. Rules for Maintaining This File
+
+- Preserve completed work from every previous day.
+- Add new accomplishments under the appropriate dated section; do not erase historical progress.
+- Update the current progress, unfinished tasks, and exact next step whenever work changes.
+- Keep environment information, database design, project structure, and important commit references accurate.
+- Record test results only after seeing actual output.
+- Do not assume tasks are complete without confirmation or verification.
+- Troubleshoot reported errors before moving forward.
+- Keep explanations concise and use free tools where practical.
+- Keep `ROADMAP.md` stable unless the schedule is intentionally revised.
+- At the end of each work session, provide the updated status content and save it to GitHub when the user confirms the changes.
+
+## 10. Latest Verified Git Checkpoint
+
+- Branch: `master`
+- Latest reported commit: `f45ebd1`
+- Commit message: `feat: add SQLite database and tests`
+- Remote: `origin/master`
+- Push: successful
+- Database test suite: 4 passed
+
+The working tree after the latest commit has not yet been rechecked. Verify with `git status` before treating it as clean.
