@@ -1,6 +1,6 @@
 # PROJECT_STATUS — DeadlineOS
 
-_Last updated: Saturday, 17 October 2026_
+_Last updated: Sunday, 18 October 2026_
 
 ## 1. Environment
 
@@ -50,7 +50,7 @@ Planned future features include deadline reminders, a React dashboard, Docker, C
 - [x] Verified installed dependencies.
 - [x] Created `backend/app/database.py`.
 - [x] Configured a SQLite database at `backend/deadlineos.db`.
-- [x] Enabled SQLite foreign-key enforcement.
+- [x] Enabled SQLite foreign-key enforcement in the database setup.
 - [x] Created the `assignments` table.
 - [x] Created the `subtasks` table.
 - [x] Added a foreign-key relationship from subtasks to assignments.
@@ -59,9 +59,9 @@ Planned future features include deadline reminders, a React dashboard, Docker, C
 - [x] Verified all four database tests pass.
 - [x] Removed the temporary `backend/check_db.py` verification script.
 - [x] Committed the database work as `f45ebd1` — `feat: add SQLite database and tests`.
-- [x] Successfully pushed the commit to `origin/master`.
+- [x] Successfully pushed the database commit to `origin/master`.
 
-#### Verified database tests
+#### Verified Day 2 database tests
 
 1. Table creation.
 2. Valid assignment–subtask relationships.
@@ -83,7 +83,8 @@ Day 2 test result: **4 passed**.
 - [x] Verified the complete test suite: **10 passed**.
 - [x] Verified package dependencies using `pip check`.
 - [x] Confirmed `backend/requirements.txt` contains `fastapi`, `uvicorn[standard]`, and `pytest`.
-- [x] Committed and pushed the Day 3 changes; the user confirmed there were no issues.
+- [x] Committed and pushed the Day 3 changes, as previously confirmed by the user.
+- [ ] Python class and object-oriented programming practice remains unfinished.
 
 #### Verified Day 3 tests
 
@@ -107,7 +108,7 @@ $env:PYTHONPATH = "$PWD\backend"
 backend\.venv\Scripts\python.exe -m pytest backend\tests -v -p no:cacheprovider
 ```
 
-Result: **10 passed in 0.21s**.
+Result: **10 passed**.
 
 Dependency verification:
 
@@ -117,29 +118,99 @@ backend\.venv\Scripts\python.exe -m pip check
 
 Result: `No broken requirements found.`
 
-Note: Python class practice was part of the original Day 3 plan but has not been verified as completed. Reassess it later instead of marking it complete.
+Note: The Day 3 commit hash has not been verified in this session. Retrieve it using `git log -5 --oneline` rather than guessing.
+
+### Day 4 — Sunday, 18 October 2026: SQL and Database Design
+
+#### SQL queries and relationships
+
+- [x] Inspected the existing `assignments` and `subtasks` tables.
+- [x] Verified the column names, data types, primary keys, and foreign-key relationship.
+- [x] Practised `SELECT` queries.
+- [x] Practised filtering records with `WHERE`.
+- [x] Practised counting records with `COUNT(*)`.
+- [x] Practised aggregation with `GROUP BY`.
+- [x] Practised joining assignments and subtasks with `JOIN`.
+- [x] Practised counting subtasks per assignment with `LEFT JOIN`.
+- [x] Used temporary practice data and verified that the practice script removed those records afterward.
+- [x] Removed the temporary `backend/sql_practice.py` script.
+
+#### Database constraints
+
+Inspected the existing SQLite schema and verified that it already contains:
+
+- [x] `PRIMARY KEY` constraints for both tables.
+- [x] `NOT NULL` constraints on required fields.
+- [x] Default values for assignment status, creation timestamp, and subtask completion.
+- [x] `CHECK` constraint limiting assignment status to `pending`, `in_progress`, or `completed`.
+- [x] `CHECK` constraint limiting `is_completed` to `0` or `1`.
+- [x] Foreign-key constraint linking `subtasks.assignment_id` to `assignments.id`.
+- [x] `ON DELETE CASCADE` for removing subtasks when their parent assignment is deleted.
+
+#### Indexing
+
+- [x] Inspected existing indexes.
+- [x] Created the index `idx_subtasks_assignment_id` on `subtasks(assignment_id)`.
+- [x] Verified that SQLite lists the new index using `PRAGMA index_list(subtasks)`.
+
+Command used:
+
+```sql
+CREATE INDEX IF NOT EXISTS idx_subtasks_assignment_id
+ON subtasks(assignment_id);
+```
+
+The index was created in the local SQLite database. Confirm that it exists after any database recreation or reset. Because the database file may be ignored by Git, the index may not be present in a fresh checkout or another environment.
+
+#### Constraint verification
+
+- [x] Verified that an assignment with a `NULL` title is rejected.
+- [x] Verified that an invalid assignment status is rejected.
+- [x] Verified that a subtask referencing a nonexistent assignment is rejected.
+- [x] Verified that an invalid subtask completion value is rejected.
+- [x] Confirmed that the test script rolled back its attempted invalid inserts.
+
+Foreign-key testing explicitly enabled `PRAGMA foreign_keys = ON` on the test connection.
+
+#### Regression testing and cleanup
+
+- [x] Reran the complete pytest suite after the database changes.
+- [x] Verified all **10 tests passed in 0.49 seconds**.
+- [x] Removed `backend/sql_practice.py`.
+- [x] Ran `git status`.
+- [x] Verified that the working tree is clean.
+- [x] Verified that the local `master` branch was up to date with `origin/master` at the time of the Git status check.
+
+Day 4 result: **SQL exercises, index creation, constraint verification, regression testing, and temporary-file cleanup completed.**
+
+The database index is a local database change; it was not separately committed to Git because the database file may be ignored. Do not claim that the index has been pushed to GitHub.
 
 ## 4. Current Database Design
 
-Defined in `docs/PROJECT_PLAN.md`.
+Defined in `docs/PROJECT_PLAN.md` and verified against the local database schema.
 
 ### Assignments
 
-- `id`: integer primary key.
+- `id`: integer primary key with auto-increment.
 - `title`: required text.
 - `description`: optional text.
 - `due_date`: optional date/time text.
-- `status`: `pending`, `in_progress`, or `completed`.
-- `created_at`: creation timestamp.
+- `status`: required text, default `pending`; allowed values are `pending`, `in_progress`, and `completed`.
+- `created_at`: required text, default `CURRENT_TIMESTAMP`.
 
 ### Subtasks
 
-- `id`: integer primary key.
-- `assignment_id`: required foreign key referencing `assignments.id`.
+- `id`: integer primary key with auto-increment.
+- `assignment_id`: required integer foreign key referencing `assignments.id`.
 - `title`: required text.
-- `is_completed`: integer boolean (`0` or `1`).
+- `is_completed`: required integer boolean (`0` or `1`), default `0`.
 
 One assignment can have multiple subtasks. Deleting an assignment cascades to its subtasks.
+
+### Indexes
+
+- `idx_subtasks_assignment_id` on `subtasks(assignment_id)` exists in the local database as verified on 18 October 2026.
+- Reverify this index if the database is recreated.
 
 ## 5. Known Project Structure
 
@@ -174,35 +245,42 @@ Note: `backend/deadlineos.db` is generated by the database connection. Verify th
 - [x] Day 1: Foundation setup.
 - [x] Day 2: SQLite connection, tables, relationships, and database tests.
 - [x] Day 3: Deadline calculations, assignment title validation, automated tests, and dependency verification.
+- [x] Day 4: SQL queries, joins, grouping, constraints, index creation, and regression testing.
 - [ ] Python classes and object-oriented programming practice.
-- [ ] Remaining Week 1 foundation topics.
+- [ ] Git branches, pull requests, and merge-conflict practice.
+- [ ] HTTP methods, status codes, JSON, headers, validation, and authentication concepts.
+- [ ] Linux/CLI fundamentals.
+- [ ] Architecture review, MVP definition, and GitHub issues.
 - [ ] Backend CRUD API and subsequent roadmap tasks.
-
-The schedule follows `ROADMAP.md`, but unfinished work takes priority over the calendar. Do not mark future tasks complete without evidence.
+- [ ] React frontend integration and subsequent planned features.
 
 ## 7. Unfinished Tasks and Next Step
 
-### Immediate next task
+### Immediate next task: Python classes and object-oriented programming
 
-Continue Week 1 with the remaining Python practice and HTTP/API fundamentals.
+The original Day 3 plan included class practice, but completion has not been verified. Finish this outstanding task before moving deeper into HTTP/API topics.
 
-1. Practise Python classes and object-oriented programming.
-2. Review virtual environments and package management if needed. Dependency health has already been verified.
-3. Learn or review HTTP methods, status codes, JSON, headers, request validation, and authentication concepts.
-4. Apply these concepts to the existing FastAPI application in a later step.
-
-Do not start the next task until the current progress and any outstanding work have been checked.
+1. Practise defining a class, its constructor, attributes, and instance methods.
+2. Build a small assignment-related class without changing the existing production code.
+3. Practise creating instances and calling methods.
+4. Explain how a class differs from an instance and how this could be useful in DeadlineOS.
+5. Run the relevant practice and review the results before marking the task complete.
 
 ### Remaining Week 1 topics
 
+- [ ] Python class and object-oriented programming practice.
 - [ ] Git branches, pull requests, and merge-conflict practice.
-- [ ] Python fundamentals review, including classes.
-- [ ] SQL joins, grouping, constraints, and indexes.
-- [ ] HTTP, status codes, JSON, headers, validation, and authentication concepts.
+- [ ] HTTP methods, status codes, JSON, headers, request validation, and authentication concepts.
 - [ ] Linux/CLI fundamentals.
 - [ ] Architecture review, MVP definition, and GitHub issues.
 
-Some topics may already be familiar; assess them rather than repeating beginner lessons unnecessarily.
+SQL joins, grouping, constraints, and index practice were completed on Day 4. Do not repeat these topics unnecessarily; revisit them only if a knowledge check or implementation exposes a gap.
+
+### After Python OOP
+
+Proceed to HTTP and API fundamentals, then Linux/CLI practice and the Week 1 architecture review. Begin Week 2 backend CRUD work only after checking the remaining foundations and the roadmap.
+
+The schedule follows `ROADMAP.md`, but unfinished work takes priority over the calendar. Do not mark future tasks complete without evidence.
 
 ## 8. Useful Commands
 
@@ -216,7 +294,7 @@ backend\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir backend --rel
 
 ```powershell
 $env:PYTHONPATH = "$PWD\backend"
-backend\.venv\Scripts\python.exe -m pytest backend\tests -v
+backend\.venv\Scripts\python.exe -m pytest backend\tests -v -p no:cacheprovider
 ```
 
 ### Check dependencies
@@ -235,6 +313,12 @@ git status
 
 ```powershell
 git log -5 --oneline
+```
+
+### Inspect the subtask index
+
+```powershell
+backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/deadlineos.db'); print(*c.execute('PRAGMA index_list(subtasks)').fetchall(), sep='\n'); c.close()"
 ```
 
 ### Useful local URLs
@@ -262,7 +346,8 @@ git log -5 --oneline
 - Remote: `origin/master`.
 - Day 2 checkpoint: `f45ebd1` — `feat: add SQLite database and tests`.
 - Day 3 changes: commit and push completed successfully, as confirmed by the user.
-- Day 3 commit hash has not been verified in this conversation. Retrieve it with `git log -5 --oneline` rather than guessing.
-- Latest verified full test suite: **10 passed**.
-- Latest verified dependency check: `No broken requirements found.`
-- Final working-tree cleanliness has not been independently verified. Run `git status` before treating the working tree as clean.
+- Day 3 commit hash has not been verified in this session. Retrieve it with `git log -5 --oneline` rather than guessing.
+- Latest verified full test suite: **10 passed in 0.49 seconds**, after the Day 4 database changes.
+- Latest verified dependency check: `No broken requirements found.` (from Day 3).
+- Latest verified working-tree status after cleanup: clean, with `master` up to date with `origin/master`.
+- The index was created in the local SQLite database; do not assume it is committed or pushed.
