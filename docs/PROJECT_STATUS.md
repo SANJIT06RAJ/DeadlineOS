@@ -1,6 +1,6 @@
 # PROJECT_STATUS — DeadlineOS
 
-_Last updated: Tuesday, 20 October 2026_
+_Last updated: Wednesday, 21 October 2026_
 
 ## 1. Environment
 
@@ -16,7 +16,7 @@ _Last updated: Tuesday, 20 October 2026_
 - Database: SQLite
 - Automated testing: pytest
 - Linux environment: Ubuntu on WSL 2
-- Remote repository: `https://github.com/SANJIT06RAJ/DeadlineOS`
+- Remote repository: https://github.com/SANJIT06RAJ/DeadlineOS
 - Active branch: `master`
 
 ## 2. Project Goal
@@ -104,7 +104,7 @@ Day 2 test result: **4 passed**.
 - [x] Implemented `validate_assignment_title(title: str) -> str`.
 - [x] Added title trimming and rejection of empty or whitespace-only titles using `ValueError`.
 - [x] Created `backend/tests/test_assignment_service.py`.
-- [x] Added six assignment-service tests covering deadline calculations and title validation.
+- [x] Added assignment-service tests covering deadline calculations and title validation.
 - [x] Resolved the Python import-path issue for pytest by setting `PYTHONPATH` to the backend directory during testing.
 - [x] Verified the complete test suite: **10 passed**.
 - [x] Verified package dependencies using `pip check`.
@@ -115,7 +115,7 @@ Day 2 test result: **4 passed**.
 
 #### Verified Day 3 tests
 
-The full test suite covers:
+The test suite covered:
 
 1. Future deadline calculation.
 2. Overdue assignment calculation.
@@ -143,7 +143,7 @@ Dependency verification:
 backend\.venv\Scripts\python.exe -m pip check
 ```
 
-Result: `No broken requirements found.`
+Historical result: `No broken requirements found.`
 
 Note: The Day 3 commit hash has not been independently verified here. Retrieve it using `git log -5 --oneline` rather than guessing.
 
@@ -187,7 +187,7 @@ CREATE INDEX IF NOT EXISTS idx_subtasks_assignment_id
 ON subtasks(assignment_id);
 ```
 
-The index was created in the local SQLite database. Confirm that it exists after any database recreation or reset. Because the database file may be ignored by Git, the index may not be present in a fresh checkout or another environment.
+The index was created in the local SQLite database. Because the database file may be ignored by Git, the index may not exist in a fresh checkout or another environment. Reverify it after any database recreation or reset.
 
 #### Constraint verification
 
@@ -232,7 +232,7 @@ The database index is a local database change. Do not claim that it has been com
 
 Day 5 result: **HTTP/REST fundamentals and the knowledge check completed.**
 
-Note: These concepts have been studied, but a dedicated API client exercise using Postman or an equivalent tool has not yet been recorded as completed.
+Note: A dedicated API client exercise using Postman or an equivalent tool has not yet been recorded as completed.
 
 ### Day 6 — Tuesday, 20 October 2026: Linux/CLI and Git Branching
 
@@ -264,7 +264,7 @@ Observed Windows listener:
 127.0.0.1:8000 ... LISTENING 15444
 ```
 
-The Uvicorn server process was also inspected separately. The listener PID and the Python server PID differed because Uvicorn's reload mode can use a parent reloader process and a child server process.
+The Uvicorn server process was also inspected separately. The listener PID and Python server PID differed because Uvicorn reload mode can use a parent reloader process and a child server process.
 
 #### Git branching and merge-conflict practice
 
@@ -289,7 +289,7 @@ The practice merge and its commits were intentionally kept off `master`. The tem
 
 Day 6 result: **Linux/CLI fundamentals, process and port inspection, and Git branching/merge-conflict practice completed.**
 
-One small concept to reinforce: distinguish a merge commit's two parents from a normal commit with a single parent.
+One concept remains to reinforce: distinguish a merge commit's two parents from a normal commit with a single parent.
 
 ### Backend API Implementation — Tuesday, 20 October 2026
 
@@ -310,7 +310,7 @@ GitHub issues:
 5. [Frontend dashboard and forms](https://github.com/SANJIT06RAJ/DeadlineOS/issues/5)
 6. [Deadline sorting and overdue summaries](https://github.com/SANJIT06RAJ/DeadlineOS/issues/6)
 
-The issues were created and were reported as open. Their current GitHub status should be checked before making further changes.
+The issues were created and were reported as open. Their current GitHub status has not been independently checked here.
 
 #### Pydantic schemas
 
@@ -366,7 +366,8 @@ Subtask completion values are converted to Boolean values in API responses.
 - [x] Installed the additional `httpx2` package into the backend virtual environment after the test client reported a missing requirement.
 - [x] Resolved the FastAPI startup-event deprecation warning by using lifespan.
 - [x] Ran the complete test suite after the API implementation.
-- [x] Latest reported result: **27 passed**.
+- [x] Recorded the earlier full-suite result: **27 passed**.
+- [x] Subsequently expanded the suite as part of deadline-summary implementation; the latest reported result is **36 passed**.
 
 The installed `httpx2` dependency still needs to be checked against `backend/requirements.txt`. Do not assume the dependency has been recorded in the requirements file until it has been inspected and updated if necessary.
 
@@ -383,11 +384,77 @@ The API implementation commit included:
 
 The commit reported three files changed, with 599 insertions and two deletions.
 
-The status-file update is a separate task and must not be considered committed until its own commit and push are verified.
+### Deadline Sorting and Overdue Summaries — Completed
+
+GitHub issue: [#6 — Deadline sorting and overdue summaries](https://github.com/SANJIT06RAJ/DeadlineOS/issues/6)
+
+#### Implementation
+
+- [x] Added deadline information to assignment API responses.
+- [x] Added the `days_remaining` response field.
+- [x] Added the `is_overdue` response field.
+- [x] Ensured completed assignments are not classified as overdue.
+- [x] Ensured assignments without due dates are not classified as overdue.
+- [x] Added deadline-based sorting to `GET /assignments`.
+- [x] Added `GET /assignments/summary`.
+- [x] Added assignment counts by status.
+- [x] Added overdue assignment counts.
+- [x] Added due-today assignment counts.
+- [x] Added upcoming assignment counts.
+- [x] Added no-due-date assignment counts.
+- [x] Added tests for assignment deadline response fields.
+- [x] Added tests for overdue logic and completed assignments.
+- [x] Added tests for deadline sorting.
+- [x] Added tests for summary counts.
+
+#### Files changed
+
+- `backend/app/main.py`
+- `backend/app/schemas.py`
+- `backend/app/services/assignment_service.py`
+- `backend/tests/test_assignment_api.py`
+- `backend/tests/test_assignment_service.py`
+
+#### Summary response schema
+
+The `AssignmentSummary` schema contains:
+
+- `total_assignments`
+- `pending_assignments`
+- `in_progress_assignments`
+- `completed_assignments`
+- `overdue_assignments`
+- `due_today_assignments`
+- `upcoming_assignments`
+- `no_due_date_assignments`
+
+#### Automated test result
+
+Latest reported complete test suite: **36 passed**.
+
+Command used:
+
+```powershell
+$env:PYTHONPATH = "$PWD\backend"
+python -m pytest backend\tests -v -p no:cacheprovider
+```
+
+The test suite passed according to the latest reported output. Dependency verification and manual Swagger verification remain separate tasks.
+
+#### Git checkpoint
+
+- [x] Committed the implementation as `1e26949` — `feat: add deadline sorting and assignment summaries`.
+- [x] Pushed the commit to `origin/master`.
+- [x] Confirmed that local `master` was up to date with `origin/master`.
+- [x] Left `backend/oop_practice.py` untracked and untouched.
+
+Commit: https://github.com/SANJIT06RAJ/DeadlineOS/commit/1e26949
+
+The feature implementation is complete. Manual API verification has not yet been confirmed.
 
 ## 4. Current Database Design
 
-Defined in `docs/PROJECT_PLAN.md` and verified against the local database schema.
+Defined in `docs/PROJECT_PLAN.md` and previously verified against the local database schema.
 
 ### Assignments
 
@@ -409,8 +476,10 @@ One assignment can have multiple subtasks. Deleting an assignment cascades to it
 
 ### Indexes
 
-- `idx_subtasks_assignment_id` on `subtasks(assignment_id)` exists in the local database as verified on 18 October 2026.
+- `idx_subtasks_assignment_id` on `subtasks(assignment_id)` existed in the local database when verified on 18 October 2026.
 - Reverify this index if the database is recreated.
+
+The index's presence in the local database does not mean the database file or index has been committed to Git.
 
 ## 5. Known Project Structure
 
@@ -445,7 +514,7 @@ Notes:
 
 - `backend/deadlineos.db` is generated by the database connection. Verify the local file and `.gitignore` rules before committing database files.
 - `backend/oop_practice.py` is an untracked local exercise file. Leave it untouched unless explicitly working on that exercise.
-- The structure above records the files known to exist from the current project history. Check the actual directory if additional files are needed.
+- The structure above records files known to exist from project history. Check the actual directory if additional files are needed.
 
 ## 6. Current Progress
 
@@ -466,19 +535,25 @@ Notes:
 - [x] Added API integration tests.
 - [x] Replaced the deprecated FastAPI startup event with a lifespan handler.
 - [x] Committed and pushed the API implementation as `eb6a533`.
-- [x] Latest reported complete test suite: **27 passed**.
+- [x] Implemented deadline sorting and overdue summaries.
+- [x] Added `days_remaining` and `is_overdue` to assignment responses.
+- [x] Added `GET /assignments/summary`.
+- [x] Added tests for overdue logic, deadline sorting, and summary counts.
+- [x] Achieved a reported complete test suite result of **36 passed**.
+- [x] Committed and pushed the deadline-summary implementation as `1e26949`.
 
 ### Outstanding
 
 - [ ] Confirm `httpx2` is recorded correctly in `backend/requirements.txt`.
 - [ ] Run `pip check` after verifying the dependency list.
-- [ ] Rerun the complete test suite and record the actual output.
-- [ ] Inspect the API through Swagger UI.
-- [ ] Review important API validation, error responses, and cascading deletion behaviour.
+- [ ] Rerun the complete test suite and record the actual output after the dependency check.
+- [ ] Manually inspect `GET /assignments/summary` through Swagger UI.
+- [ ] Manually inspect assignment response fields `days_remaining` and `is_overdue`.
+- [ ] Review important API validation and error responses.
+- [ ] Verify cascading deletion behaviour using disposable test records.
 - [ ] Practise API requests using Postman or an equivalent client.
 - [ ] Reinforce independent Python object-instance attributes.
 - [ ] Reinforce the two-parent structure of a merge commit.
-- [ ] Implement deadline sorting and overdue summaries.
 - [ ] Build the React dashboard and forms.
 - [ ] Integrate the React frontend with the FastAPI backend.
 - [ ] Implement reminders and workload tracking.
@@ -486,13 +561,11 @@ Notes:
 - [ ] Add Docker and CI/CD when the application foundation is stable.
 - [ ] Plan the optional AI document extraction feature with explicit user confirmation.
 
-## 7. Unfinished Tasks and Exact Next Step
+## 7. Unfinished Tasks and Exact Next Steps
 
-### Immediate next task: Verify the backend dependencies and API
+The deadline-sorting and summary feature has been implemented, tested, committed, and pushed. The next priority is to verify dependency reproducibility and manually inspect the API before moving into frontend work.
 
-The assignment and subtask CRUD APIs have been implemented and committed. Before adding new features, verify that the current dependency setup and API behaviour are reproducible.
-
-#### Step 1 — Inspect the requirements file
+### Step 1 — Inspect the requirements file
 
 Open the project in VS Code:
 
@@ -502,13 +575,17 @@ Open:
 
 `backend/requirements.txt`
 
-Check whether `httpx2` is listed. It was installed in the virtual environment to resolve the test-client dependency error, but its presence in the requirements file has not yet been verified.
+Check whether `httpx2` is listed. It was installed in the virtual environment to resolve a test-client dependency error, but its presence in the requirements file has not yet been verified.
 
-If it is missing, confirm the exact installed package version and add the appropriate pinned or version-constrained dependency to `backend/requirements.txt`.
+If it is missing, inspect the installed package version first:
 
-Do not replace the existing dependencies or guess the version.
+```powershell
+backend\.venv\Scripts\python.exe -m pip show httpx2
+```
 
-#### Step 2 — Verify dependencies
+Confirm that the package is actually required by the current test setup before adding it. Record the appropriate version constraint rather than guessing or replacing the existing dependencies.
+
+### Step 2 — Verify dependencies
 
 From PowerShell in the project root, run:
 
@@ -516,9 +593,9 @@ From PowerShell in the project root, run:
 backend\.venv\Scripts\python.exe -m pip check
 ```
 
-Record the actual output.
+Record the actual output. Resolve dependency errors before proceeding.
 
-#### Step 3 — Rerun the complete test suite
+### Step 3 — Rerun the complete test suite
 
 Run:
 
@@ -527,11 +604,13 @@ $env:PYTHONPATH = "$PWD\backend"
 backend\.venv\Scripts\python.exe -m pytest backend\tests -v -p no:cacheprovider
 ```
 
-Confirm the actual number of passing tests. If any test fails, resolve the failure before continuing.
+Confirm the actual number of passing tests. The latest reported result is 36 passed, but record a new result only after seeing the command output.
 
-#### Step 4 — Inspect the API
+If any test fails, resolve the failure before continuing.
 
-Start the backend:
+### Step 4 — Inspect the API through Swagger UI
+
+From the project root, start the backend:
 
 ```powershell
 backend\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir backend --reload
@@ -541,27 +620,55 @@ Open:
 
 `http://127.0.0.1:8000/docs`
 
-Use Swagger UI to inspect the assignment and subtask endpoints. Verify creation, retrieval, updates, deletion, invalid IDs, invalid input, and the behaviour when an assignment with subtasks is deleted.
+Check the following read-only endpoints first:
 
-Use disposable test records and avoid deleting any data that needs to be preserved.
+1. `GET /health` — confirm that the backend is healthy.
+2. `GET /assignments` — inspect assignment sorting and the `days_remaining` and `is_overdue` fields.
+3. `GET /assignments/summary` — inspect the summary counts.
 
-#### Step 5 — Review and commit the status update
+Compare the responses with the actual database contents. If you test create, update, or delete operations, use disposable test records and avoid deleting data that needs to be preserved.
 
-After the dependency and API checks are complete:
+Do not mark manual API verification complete until the results have been checked.
 
-1. Update this file with the verified results.
+### Step 5 — Update and commit the status file
+
+After dependency checks and API verification:
+
+1. Update `docs/PROJECT_STATUS.md` with the actual results.
 2. Run `git diff --check`.
 3. Review `git diff`.
-4. Commit and push the status update.
-5. Confirm the final output of `git status`.
+4. Stage only the intended project status changes.
+5. Commit and push the status update.
+6. Confirm the final output of `git status`.
+
+Example commands after reviewing the changes:
+
+```powershell
+git status --short
+git add docs/PROJECT_STATUS.md
+git diff --cached --check
+git diff --cached
+```
+
+Then, if the staged changes are correct:
+
+```powershell
+git commit -m "docs: update project status after deadline summaries"
+git push origin master
+git status
+```
+
+Leave `backend/oop_practice.py` untracked and untouched.
 
 ### Next feature after verification
 
-Proceed to GitHub issue [#6 — Deadline sorting and overdue summaries](https://github.com/SANJIT06RAJ/DeadlineOS/issues/6) after the API checks are complete.
+Proceed to [GitHub issue #5 — Frontend dashboard and forms](https://github.com/SANJIT06RAJ/DeadlineOS/issues/5).
 
-Then continue with issue [#5 — Frontend dashboard and forms](https://github.com/SANJIT06RAJ/DeadlineOS/issues/5), followed by frontend/backend integration.
+Build the React dashboard and forms, then integrate the frontend with the existing FastAPI backend.
 
-### Remaining reinforcement
+Issue #6 — Deadline sorting and overdue summaries — has already been implemented and pushed. Check its current GitHub status rather than assuming whether the issue has been closed.
+
+### Remaining reinforcement exercises
 
 These short exercises can be completed separately without repeating the full lessons:
 
@@ -616,9 +723,9 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 ### Useful local URLs
 
-- `http://127.0.0.1:8000/`
-- `http://127.0.0.1:8000/health`
-- `http://127.0.0.1:8000/docs`
+- Root: `http://127.0.0.1:8000/`
+- Health check: `http://127.0.0.1:8000/health`
+- Swagger UI: `http://127.0.0.1:8000/docs`
 
 ## 9. Rules for Maintaining This File
 
@@ -637,17 +744,23 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Branch: `master`.
 - Remote: `origin/master`.
-- Latest verified API implementation commit: `eb6a533` — `feat: implement assignment and subtask CRUD APIs`.
-- API implementation commit was successfully pushed to `origin/master`.
+- Latest reported implementation commit: `1e26949` — `feat: add deadline sorting and assignment summaries`.
+- Deadline-summary commit was successfully pushed to `origin/master`.
+- Earlier API implementation commit: `eb6a533` — `feat: implement assignment and subtask CRUD APIs`.
 - Day 2 checkpoint: `f45ebd1` — `feat: add SQLite database and tests`.
 - Earlier backend checkpoint: `a704806` — `feat: add initial FastAPI backend`.
 - Initial repository commit: `0b0d2f8`.
 - Day 3 changes were committed and pushed, as previously confirmed by the user. The exact commit hash has not been independently verified here.
 - Day 6 practice merge commit: `c27ba48` — `practice: resolve Git merge conflict`. This commit was on a temporary practice branch and is **not** part of `master`.
-- Latest reported complete test suite after the API implementation: **27 passed**.
-- Earlier verified dependency check: `No broken requirements found.` The check must be rerun after confirming the `httpx2` dependency.
-- The API implementation commit included `backend/app/main.py`, `backend/app/schemas.py`, and `backend/tests/test_assignment_api.py`.
-- The status-file update described here has **not yet been verified as committed or pushed**.
-- `backend/oop_practice.py` was previously the only untracked file. Recheck `git status` after editing this document rather than assuming the working tree is unchanged.
+- Latest reported complete test suite: **36 passed**.
+- The `httpx2` entry in `backend/requirements.txt` still needs to be verified.
+- The dependency check needs to be rerun after inspecting the dependency list.
+- Manual Swagger verification of deadline fields and summary counts has not yet been confirmed.
+- `backend/oop_practice.py` was previously the only untracked file. Recheck `git status` after editing this document.
 - The index was created in the local SQLite database; do not assume it is committed or pushed.
-- No Day 5 or Day 6 application-code changes were recorded; those days focused on concepts and practice.
+- The deadline-summary commit changed `backend/app/main.py`, `backend/app/schemas.py`, `backend/app/services/assignment_service.py`, `backend/tests/test_assignment_api.py`, and `backend/tests/test_assignment_service.py`.
+- The status-file update in this document is **not yet verified as committed or pushed**.
+
+---
+
+**Current next action:** Save this updated document to `docs/PROJECT_STATUS.md`. Review the diff, commit and push the status update, and then verify the backend dependencies and API through Swagger UI.
