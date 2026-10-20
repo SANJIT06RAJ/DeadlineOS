@@ -1,4 +1,11 @@
 
+from datetime import date
+
+from app.services.assignment_service import (
+    calculate_days_remaining,
+    is_overdue,
+)
+
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Response, status
@@ -7,6 +14,7 @@ from app.database import create_tables, get_connection
 from app.schemas import (
     AssignmentCreate,
     AssignmentResponse,
+    AssignmentSummary,
     AssignmentUpdate,
     SubtaskCreate,
     SubtaskResponse,
@@ -26,7 +34,28 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+def serialize_assignment(row):
+    data = dict(row)
 
+    due_date_value = (
+        date.fromisoformat(data["due_date"])
+        if data["due_date"]
+        else None
+    )
+    today = date.today()
+
+    data["days_remaining"] = (
+        calculate_days_remaining(due_date_value, today)
+        if due_date_value is not None
+        else None
+    )
+    data["is_overdue"] = is_overdue(
+        due_date_value,
+        data["status"],
+        today,
+    )
+
+    return data
 
 @app.get("/")
 def home():
@@ -77,7 +106,59 @@ def create_assignment(assignment: AssignmentCreate):
             (cursor.lastrowid,),
         ).fetchone()
 
-    return dict(row)
+    return serialize_assignment(row)
+
+
+@app.get("/assignments/summary", response_model=AssignmentSummary)
+def get_assignment_summary():
+    with get_connection() as connection:
+        rows = connection.execute(
+            "SELECT due_date, status FROM assignments"
+        ).fetchall()
+
+    today = date.today()
+
+    total = len(rows)
+    pending = sum(row["status"] == "pending" for row in rows)
+    in_progress = sum(row["status"] == "in_progress" for row in rows)
+    completed = sum(row["status"] == "completed" for row in rows)
+
+    overdue = 0
+    due_today = 0
+    upcoming = 0
+    no_due_date = 0
+
+    for row in rows:
+        due_date_value = (
+            date.fromisoformat(row["due_date"])
+            if row["due_date"]
+            else None
+        )
+
+        if due_date_value is None:
+            no_due_date += 1
+            continue
+
+        if row["status"] == "completed":
+            continue
+
+        if due_date_value < today:
+            overdue += 1
+        elif due_date_value == today:
+            due_today += 1
+        else:
+            upcoming += 1
+
+    return {
+        "total_assignments": total,
+        "pending_assignments": pending,
+        "in_progress_assignments": in_progress,
+        "completed_assignments": completed,
+        "overdue_assignments": overdue,
+        "due_today_assignments": due_today,
+        "upcoming_assignments": upcoming,
+        "no_due_date_assignments": no_due_date,
+    }
 
 
 @app.get("/assignments/{assignment_id}", response_model=AssignmentResponse)
@@ -91,7 +172,7 @@ def get_assignment(assignment_id: int):
     if row is None:
         raise HTTPException(status_code=404, detail="Assignment not found")
 
-    return dict(row)
+    return serialize_assignment(row)
 
 
 @app.patch("/assignments/{assignment_id}", response_model=AssignmentResponse)
@@ -142,7 +223,7 @@ def update_assignment(assignment_id: int, assignment: AssignmentUpdate):
             (assignment_id,),
         ).fetchone()
 
-    return dict(row)
+    return serialize_assignment(row)
 
 
 @app.delete("/assignments/{assignment_id}", status_code=status.HTTP_204_NO_CONTENT)

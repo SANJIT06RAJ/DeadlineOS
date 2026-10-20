@@ -1,4 +1,5 @@
 
+from datetime import date, timedelta
 import pytest
 from fastapi.testclient import TestClient
 
@@ -37,6 +38,12 @@ def test_create_assignment(client):
     assert data["due_date"] == "2026-10-30"
     assert data["status"] == "pending"
     assert isinstance(data["id"], int)
+    assert "days_remaining" in data
+    assert "is_overdue" in data
+    assert data["days_remaining"] is None or isinstance(
+    data["days_remaining"], int
+    )
+    assert isinstance(data["is_overdue"], bool)
 
 
 def test_list_assignments(client):
@@ -255,3 +262,131 @@ def test_reject_empty_subtask_title(client):
     )
 
     assert response.status_code == 422
+
+def test_assignment_response_includes_deadline_fields(client):
+    response = client.post(
+        "/assignments",
+        json={
+            "title": "Overdue API Test",
+            "due_date": "2020-01-01",
+            "status": "pending",
+        },
+    )
+
+    assert response.status_code == 201
+    data = response.json()
+
+    assert data["days_remaining"] < 0
+    assert data["is_overdue"] is True
+
+
+def test_assignment_summary_counts_statuses(client):
+    client.post(
+        "/assignments",
+        json={"title": "Pending task", "status": "pending"},
+    )
+    client.post(
+        "/assignments",
+        json={"title": "In progress task", "status": "in_progress"},
+    )
+    client.post(
+        "/assignments",
+        json={"title": "Completed task", "status": "completed"},
+    )
+
+    response = client.get("/assignments/summary")
+
+    assert response.status_code == 200
+    data = response.json()
+
+    assert data["total_assignments"] == 3
+    assert data["pending_assignments"] == 1
+    assert data["in_progress_assignments"] == 1
+    assert data["completed_assignments"] == 1
+    assert data["overdue_assignments"] == 0
+    assert data["due_today_assignments"] == 0
+    assert data["upcoming_assignments"] == 0
+    assert data["no_due_date_assignments"] == 3
+
+
+def test_assignment_summary_counts_overdue_tasks(client):
+    client.post(
+        "/assignments",
+        json={
+            "title": "Overdue task",
+            "due_date": "2020-01-01",
+            "status": "pending",
+        },
+    )
+    client.post(
+        "/assignments",
+        json={
+            "title": "Completed old task",
+            "due_date": "2020-01-01",
+            "status": "completed",
+        },
+    )
+
+    response = client.get("/assignments/summary")
+
+    assert response.status_code == 200
+    data = response.json()
+
+    assert data["total_assignments"] == 2
+    assert data["overdue_assignments"] == 1
+    assert data["completed_assignments"] == 1
+
+
+
+def test_list_assignments_sorts_by_due_date(client):
+    client.post(
+        "/assignments",
+        json={"title": "No deadline"},
+    )
+    client.post(
+        "/assignments",
+        json={"title": "Later task", "due_date": "2099-12-31"},
+    )
+    client.post(
+        "/assignments",
+        json={"title": "Earlier task", "due_date": "2020-01-01"},
+    )
+
+    response = client.get("/assignments")
+
+    assert response.status_code == 200
+    assignments = response.json()
+
+    assert [
+        assignment["title"] for assignment in assignments
+    ] == ["Earlier task", "Later task", "No deadline"]
+
+
+def test_assignment_summary_counts_due_today_and_upcoming(client):
+    today = date.today()
+    tomorrow = today + timedelta(days=1)
+
+    client.post(
+        "/assignments",
+        json={
+            "title": "Due today",
+            "due_date": today.isoformat(),
+            "status": "pending",
+        },
+    )
+    client.post(
+        "/assignments",
+        json={
+            "title": "Due tomorrow",
+            "due_date": tomorrow.isoformat(),
+            "status": "in_progress",
+        },
+    )
+
+    response = client.get("/assignments/summary")
+
+    assert response.status_code == 200
+    data = response.json()
+
+    assert data["due_today_assignments"] == 1
+    assert data["upcoming_assignments"] == 1

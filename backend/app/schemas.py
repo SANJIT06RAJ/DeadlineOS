@@ -41,6 +41,7 @@ class AssignmentUpdate(BaseModel):
         return value
 
 
+
 class AssignmentResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -50,6 +51,8 @@ class AssignmentResponse(BaseModel):
     due_date: date | None
     status: AssignmentStatus
     created_at: str
+    days_remaining: int | None = None
+    is_overdue: bool = False
 
 
 class SubtaskCreate(BaseModel):
@@ -85,3 +88,13 @@ class SubtaskResponse(BaseModel):
     assignment_id: int
     title: str
     is_completed: bool
+
+class AssignmentSummary(BaseModel):
+    total_assignments: int
+    pending_assignments: int
+    in_progress_assignments: int
+    completed_assignments: int
+    overdue_assignments: int
+    due_today_assignments: int
+    upcoming_assignments: int
+    no_due_date_assignments: int
