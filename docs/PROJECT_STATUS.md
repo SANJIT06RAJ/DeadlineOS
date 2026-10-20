@@ -1,6 +1,6 @@
 # PROJECT_STATUS — DeadlineOS
 
-_Last updated: Sunday, 18 October 2026_
+_Last updated: Tuesday, 20 October 2026_
 
 ## 1. Environment
 
@@ -15,6 +15,7 @@ _Last updated: Sunday, 18 October 2026_
 - Backend: FastAPI + Uvicorn
 - Database: SQLite
 - Automated testing: pytest
+- Linux environment: Ubuntu on WSL 2
 
 ## 2. Project Goal
 
@@ -84,7 +85,8 @@ Day 2 test result: **4 passed**.
 - [x] Verified package dependencies using `pip check`.
 - [x] Confirmed `backend/requirements.txt` contains `fastapi`, `uvicorn[standard]`, and `pytest`.
 - [x] Committed and pushed the Day 3 changes, as previously confirmed by the user.
-- [ ] Python class and object-oriented programming practice remains unfinished.
+- [x] Completed a basic Python class and object practice exercise on 20 October.
+- [ ] Reinforce the concept that each object instance maintains its own attributes.
 
 #### Verified Day 3 tests
 
@@ -118,14 +120,14 @@ backend\.venv\Scripts\python.exe -m pip check
 
 Result: `No broken requirements found.`
 
-Note: The Day 3 commit hash has not been verified in this session. Retrieve it using `git log -5 --oneline` rather than guessing.
+Note: The Day 3 commit hash has not been independently verified here. Retrieve it using `git log -5 --oneline` rather than guessing.
 
 ### Day 4 — Sunday, 18 October 2026: SQL and Database Design
 
 #### SQL queries and relationships
 
 - [x] Inspected the existing `assignments` and `subtasks` tables.
-- [x] Verified the column names, data types, primary keys, and foreign-key relationship.
+- [x] Verified column names, data types, primary keys, and the foreign-key relationship.
 - [x] Practised `SELECT` queries.
 - [x] Practised filtering records with `WHERE`.
 - [x] Practised counting records with `COUNT(*)`.
@@ -177,13 +179,92 @@ Foreign-key testing explicitly enabled `PRAGMA foreign_keys = ON` on the test co
 - [x] Reran the complete pytest suite after the database changes.
 - [x] Verified all **10 tests passed in 0.49 seconds**.
 - [x] Removed `backend/sql_practice.py`.
-- [x] Ran `git status`.
-- [x] Verified that the working tree is clean.
-- [x] Verified that the local `master` branch was up to date with `origin/master` at the time of the Git status check.
+- [x] Verified that the working tree was clean at the time of the Day 4 check.
+- [x] Verified that local `master` was up to date with `origin/master` at that time.
 
 Day 4 result: **SQL exercises, index creation, constraint verification, regression testing, and temporary-file cleanup completed.**
 
-The database index is a local database change; it was not separately committed to Git because the database file may be ignored. Do not claim that the index has been pushed to GitHub.
+The database index is a local database change. Do not claim that it has been committed or pushed to GitHub.
+
+### Day 5 — Monday, 19 October 2026: HTTP and REST API Fundamentals
+
+#### HTTP and REST concepts
+
+- [x] Reviewed HTTP request and response fundamentals.
+- [x] Reviewed REST resource URLs.
+- [x] Reviewed HTTP methods and their purposes.
+- [x] Reviewed HTTP status codes.
+- [x] Reviewed JSON as a common API request and response format.
+- [x] Reviewed HTTP headers.
+- [x] Reviewed request validation.
+- [x] Discussed authentication and authorization.
+
+#### Knowledge check
+
+- [x] Identified `/assignments/5` as a resource URL.
+- [x] Correctly explained that authorization controls whether a logged-in student may edit another student's assignment.
+- [x] Correctly identified `PATCH` as a method for partially updating a resource.
+
+Day 5 result: **HTTP/REST fundamentals and the knowledge check completed.**
+
+Note: These concepts have been studied, but a dedicated API client exercise using Postman or an equivalent tool has not yet been recorded as completed.
+
+### Day 6 — Tuesday, 20 October 2026: Linux/CLI and Git Branching
+
+#### Linux and WSL
+
+- [x] Installed and started Ubuntu using WSL 2.
+- [x] Verified the Ubuntu distribution was running as WSL version 2.
+- [x] Navigated to the Windows project directory from Ubuntu at `/mnt/c/Users/kefztv/Desktop/DeadlineOS`.
+- [x] Practised `pwd` to inspect the current directory.
+- [x] Practised `ls -la` to inspect project files, including hidden files.
+- [x] Practised `find backend -maxdepth 2 -type f` to locate backend files.
+- [x] Practised changing directories into and out of `backend`.
+- [x] Used `ss -ltnp` to inspect listening TCP sockets.
+- [x] Used `ps aux` to inspect running processes.
+- [x] Used Windows `netstat -ano` to inspect the port 8000 listener.
+- [x] Used PowerShell `Get-Process` to inspect a Python process by PID.
+- [x] Verified that `http://127.0.0.1:8000/health` returned a healthy status when the backend was running.
+
+#### Processes and ports
+
+- [x] Learned that `LISTENING` indicates a socket accepting incoming connections.
+- [x] Learned that a PID identifies a process.
+- [x] Compared the Windows-hosted FastAPI process with Linux process and socket inspection.
+- [x] Identified that the FastAPI process was running on Windows rather than inside Ubuntu during the initial Linux checks.
+
+Observed Windows listener:
+
+```text
+127.0.0.1:8000 ... LISTENING 15444
+```
+
+The Uvicorn server process was also inspected separately. The listener PID and the Python server PID differed because Uvicorn's reload mode can use a parent reloader process and a child server process.
+
+#### Git branching and merge-conflict practice
+
+- [x] Checked that `master` was up to date with `origin/master` before starting.
+- [x] Created the local practice branch `practice/git-branching`.
+- [x] Created and committed a temporary `git-practice.txt` file.
+- [x] Created the local practice branch `practice/git-conflict`.
+- [x] Changed the same line differently on each branch.
+- [x] Triggered a real content merge conflict using `git merge practice/git-conflict`.
+- [x] Inspected the conflict markers in `git-practice.txt`.
+- [x] Resolved the conflict by writing the intended final content.
+- [x] Staged the resolution and committed it as `c27ba48` — `practice: resolve Git merge conflict`.
+- [x] Inspected the branch history with `git log --oneline --graph --all`.
+- [x] Switched back to `master`.
+- [x] Removed the accidental file `witch master`, which contained copied Git history output.
+- [x] Deleted both temporary local practice branches after confirming that their commits were not part of `master`.
+- [x] Verified that only `master` remained as a local branch.
+- [x] Verified that `master` was still up to date with `origin/master`.
+- [x] Confirmed that no practice commits were pushed to GitHub.
+
+The practice merge and its commits were intentionally kept off `master`. The temporary branches were deleted after the exercise, so their commits are not part of the project's current `master` history.
+
+Day 6 result: **Linux/CLI fundamentals, process and port inspection, and Git branching/merge-conflict practice completed.**
+
+One small concept to reinforce: distinguish a merge commit's two parents from a normal commit with a single parent.
 
 ## 4. Current Database Design
 
@@ -226,6 +307,7 @@ DeadlineOS/
 │   ├── .venv/
 │   ├── requirements.txt
 │   ├── deadlineos.db
+│   ├── oop_practice.py        # Local OOP exercise; currently untracked
 │   ├── app/
 │   │   ├── __init__.py
 │   │   ├── main.py
@@ -246,39 +328,36 @@ Note: `backend/deadlineos.db` is generated by the database connection. Verify th
 - [x] Day 2: SQLite connection, tables, relationships, and database tests.
 - [x] Day 3: Deadline calculations, assignment title validation, automated tests, and dependency verification.
 - [x] Day 4: SQL queries, joins, grouping, constraints, index creation, and regression testing.
-- [ ] Python classes and object-oriented programming practice.
-- [ ] Git branches, pull requests, and merge-conflict practice.
-- [ ] HTTP methods, status codes, JSON, headers, validation, and authentication concepts.
-- [ ] Linux/CLI fundamentals.
-- [ ] Architecture review, MVP definition, and GitHub issues.
-- [ ] Backend CRUD API and subsequent roadmap tasks.
-- [ ] React frontend integration and subsequent planned features.
+- [x] Day 5: HTTP and REST API fundamentals and knowledge check.
+- [x] Day 6: Linux/CLI fundamentals, process and port inspection, and Git branching/merge-conflict practice.
+- [x] Basic Python class and object practice exercise executed successfully.
+- [ ] Reinforce independent object-instance attributes and merge-commit parent relationships.
+- [ ] Practise API requests with Postman or an equivalent client.
+- [ ] Complete Week 1 architecture review and MVP definition.
+- [ ] Create GitHub issues for the MVP.
+- [ ] Begin backend CRUD API work and subsequent roadmap tasks.
+- [ ] Complete React frontend integration and planned features.
 
 ## 7. Unfinished Tasks and Next Step
 
-### Immediate next task: Python classes and object-oriented programming
+### Immediate next task: Week 1 architecture review and MVP definition
 
-The original Day 3 plan included class practice, but completion has not been verified. Finish this outstanding task before moving deeper into HTTP/API topics.
+The Day 1–6 foundations have been covered. The next scheduled Week 1 task is to review the project design and define the MVP before starting Week 2 backend CRUD work.
 
-1. Practise defining a class, its constructor, attributes, and instance methods.
-2. Build a small assignment-related class without changing the existing production code.
-3. Practise creating instances and calling methods.
-4. Explain how a class differs from an instance and how this could be useful in DeadlineOS.
-5. Run the relevant practice and review the results before marking the task complete.
+1. Review `docs/PROJECT_PLAN.md` and `ROADMAP.md`.
+2. Identify the minimum assignment and subtask features required for a useful first version.
+3. Map the current database schema to the required API endpoints.
+4. Identify validation rules and important error responses.
+5. Create GitHub issues for the MVP tasks.
+6. Confirm the planned implementation order before beginning CRUD endpoints.
 
-### Remaining Week 1 topics
+### Remaining reinforcement
 
-- [ ] Python class and object-oriented programming practice.
-- [ ] Git branches, pull requests, and merge-conflict practice.
-- [ ] HTTP methods, status codes, JSON, headers, request validation, and authentication concepts.
-- [ ] Linux/CLI fundamentals.
-- [ ] Architecture review, MVP definition, and GitHub issues.
+- Practise making an API request and inspecting its method, status code, JSON, and headers.
+- Reinforce Python object independence with two `Assignment` instances having different titles and due dates.
+- Explain why a merge commit can have two parents.
 
-SQL joins, grouping, constraints, and index practice were completed on Day 4. Do not repeat these topics unnecessarily; revisit them only if a knowledge check or implementation exposes a gap.
-
-### After Python OOP
-
-Proceed to HTTP and API fundamentals, then Linux/CLI practice and the Week 1 architecture review. Begin Week 2 backend CRUD work only after checking the remaining foundations and the roadmap.
+These reinforcement tasks do not require repeating the entire HTTP, Linux, or Git lesson.
 
 The schedule follows `ROADMAP.md`, but unfinished work takes priority over the calendar. Do not mark future tasks complete without evidence.
 
@@ -286,11 +365,15 @@ The schedule follows `ROADMAP.md`, but unfinished work takes priority over the c
 
 ### Start the backend
 
+From the project root:
+
 ```powershell
 backend\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir backend --reload
 ```
 
 ### Run all tests
+
+From the project root:
 
 ```powershell
 $env:PYTHONPATH = "$PWD\backend"
@@ -344,10 +427,12 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Branch: `master`.
 - Remote: `origin/master`.
+- Latest verified `master` commit: `207f200` — `docs: update DeadlineOS progress through Day 4`.
 - Day 2 checkpoint: `f45ebd1` — `feat: add SQLite database and tests`.
-- Day 3 changes: commit and push completed successfully, as confirmed by the user.
-- Day 3 commit hash has not been verified in this session. Retrieve it with `git log -5 --oneline` rather than guessing.
+- Day 3 changes: commit and push completed successfully, as confirmed by the user. The exact commit hash has not been independently verified here.
+- Day 6 practice merge commit: `c27ba48` — `practice: resolve Git merge conflict`. This commit was on a temporary practice branch and is **not** part of `master`.
 - Latest verified full test suite: **10 passed in 0.49 seconds**, after the Day 4 database changes.
-- Latest verified dependency check: `No broken requirements found.` (from Day 3).
-- Latest verified working-tree status after cleanup: clean, with `master` up to date with `origin/master`.
+- Latest verified dependency check: `No broken requirements found.` from Day 3.
+- Latest verified Git status: `master` is up to date with `origin/master`. The only untracked file is `backend/oop_practice.py`.
 - The index was created in the local SQLite database; do not assume it is committed or pushed.
+- No Day 5 or Day 6 application-code changes have been recorded; those days focused on concepts and practice.
