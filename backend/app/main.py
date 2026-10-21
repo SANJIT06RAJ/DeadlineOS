@@ -77,7 +77,7 @@ def list_assignments():
             "SELECT * FROM assignments ORDER BY due_date IS NULL, due_date, id"
         ).fetchall()
 
-    return [dict(row) for row in rows]
+    return [serialize_assignment(row) for row in rows]
 
 
 @app.post(
