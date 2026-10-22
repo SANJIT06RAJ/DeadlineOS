@@ -168,9 +168,10 @@ The earlier staged state must not be assumed to reflect the current Git index.
 
 **Day 10 Git checkpoint:**
 
-- Latest verified commit: `6b70998` — `test: verify database schema and foreign keys`.
+- Latest verified commit at the end of Day 10 work: `ece13f6` — `fix: close database connections after initialization`.
+- Previous relevant commit: `6b70998` — `test: verify database schema and foreign keys`.
 - Remote: `origin/master`.
-- Local branch: `master`, reported up to date with `origin/master`.
+- Local branch: `master`, verified synchronized with `origin/master`.
 - `backend/tests/test_database.py` — schema-verification test committed and pushed.
 - `backend/oop_practice.py` — untracked and intentionally excluded from the project commit.
 
@@ -186,8 +187,11 @@ The earlier staged state must not be assumed to reflect the current Git index.
 - [x] Updated `backend/app/database.py` so `create_tables()` explicitly closes its connection.
 - [x] Reran the backend test suite from `backend`: **37 passed**.
 - [x] Repeated the fresh-database check after the code change; all checks and cleanup passed.
+- [x] Reviewed and committed the `backend/app/database.py` connection-cleanup change as `ece13f6`.
+- [x] Pushed the commit to `origin/master` and verified local `master` matches `origin/master`.
+- [x] Confirmed the only remaining untracked file is `backend/oop_practice.py`, which remains untouched and excluded.
 
-**Day 10 outcome:** Fresh-database reproducibility verified, migration tooling deferred for the current MVP, and `create_tables()` connection cleanup improved. The `backend/app/database.py` change is currently local and must still be reviewed and committed through the normal Git workflow.
+**Day 10 outcome:** Fresh-database reproducibility verified, migration tooling deferred for the current MVP, and `create_tables()` connection cleanup improved. The change was reviewed, the full backend test suite passed (**37 passed**), and commit `ece13f6` (`fix: close database connections after initialization`) was pushed to `origin/master`.
 
 ### Day 11 — Sunday, 25 October 2026
 
@@ -308,4 +312,4 @@ Week 2 is complete when:
 
 ---
 
-**Next action:** Continue with Day 11 CRUD verification: review endpoint edge cases, response consistency, missing-resource behavior, and invalid-input handling. Review the local `backend/app/database.py` diff before staging or committing. Keep `backend/oop_practice.py` excluded from all project changes.
+**Next action:** Continue with Day 11 CRUD verification: review endpoint edge cases, response consistency, missing-resource behavior, and invalid-input handling. Keep `backend/oop_practice.py` excluded from all project changes.
