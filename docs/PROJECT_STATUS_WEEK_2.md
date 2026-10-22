@@ -174,13 +174,20 @@ The earlier staged state must not be assumed to reflect the current Git index.
 - `backend/tests/test_database.py` — schema-verification test committed and pushed.
 - `backend/oop_practice.py` — untracked and intentionally excluded from the project commit.
 
-**Still pending:**
+**Migration decision:** Defer a migration tool for the current SQLite MVP. The schema is small and initialization uses `CREATE TABLE IF NOT EXISTS`. Reassess migrations when schema changes need to modify existing tables while preserving user data.
 
-- [ ] Decide whether a migration tool is justified for the current MVP.
-- [ ] Verify database creation and initialization in a fresh environment.
-- [ ] Record the reproducibility result and any required setup steps.
+**Fresh-database verification — completed:**
 
-**Day 10 outcome:** Added database schema and foreign-key regression coverage, verified that all 37 backend tests passed, and pushed the intended test change. Fresh-database reproducibility and the migration-tool decision remain open.
+- [x] Created a fresh SQLite database in an isolated temporary directory.
+- [x] Verified that the `assignments` and `subtasks` tables were created.
+- [x] Verified foreign-key enforcement.
+- [x] Verified repeated initialization.
+- [x] Explicitly closed verification connections and removed the temporary database successfully.
+- [x] Updated `backend/app/database.py` so `create_tables()` explicitly closes its connection.
+- [x] Reran the backend test suite from `backend`: **37 passed**.
+- [x] Repeated the fresh-database check after the code change; all checks and cleanup passed.
+
+**Day 10 outcome:** Fresh-database reproducibility verified, migration tooling deferred for the current MVP, and `create_tables()` connection cleanup improved. The `backend/app/database.py` change is currently local and must still be reviewed and committed through the normal Git workflow.
 
 ### Day 11 — Sunday, 25 October 2026
 
@@ -241,8 +248,8 @@ The earlier staged state must not be assumed to reflect the current Git index.
 - [x] Commit and push the schema-verification test.
 - [x] Verify the latest test commit and that local `master` is synchronized with `origin/master`.
 - [x] Keep `backend/oop_practice.py` untouched and excluded from the project commit.
-- [ ] Verify fresh-database creation and reproducibility.
-- [ ] Decide whether database migration tooling is necessary for the MVP.
+- [x] Verify fresh-database creation and reproducibility in an isolated temporary directory.
+- [x] Decide to defer migration tooling for the current SQLite MVP until safe changes to existing tables or preservation of deployed data require it.
 - [ ] Continue auditing API validation and error responses.
 - [ ] Practise API requests using Swagger UI, Postman, or an equivalent client where useful.
 - [ ] Confirm dependency consistency with `backend/requirements.txt` when needed.
@@ -287,7 +294,7 @@ Week 2 is complete when:
 - [x] Database relationships and constraints are documented.
 - [x] ER diagram created and verified on GitHub.
 - [ ] Existing FastAPI configuration and project structure are understood and reviewed.
-- [ ] Database initialization, fresh-database reproducibility, and schema decisions are verified and documented.
+- [x] Database initialization, fresh-database reproducibility, and the migration decision are verified and documented.
 - [ ] Existing CRUD behavior is verified, including relevant edge cases.
 - [ ] Validation, sorting, filtering, and pagination requirements are audited.
 - [ ] API error handling and regression tests are reviewed.
@@ -301,4 +308,4 @@ Week 2 is complete when:
 
 ---
 
-**Next action:** Continue with Day 10's outstanding checks. First, determine whether migration tooling is necessary for the current SQLite MVP. Then verify that the database can be created reproducibly in a fresh environment. Keep `backend/oop_practice.py` excluded from all project changes.
+**Next action:** Continue with Day 11 CRUD verification: review endpoint edge cases, response consistency, missing-resource behavior, and invalid-input handling. Review the local `backend/app/database.py` diff before staging or committing. Keep `backend/oop_practice.py` excluded from all project changes.
