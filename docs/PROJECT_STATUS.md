@@ -2,6 +2,8 @@
 
 _*Last updated: Friday, 23 October 2026*_
 
+**Latest verified checkpoint:** `ece13f6` — `fix: close database connections after initialization`, pushed to `origin/master` after the full backend test suite passed (**37 passed**).
+
 ## 1. Environment
 
 - OS: Windows
@@ -866,7 +868,10 @@ Notes:
 - [x] Create `docs/ER_DIAGRAM.md` documenting the `assignments`–`subtasks` relationship and verify it exists on GitHub.
 - [x] Verify fresh SQLite database creation, required tables, foreign-key enforcement, repeatable initialization, and temporary database cleanup.
 - [x] Defer migration tooling for the current SQLite MVP until safe modifications to existing tables or preservation of deployed data require it.
-- [ ] Review the local `backend/app/database.py` connection-cleanup change, then test and commit it through the normal Git workflow.
+- [x] Reviewed and committed the `backend/app/database.py` connection-cleanup change as `ece13f6` — `fix: close database connections after initialization`.
+- [x] Reran the backend test suite from `backend`: **37 passed**.
+- [x] Pushed the commit to `origin/master` and verified `master` was synchronized with `origin/master`.
+- [x] Confirmed `backend/oop_practice.py` remains untracked, untouched, and excluded.
 - [ ] Build the React dashboard and forms.
 - [ ] Integrate the React frontend with the FastAPI backend.
 - [ ] Implement reminders and workload tracking.
@@ -876,7 +881,7 @@ Notes:
 
 ## 7. Unfinished Tasks and Exact Next Steps
 
-The deadline-sorting and summary feature has been implemented, tested, committed, and pushed. The ER diagram is created and verified on GitHub. Day 10 fresh-database verification passed, including required tables, foreign-key enforcement, repeatable initialization, and temporary cleanup; migration tooling is deferred for the current SQLite MVP. The local `backend/app/database.py` connection-cleanup change still needs review and a normal Git commit. Next, verify CRUD edge cases and API error responses before moving toward frontend work.
+The deadline-sorting and summary feature has been implemented, tested, committed, and pushed. The ER diagram is created and verified on GitHub. Day 10 fresh-database verification passed, including required tables, foreign-key enforcement, repeatable initialization, and temporary cleanup; migration tooling is deferred for the current SQLite MVP. The `backend/app/database.py` connection-cleanup change was reviewed, tested, committed as `ece13f6`, and pushed to `origin/master`. Next, verify CRUD edge cases and API error responses before moving toward frontend work.
 
 ### Step 1 — Completed: dependency verification
 
@@ -894,11 +899,11 @@ The user verified deadline sorting, `days_remaining`, `is_overdue`, and the `/as
 
 `docs/ER_DIAGRAM.md` has been created and its presence on GitHub under `master` was verified. It documents the `assignments`–`subtasks` relationship.
 
-### Step 5 — Current: CRUD and API edge-case verification
+### Step 5 — Next: CRUD and API edge-case verification
 
 Review existing assignment and subtask endpoints for missing-resource behavior, invalid input, response consistency, and partial-update edge cases. Add tests only for confirmed gaps and run the full suite from `backend`.
 
-The Day 10 status update is recorded in `docs/PROJECT_STATUS_WEEK_2.md`. Review the local `backend/app/database.py` change with Git before staging or committing it.
+The Day 10 database connection-cleanup change is committed and pushed as `ece13f6`. Keep `backend/oop_practice.py` untouched and excluded.
 
 ### Historical verification details
 
@@ -1140,9 +1145,11 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Remote: `origin/master`.
 
-- Latest reported commit: `74532d1` — `fix: calculate deadline fields in assignment list`.
+- Latest verified commit: `ece13f6` — `fix: close database connections after initialization`.
 
-- Deadline-summary commit was successfully pushed to `origin/master`.
+- `ece13f6` was successfully pushed to `origin/master`; local `master` and `origin/master` were verified synchronized.
+
+- Previous checkpoint: `74532d1` — `fix: calculate deadline fields in assignment list`.
 
 - Earlier API implementation commit: `eb6a533` — `feat: implement assignment and subtask CRUD APIs`.
 
@@ -1156,7 +1163,7 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Day 6 practice merge commit: `c27ba48` — `practice: resolve Git merge conflict`. This commit was on a temporary practice branch and is \***\*not\*\*** part of `master`.
 
-- Latest reported complete test suite: **37 passed** after Day 10 verification and the local `create_tables()` connection-cleanup change.
+- Latest verified complete test suite: **37 passed** after Day 10 schema verification and the `create_tables()` connection-cleanup change.
 
 - `backend/requirements.txt` includes `httpx2==2.15.1` according to the latest known project state.
 
@@ -1164,14 +1171,14 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Manual Swagger verification of deadline fields and summary counts was completed on Day 7.
 
-- `backend/oop_practice.py` was previously the only untracked file. Recheck `git status` after editing this document.
+- `backend/oop_practice.py` remains the only untracked file at the latest local check and is intentionally untouched and excluded.
 
 - The index was created in the local SQLite database; do not assume it is committed or pushed.
 
 - The deadline-summary commit changed `backend/app/main.py`, `backend/app/schemas.py`, `backend/app/services/assignment_service.py`, `backend/tests/test_assignment_api.py`, and `backend/tests/test_assignment_service.py`.
 
-- The Week 2 status file was updated on GitHub on 23 October 2026 to record Day 10 database verification. The local `backend/app/database.py` change has not yet been committed or pushed.
+- The Week 2 status file records Day 10 database verification and the completed connection-cleanup fix. The code commit `ece13f6` and status documentation updates are pushed to `origin/master`.
 
 ---
 
-**Current next action:** Review the local `backend/app/database.py` diff and Git status, then continue Day 11 CRUD edge-case verification. Keep `backend/oop_practice.py` untouched and excluded.
+**Current next action:** Continue Day 11 CRUD edge-case verification: inspect missing-resource responses, invalid inputs, response consistency, and partial-update behavior. Keep `backend/oop_practice.py` untouched and excluded.
