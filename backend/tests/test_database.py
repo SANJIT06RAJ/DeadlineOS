@@ -83,3 +83,52 @@ def test_deleting_assignment_deletes_subtasks(test_db):
         ).fetchone()[0]
 
     assert remaining == 0
+
+
+def test_database_schema_and_foreign_keys(test_db):
+    with database.get_connection() as connection:
+        assignment_columns = {
+            row["name"]
+            for row in connection.execute(
+                "PRAGMA table_info(assignments)"
+            )
+        }
+
+        subtask_columns = {
+            row["name"]
+            for row in connection.execute(
+                "PRAGMA table_info(subtasks)"
+            )
+        }
+
+        foreign_keys_enabled = connection.execute(
+            "PRAGMA foreign_keys"
+        ).fetchone()[0]
+
+        subtask_foreign_keys = connection.execute(
+            "PRAGMA foreign_key_list(subtasks)"
+        ).fetchall()
+
+    assert {
+        "id",
+        "title",
+        "description",
+        "due_date",
+        "status",
+        "created_at",
+    } <= assignment_columns
+
+    assert {
+        "id",
+        "assignment_id",
+        "title",
+        "is_completed",
+    } <= subtask_columns
+    assert foreign_keys_enabled == 1
+    assert any(
+        row["table"] == "assignments"
+        and row["from"] == "assignment_id"
+        and row["to"] == "id"
+        and row["on_delete"].upper() == "CASCADE"
+        for row in subtask_foreign_keys
+    )
