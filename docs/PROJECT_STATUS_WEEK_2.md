@@ -74,15 +74,17 @@ Files:
 - [x] Database tests.
 - [x] Assignment service tests.
 - [x] API integration tests.
-- [x] Latest confirmed test result: **36 passed**.
+- [x] Previously confirmed full-suite result: **36 passed**.
+- [x] Database tests updated to use a temporary SQLite database per test.
+- [x] Invalid foreign-key test updated to use `pytest.raises(sqlite3.IntegrityError)`.
 
-The successful test command was run from the `backend` directory:
+Run the backend test suite from the `backend` directory:
 
 ```powershell
-python -m pytest tests -v -p no:cacheprovider
+python -m pytest tests -v
 ```
 
-Running pytest from the repository root with `python -m pytest backend/tests -v` previously caused `ModuleNotFoundError: No module named 'app'` during test collection. This was an import-path issue, not a failed application assertion.
+**Test execution note:** Running `python -m pytest backend/tests -v` from the repository root previously caused `ModuleNotFoundError: No module named 'app'` during test collection. The latest root-level run reproduced this import-path issue and collected zero tests. It did not establish that the application assertions failed. Rerun the suite from `backend` to reconfirm the current changes before committing.
 
 ## 4. Daily Progress
 
@@ -102,27 +104,38 @@ Running pytest from the repository root with `python -m pytest backend/tests -v`
 
 **Day 8 outcome:** Database design reviewed, ER documentation created, Week 2 status documented, and regression tests passed.
 
-**Git status at the latest checkpoint:**
+**Original Day 8 Git checkpoint:**
 
-- `docs/ER_DIAGRAM.md` — staged for commit.
-- `docs/PROJECT_STATUS_WEEK_2.md` — staged for commit.
+- `docs/ER_DIAGRAM.md` — reported as staged at that checkpoint.
+- `docs/PROJECT_STATUS_WEEK_2.md` — reported as staged at that checkpoint.
 - `backend/oop_practice.py` — untracked and intentionally left untouched.
 
-The latest staged whitespace check reported trailing whitespace on lines 3–5 of `docs/PROJECT_STATUS_WEEK_2.md`. Those lines need to be corrected, then the file restaged and `git diff --cached --check` rerun before committing.
+The earlier staged state must not be assumed to reflect the current Git index.
 
-**Commit and push status:** Not yet confirmed.
+### Day 9 — Backend Test Isolation and Regression Verification
 
-### Day 9 — Friday, 23 October 2026
+**Scheduled focus:** FastAPI configuration and project structure.
 
-**Planned focus:** FastAPI configuration and project structure.
+**Work completed and verified:**
 
-- [ ] Review the current application structure.
-- [ ] Review configuration and dependency management.
-- [ ] Check how the application starts and creates database tables.
-- [ ] Identify worthwhile structural improvements without unnecessary refactoring.
-- [ ] Run regression tests after any changes.
+- [x] Reviewed the existing backend routes, schemas, database setup, service logic, and tests.
+- [x] Updated `backend/tests/test_database.py` to use a separate temporary SQLite database for each test through `tmp_path` and `monkeypatch`.
+- [x] Updated the invalid foreign-key test to explicitly expect `sqlite3.IntegrityError` using `pytest.raises`.
+- [x] Reviewed the database test changes with `git diff`.
+- [x] Previously ran the backend test suite successfully: **36 passed**.
+- [x] Ran `git diff --check` successfully with no reported whitespace errors.
+- [x] Updated this Week 2 status document to preserve Day 8 and record Day 9.
 
-**Completion evidence:** Configuration and startup behavior verified, changes documented where applicable, and actual test results recorded.
+**Latest verification note:** The most recent root-level pytest attempt failed during test collection because Python could not import `app`. The test suite still needs to be rerun from `backend` after the latest changes.
+
+**Day 9 outcome:** Database tests now use isolated temporary databases, and invalid foreign-key rejection is tested explicitly. Final regression verification and Git publication remain pending.
+
+**Still pending:**
+
+- [ ] Rerun the full test suite from `backend` and confirm the result.
+- [ ] Verify the final staged diff.
+- [ ] Commit and push the intended changes.
+- [ ] Keep `backend/oop_practice.py` separate from the project commit.
 
 ### Day 10 — Saturday, 24 October 2026
 
@@ -133,7 +146,7 @@ The latest staged whitespace check reported trailing whitespace on lines 3–5 o
 - [ ] Verify database creation in a fresh environment.
 - [ ] Recheck constraints and foreign-key behavior.
 
-**Completion evidence:** Reproducible database setup and documented schema decisions.
+**Completion criteria:** Reproducible database setup and documented schema decisions.
 
 ### Day 11 — Sunday, 25 October 2026
 
@@ -144,7 +157,7 @@ The latest staged whitespace check reported trailing whitespace on lines 3–5 o
 - [ ] Review endpoint edge cases and response consistency.
 - [ ] Confirm missing-resource and invalid-input behavior through tests.
 
-**Completion evidence:** Existing CRUD behavior verified without duplicating completed implementation.
+**Completion criteria:** Existing CRUD behavior verified without duplicating completed implementation.
 
 ### Day 12 — Monday, 26 October 2026
 
@@ -157,7 +170,7 @@ The latest staged whitespace check reported trailing whitespace on lines 3–5 o
 - [ ] Implement only missing features useful for the MVP.
 - [ ] Add tests for any new behavior.
 
-**Completion evidence:** Requirements audit completed and any chosen additions tested.
+**Completion criteria:** Requirements audit completed and any chosen additions tested.
 
 ### Day 13 — Tuesday, 27 October 2026
 
@@ -169,7 +182,7 @@ The latest staged whitespace check reported trailing whitespace on lines 3–5 o
 - [ ] Verify partial-update edge cases.
 - [ ] Run the full regression suite.
 
-**Completion evidence:** Error handling tested and results recorded.
+**Completion criteria:** Error handling tested and results recorded.
 
 ### Day 14 — Wednesday, 28 October 2026
 
@@ -181,26 +194,29 @@ The latest staged whitespace check reported trailing whitespace on lines 3–5 o
 - [ ] Run the complete regression suite.
 - [ ] Review Git changes and record verified progress.
 
-**Completion evidence:** Backend tested, useful API documentation reviewed, and Week 2 status accurately updated.
+**Completion criteria:** Backend tested, useful API documentation reviewed, and Week 2 status accurately updated.
 
 ## 5. Known Outstanding Work
 
-- [ ] Correct the trailing whitespace in lines 3–5 of this file and rerun the staged whitespace check.
-- [ ] Review the staged changes for `docs/ER_DIAGRAM.md` and `docs/PROJECT_STATUS_WEEK_2.md`.
-- [ ] Commit and push the intended documentation changes to GitHub.
-- [ ] Keep this Week 2 status file separate from the cumulative `docs/PROJECT_STATUS.md`.
+- [ ] Verify the current contents and Git status of `docs/ER_DIAGRAM.md`; do not assume it remains staged.
+- [x] Correct the previously reported trailing whitespace in `docs/PROJECT_STATUS_WEEK_2.md`; `git diff --check` subsequently passed.
+- [x] Review the changes to `backend/tests/test_database.py`.
+- [x] Update this Week 2 status record while preserving Day 8.
+- [ ] Rerun the full backend test suite from the `backend` directory.
+- [ ] Review the final staged and unstaged changes before committing.
+- [ ] Commit and push the intended files to GitHub.
+- [ ] Keep `backend/oop_practice.py` untouched unless deliberately resuming that exercise.
 - [ ] Continue auditing API validation and error responses.
 - [ ] Practise API requests using Swagger UI, Postman, or an equivalent client where useful.
 - [ ] Confirm dependency consistency with `backend/requirements.txt` when needed.
 - [ ] Review whether database migration tooling is necessary for the MVP.
 - [ ] Continue frontend development and React–FastAPI integration according to the roadmap.
-- [ ] Leave `backend/oop_practice.py` untouched unless deliberately resuming that exercise.
 
-These items must only be marked complete after the work has been performed and verified.
+Items are marked complete only when the work has been performed and verified.
 
 ## 6. Git and Testing Rules
 
-Before committing:
+Before committing, inspect the working tree:
 
 ```powershell
 git status --short
@@ -208,7 +224,7 @@ git diff --check
 git diff
 ```
 
-When checking staged changes:
+Inspect staged changes separately:
 
 ```powershell
 git diff --cached --check
@@ -216,12 +232,12 @@ git diff --cached --stat
 git diff --cached
 ```
 
-Stage only the files intended for the commit. Avoid `git add .` while unrelated untracked files exist.
+Stage only files intended for the commit. Avoid `git add .` while unrelated untracked files exist.
 
-For backend tests, run from the `backend` directory:
+Run backend tests from the `backend` directory:
 
 ```powershell
-python -m pytest tests -v -p no:cacheprovider
+python -m pytest tests -v
 ```
 
 Record the actual result after each test run. Do not assume the test count remains unchanged after adding or removing tests.
@@ -239,11 +255,11 @@ Week 2 is complete when:
 - [ ] API error handling and regression tests are reviewed.
 - [ ] API documentation is checked.
 - [ ] Final test results are recorded.
-- [ ] Intended documentation changes are committed and pushed.
+- [ ] Intended documentation and test changes are committed and pushed.
 - [ ] The cumulative project status is preserved and updated only when appropriate.
 
 **Progress rule:** Existing features count as implemented, but planned verification tasks remain unfinished until checked. Never mark future work complete without evidence.
 
 ---
 
-**Next action:** Save this file, remove the trailing whitespace from lines 3–5, restage it, and rerun `git diff --cached --check`. Then verify both staged documentation files before committing and pushing them.
+**Next action:** Run `python -m pytest tests -v` from the `backend` directory. If all tests pass, return to the repository root, verify the staged diff, then commit and push only the intended files. Keep `backend/oop_practice.py` out of the commit.
