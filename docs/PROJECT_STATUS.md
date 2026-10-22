@@ -1,6 +1,6 @@
 # PROJECT_STATUS — DeadlineOS
 
-_*Last updated: Thursday, 22 October 2026*_
+_*Last updated: Friday, 23 October 2026*_
 
 ## 1. Environment
 
@@ -863,7 +863,10 @@ Notes:
 - [ ] Practise API requests using Postman or an equivalent client.
 - [ ] Reinforce independent Python object-instance attributes.
 - [ ] Reinforce the two-parent structure of a merge commit.
-- [ ] Create `docs/ER_DIAGRAM.md` documenting the `assignments`–`subtasks` relationship.
+- [x] Create `docs/ER_DIAGRAM.md` documenting the `assignments`–`subtasks` relationship and verify it exists on GitHub.
+- [x] Verify fresh SQLite database creation, required tables, foreign-key enforcement, repeatable initialization, and temporary database cleanup.
+- [x] Defer migration tooling for the current SQLite MVP until safe modifications to existing tables or preservation of deployed data require it.
+- [ ] Review the local `backend/app/database.py` connection-cleanup change, then test and commit it through the normal Git workflow.
 - [ ] Build the React dashboard and forms.
 - [ ] Integrate the React frontend with the FastAPI backend.
 - [ ] Implement reminders and workload tracking.
@@ -873,7 +876,7 @@ Notes:
 
 ## 7. Unfinished Tasks and Exact Next Steps
 
-The deadline-sorting and summary feature has been implemented, tested, committed, and pushed. The dependency and manual API checks have been completed according to the latest reported progress. The next priority is to create a version-controlled ER diagram of the existing database schema, then proceed toward frontend work.
+The deadline-sorting and summary feature has been implemented, tested, committed, and pushed. The ER diagram is created and verified on GitHub. Day 10 fresh-database verification passed, including required tables, foreign-key enforcement, repeatable initialization, and temporary cleanup; migration tooling is deferred for the current SQLite MVP. The local `backend/app/database.py` connection-cleanup change still needs review and a normal Git commit. Next, verify CRUD edge cases and API error responses before moving toward frontend work.
 
 ### Step 1 — Completed: dependency verification
 
@@ -887,13 +890,15 @@ The full test suite was rerun after the Day 7 assignment-list fix and reported *
 
 The user verified deadline sorting, `days_remaining`, `is_overdue`, and the `/assignments/summary` counts. Temporary assignments with IDs `48`–`54` were deleted.
 
-### Step 4 — Next: create the ER diagram
+### Step 4 — Completed: ER diagram
 
-Open `C:\Users\kefztv\Desktop\DeadlineOS` in VS Code. Review `docs/PROJECT_PLAN.md` and `backend/app/database.py`, then create `docs/ER_DIAGRAM.md` with a Mermaid ER diagram for `assignments` and `subtasks`. Confirm that the diagram matches the schema and documents the one-to-many relationship and cascading delete.
+`docs/ER_DIAGRAM.md` has been created and its presence on GitHub under `master` was verified. It documents the `assignments`–`subtasks` relationship.
 
-### Step 5 — Update and commit the status file
+### Step 5 — Current: CRUD and API edge-case verification
 
-After the ER diagram is created and checked, update this file with verified results, review the diff, commit and push the status update.
+Review existing assignment and subtask endpoints for missing-resource behavior, invalid input, response consistency, and partial-update edge cases. Add tests only for confirmed gaps and run the full suite from `backend`.
+
+The Day 10 status update is recorded in `docs/PROJECT_STATUS_WEEK_2.md`. Review the local `backend/app/database.py` change with Git before staging or committing it.
 
 ### Historical verification details
 
@@ -1151,7 +1156,7 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Day 6 practice merge commit: `c27ba48` — `practice: resolve Git merge conflict`. This commit was on a temporary practice branch and is \***\*not\*\*** part of `master`.
 
-- Latest reported complete test suite: \***\*36 passed\*\***.
+- Latest reported complete test suite: **37 passed** after Day 10 verification and the local `create_tables()` connection-cleanup change.
 
 - `backend/requirements.txt` includes `httpx2==2.15.1` according to the latest known project state.
 
@@ -1165,8 +1170,8 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - The deadline-summary commit changed `backend/app/main.py`, `backend/app/schemas.py`, `backend/app/services/assignment_service.py`, `backend/tests/test_assignment_api.py`, and `backend/tests/test_assignment_service.py`.
 
-- The status-file update in this document is \***\*not yet verified as committed or pushed\*\***.
+- The Week 2 status file was updated on GitHub on 23 October 2026 to record Day 10 database verification. The local `backend/app/database.py` change has not yet been committed or pushed.
 
 ---
 
-\***\*Current next action:\*\*** Save this updated document to `docs/PROJECT_STATUS.md`. Review the diff, commit and push the status update, and then verify the backend dependencies and API through Swagger UI.
+**Current next action:** Review the local `backend/app/database.py` diff and Git status, then continue Day 11 CRUD edge-case verification. Keep `backend/oop_practice.py` untouched and excluded.
