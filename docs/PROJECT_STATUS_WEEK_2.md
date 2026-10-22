@@ -1,7 +1,7 @@
 # PROJECT STATUS — DEADLINEOS WEEK 2
 
 **Week:** 22–28 October 2026
-**Last updated:** Thursday, 22 October 2026
+**Last updated:** Friday, 23 October 2026
 **Primary project status:** `docs/PROJECT_STATUS.md`
 **Learning schedule:** `ROADMAP.md`
 
@@ -48,6 +48,7 @@ File: `backend/app/database.py`
 - [x] Foreign key from `subtasks.assignment_id` to `assignments.id`.
 - [x] Cascading deletion of subtasks when an assignment is deleted.
 - [x] Foreign-key enforcement enabled for each database connection.
+- [x] Database schema and foreign-key behavior covered by a dedicated test.
 
 ### API and validation
 
@@ -69,14 +70,19 @@ Files:
 - [x] Deadline-based assignment sorting.
 - [x] Assignment summary endpoint.
 
+These features already exist. Their remaining edge cases and response behavior still need systematic verification where indicated in the daily plan.
+
 ### Automated tests
 
 - [x] Database tests.
 - [x] Assignment service tests.
 - [x] API integration tests.
-- [x] Previously confirmed full-suite result: **36 passed**.
 - [x] Database tests updated to use a temporary SQLite database per test.
 - [x] Invalid foreign-key test updated to use `pytest.raises(sqlite3.IntegrityError)`.
+- [x] Added `test_database_schema_and_foreign_keys`.
+- [x] Full backend test suite passed: **37 passed**.
+- [x] Reviewed the intended staged test changes.
+- [x] `git diff --cached --check` passed before the test commit.
 
 Run the backend test suite from the `backend` directory:
 
@@ -84,7 +90,11 @@ Run the backend test suite from the `backend` directory:
 python -m pytest tests -v
 ```
 
-**Test execution note:** Running `python -m pytest backend/tests -v` from the repository root previously caused `ModuleNotFoundError: No module named 'app'` during test collection. The latest root-level run reproduced this import-path issue and collected zero tests. It did not establish that the application assertions failed. Rerun the suite from `backend` to reconfirm the current changes before committing.
+**Test execution note:** A root-level pytest invocation previously failed during test
+collection with `ModuleNotFoundError: No module named 'app'`. Running the full suite from
+the `backend` directory resolved the import-path issue; all 37 tests passed.
+
+Run future tests from the `backend` directory and record the actual result. Do not assume the test count remains unchanged after adding or removing tests.
 
 ## 4. Daily Progress
 
@@ -98,15 +108,16 @@ python -m pytest tests -v
 - [x] Reviewed `backend/app/schemas.py`.
 - [x] Reviewed `backend/app/main.py` for validation, PATCH handling, and SQL parameterization.
 - [x] Ran the complete test suite successfully: **36 passed**.
-- [x] Created `docs/ER_DIAGRAM.md` locally.
-- [x] Created `docs/PROJECT_STATUS_WEEK_2.md` locally.
+- [x] Created `docs/ER_DIAGRAM.md`.
+- [x] Created `docs/PROJECT_STATUS_WEEK_2.md`.
 - [x] Ran `git diff --check` after creating the ER diagram.
+- [x] Subsequently verified that `docs/ER_DIAGRAM.md` exists on GitHub under `master`.
 
-**Day 8 outcome:** Database design reviewed, ER documentation created, Week 2 status documented, and regression tests passed.
+**Day 8 outcome:** Database design reviewed, ER documentation created and subsequently verified on GitHub, Week 2 status documented, and regression tests passed.
 
 **Original Day 8 Git checkpoint:**
 
-- `docs/ER_DIAGRAM.md` — reported as staged at that checkpoint.
+- `docs/ER_DIAGRAM.md` — reported as staged at that checkpoint; its current presence on GitHub was verified separately.
 - `docs/PROJECT_STATUS_WEEK_2.md` — reported as staged at that checkpoint.
 - `backend/oop_practice.py` — untracked and intentionally left untouched.
 
@@ -121,32 +132,55 @@ The earlier staged state must not be assumed to reflect the current Git index.
 - [x] Reviewed the existing backend routes, schemas, database setup, service logic, and tests.
 - [x] Updated `backend/tests/test_database.py` to use a separate temporary SQLite database for each test through `tmp_path` and `monkeypatch`.
 - [x] Updated the invalid foreign-key test to explicitly expect `sqlite3.IntegrityError` using `pytest.raises`.
-- [x] Reviewed the database test changes with `git diff`.
-- [x] Previously ran the backend test suite successfully: **36 passed**.
+- [x] Reviewed the database test changes.
+- [x] Ran the backend test suite successfully at the Day 9 checkpoint: **36 passed**.
 - [x] Ran `git diff --check` successfully with no reported whitespace errors.
-- [x] Updated this Week 2 status document to preserve Day 8 and record Day 9.
+- [x] Preserved the Day 8 history in the Week 2 status record.
+- [x] Committed and pushed the database test-isolation changes in commit `81a9d80` (`test: isolate database tests and update week 2 status`).
 
-**Latest verification note:** The most recent root-level pytest attempt failed during test collection because Python could not import `app`. The test suite still needs to be rerun from `backend` after the latest changes.
+**Day 9 outcome:** Database tests use isolated temporary databases, and invalid foreign-key rejection is tested explicitly. The Day 9 changes were published to GitHub. Additional schema verification was completed during the following session.
 
-**Day 9 outcome:** Database tests now use isolated temporary databases, and invalid foreign-key rejection is tested explicitly. Final regression verification and Git publication remain pending.
+### Day 10 — Friday, 23 October 2026
+
+**Roadmap schedule:** Saturday, 24 October 2026.
+**Actual session date:** Friday, 23 October 2026.
+
+**Focus:** Database initialization, schema verification, and test reliability.
+
+**Work completed and verified:**
+
+- [x] Inspected `backend/app/database.py`.
+- [x] Reviewed how the SQLite database path is derived from `__file__`.
+- [x] Confirmed that `get_connection()` enables SQLite foreign-key enforcement on each connection.
+- [x] Reviewed the `assignments` and `subtasks` table definitions, constraints, and cascading deletion.
+- [x] Reviewed the `create_tables()` database initialization function.
+- [x] Reviewed how `backend/app/main.py` calls `create_tables()` through the FastAPI lifespan.
+- [x] Reviewed the temporary-database isolation approach in `backend/tests/test_database.py`.
+- [x] Added `test_database_schema_and_foreign_keys` to verify required schema columns, connection-level foreign-key enforcement, and the foreign-key relationship with `ON DELETE CASCADE`.
+- [x] Ran the full backend test suite from the `backend` directory: **37 passed**.
+- [x] Corrected the trailing newline in `backend/tests/test_database.py` and reran the full suite: **37 passed**.
+- [x] Reviewed the intended staged diff and confirmed it contained the database test changes.
+- [x] Ran `git diff --cached --check` successfully.
+- [x] Committed the schema-verification test.
+- [x] Pushed the commit to GitHub and verified that local `master` was synchronized with `origin/master`.
+- [x] Verified the commit: `6b70998` — `test: verify database schema and foreign keys`.
+- [x] Verified that `docs/ER_DIAGRAM.md` exists on GitHub under `master`.
+
+**Day 10 Git checkpoint:**
+
+- Latest verified commit: `6b70998` — `test: verify database schema and foreign keys`.
+- Remote: `origin/master`.
+- Local branch: `master`, reported up to date with `origin/master`.
+- `backend/tests/test_database.py` — schema-verification test committed and pushed.
+- `backend/oop_practice.py` — untracked and intentionally excluded from the project commit.
 
 **Still pending:**
 
-- [ ] Rerun the full test suite from `backend` and confirm the result.
-- [ ] Verify the final staged diff.
-- [ ] Commit and push the intended changes.
-- [ ] Keep `backend/oop_practice.py` separate from the project commit.
+- [ ] Decide whether a migration tool is justified for the current MVP.
+- [ ] Verify database creation and initialization in a fresh environment.
+- [ ] Record the reproducibility result and any required setup steps.
 
-### Day 10 — Saturday, 24 October 2026
-
-**Planned focus:** Database models and schema evolution.
-
-- [ ] Review the current SQLite schema and database initialization.
-- [ ] Determine whether a migration tool is justified for the current MVP.
-- [ ] Verify database creation in a fresh environment.
-- [ ] Recheck constraints and foreign-key behavior.
-
-**Completion criteria:** Reproducible database setup and documented schema decisions.
+**Day 10 outcome:** Added database schema and foreign-key regression coverage, verified that all 37 backend tests passed, and pushed the intended test change. Fresh-database reproducibility and the migration-tool decision remain open.
 
 ### Day 11 — Sunday, 25 October 2026
 
@@ -198,21 +232,23 @@ The earlier staged state must not be assumed to reflect the current Git index.
 
 ## 5. Known Outstanding Work
 
-- [ ] Verify the current contents and Git status of `docs/ER_DIAGRAM.md`; do not assume it remains staged.
-- [x] Correct the previously reported trailing whitespace in `docs/PROJECT_STATUS_WEEK_2.md`; `git diff --check` subsequently passed.
+- [x] Create `docs/ER_DIAGRAM.md` and verify that it exists on GitHub under `master`.
+- [x] Correct the previously reported trailing whitespace in the Week 2 status document; `git diff --check` subsequently passed.
 - [x] Review the changes to `backend/tests/test_database.py`.
-- [x] Update this Week 2 status record while preserving Day 8.
-- [ ] Rerun the full backend test suite from the `backend` directory.
-- [ ] Review the final staged and unstaged changes before committing.
-- [ ] Commit and push the intended files to GitHub.
-- [ ] Keep `backend/oop_practice.py` untouched unless deliberately resuming that exercise.
+- [x] Update the Week 2 status record while preserving Day 8 and Day 9 history.
+- [x] Rerun the full backend test suite from the `backend` directory: **37 passed**.
+- [x] Review the staged database test diff before committing.
+- [x] Commit and push the schema-verification test.
+- [x] Verify the latest test commit and that local `master` is synchronized with `origin/master`.
+- [x] Keep `backend/oop_practice.py` untouched and excluded from the project commit.
+- [ ] Verify fresh-database creation and reproducibility.
+- [ ] Decide whether database migration tooling is necessary for the MVP.
 - [ ] Continue auditing API validation and error responses.
 - [ ] Practise API requests using Swagger UI, Postman, or an equivalent client where useful.
 - [ ] Confirm dependency consistency with `backend/requirements.txt` when needed.
-- [ ] Review whether database migration tooling is necessary for the MVP.
 - [ ] Continue frontend development and React–FastAPI integration according to the roadmap.
 
-Items are marked complete only when the work has been performed and verified.
+Items are marked complete only when the work has been performed and verified. Historical test results remain historical; use new test output when validating later changes.
 
 ## 6. Git and Testing Rules
 
@@ -242,24 +278,27 @@ python -m pytest tests -v
 
 Record the actual result after each test run. Do not assume the test count remains unchanged after adding or removing tests.
 
+Keep `backend/oop_practice.py` untouched and excluded unless deliberately resuming that exercise.
+
 ## 7. Week 2 Completion Criteria
 
 Week 2 is complete when:
 
-- [ ] Database relationships and constraints are documented.
-- [ ] ER diagram is reviewed and committed.
-- [ ] Existing FastAPI configuration and project structure are understood.
-- [ ] Database initialization and schema decisions are documented.
-- [ ] Existing CRUD behavior is verified.
+- [x] Database relationships and constraints are documented.
+- [x] ER diagram created and verified on GitHub.
+- [ ] Existing FastAPI configuration and project structure are understood and reviewed.
+- [ ] Database initialization, fresh-database reproducibility, and schema decisions are verified and documented.
+- [ ] Existing CRUD behavior is verified, including relevant edge cases.
 - [ ] Validation, sorting, filtering, and pagination requirements are audited.
 - [ ] API error handling and regression tests are reviewed.
 - [ ] API documentation is checked.
-- [ ] Final test results are recorded.
-- [ ] Intended documentation and test changes are committed and pushed.
+- [x] Backend test suite passed at the latest verified checkpoint: **37 passed**.
+- [x] Intended database test changes were committed and pushed.
+- [ ] Remaining Week 2 verification work is completed and recorded.
 - [ ] The cumulative project status is preserved and updated only when appropriate.
 
 **Progress rule:** Existing features count as implemented, but planned verification tasks remain unfinished until checked. Never mark future work complete without evidence.
 
 ---
 
-**Next action:** Run `python -m pytest tests -v` from the `backend` directory. If all tests pass, return to the repository root, verify the staged diff, then commit and push only the intended files. Keep `backend/oop_practice.py` out of the commit.
+**Next action:** Continue with Day 10's outstanding checks. First, determine whether migration tooling is necessary for the current SQLite MVP. Then verify that the database can be created reproducibly in a fresh environment. Keep `backend/oop_practice.py` excluded from all project changes.
