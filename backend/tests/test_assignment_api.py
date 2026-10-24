@@ -390,3 +390,60 @@ def test_assignment_summary_counts_due_today_and_upcoming(client):
 
     assert data["due_today_assignments"] == 1
     assert data["upcoming_assignments"] == 1
+
+
+def test_update_missing_assignment_returns_404(client):
+    response = client.patch(
+        "/assignments/9999",
+        json={"title": "Updated title"},
+    )
+
+    assert response.status_code == 404
+
+
+def test_list_subtasks_for_missing_assignment_returns_404(client):
+    response = client.get("/assignments/9999/subtasks")
+
+    assert response.status_code == 404
+
+
+def test_update_missing_subtask_returns_404(client):
+    response = client.patch(
+        "/subtasks/9999",
+        json={"title": "Updated task"},
+    )
+
+    assert response.status_code == 404
+
+
+def test_delete_missing_subtask_returns_404(client):
+    response = client.delete("/subtasks/9999")
+
+    assert response.status_code == 404
+
+
+def test_update_assignment_with_empty_payload_returns_400(client):
+    created = client.post(
+        "/assignments",
+        json={"title": "Assignment"},
+    ).json()
+
+    response = client.patch(f"/assignments/{created['id']}", json={})
+
+    assert response.status_code == 400
+
+
+def test_update_subtask_with_empty_payload_returns_400(client):
+    assignment = client.post(
+        "/assignments",
+        json={"title": "Assignment"},
+    ).json()
+
+    subtask = client.post(
+        f"/assignments/{assignment['id']}/subtasks",
+        json={"title": "Subtask"},
+    ).json()
+
+    response = client.patch(f"/subtasks/{subtask['id']}", json={})
+
+    assert response.status_code == 400
