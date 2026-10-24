@@ -1,8 +1,8 @@
 # PROJECT_STATUS — DeadlineOS
 
-_*Last updated: Friday, 23 October 2026*_
+_*Last updated: Saturday, 24 October 2026*_
 
-**Latest verified checkpoint:** `ece13f6` — `fix: close database connections after initialization`, pushed to `origin/master` after the full backend test suite passed (**37 passed**).
+**Latest verified checkpoint:** `15e89df` — `test: cover CRUD API edge cases`, pushed to `origin/master` after the full backend test suite passed (**43 passed**). Local `master` and `origin/master` are synchronized. `backend/oop_practice.py` remains untracked and intentionally excluded.
 
 ## 1. Environment
 
@@ -824,6 +824,8 @@ Notes:
 
 - [x] Day 6: Linux/CLI fundamentals, process and port inspection, and Git branching/merge-conflict practice.
 - [x] Day 7: Manual Swagger verification, deadline response bug fix, regression tests, and temporary test-data cleanup.
+- [x] Day 10: Fresh-database verification, SQLite initialization cleanup, and regression suite (**37 passed**); commit `ece13f6`.
+- [x] Day 11: Added six CRUD edge-case tests, reran the full suite (**43 passed**), and pushed commit `15e89df`.
 
 - [x] Basic Python class and object practice exercise executed successfully.
 
@@ -869,8 +871,9 @@ Notes:
 - [x] Verify fresh SQLite database creation, required tables, foreign-key enforcement, repeatable initialization, and temporary database cleanup.
 - [x] Defer migration tooling for the current SQLite MVP until safe modifications to existing tables or preservation of deployed data require it.
 - [x] Reviewed and committed the `backend/app/database.py` connection-cleanup change as `ece13f6` — `fix: close database connections after initialization`.
-- [x] Reran the backend test suite from `backend`: **37 passed**.
-- [x] Pushed the commit to `origin/master` and verified `master` was synchronized with `origin/master`.
+- [x] Day 10 regression suite from `backend`: **37 passed** (historical result).
+- [x] Day 11 regression suite from `backend`: **43 passed** after adding six CRUD edge-case tests.
+- [x] Pushed the Day 11 test commit `15e89df` to `origin/master` and verified `master` was synchronized with `origin/master`.
 - [x] Confirmed `backend/oop_practice.py` remains untracked, untouched, and excluded.
 - [ ] Build the React dashboard and forms.
 - [ ] Integrate the React frontend with the FastAPI backend.
@@ -881,7 +884,7 @@ Notes:
 
 ## 7. Unfinished Tasks and Exact Next Steps
 
-The deadline-sorting and summary feature has been implemented, tested, committed, and pushed. The ER diagram is created and verified on GitHub. Day 10 fresh-database verification passed, including required tables, foreign-key enforcement, repeatable initialization, and temporary cleanup; migration tooling is deferred for the current SQLite MVP. The `backend/app/database.py` connection-cleanup change was reviewed, tested, committed as `ece13f6`, and pushed to `origin/master`. Next, verify CRUD edge cases and API error responses before moving toward frontend work.
+The deadline-sorting and summary feature has been implemented, tested, committed, and pushed. The ER diagram is created and verified on GitHub. Day 10 fresh-database verification passed, including required tables, foreign-key enforcement, repeatable initialization, and temporary cleanup; migration tooling is deferred for the current SQLite MVP. The `backend/app/database.py` connection-cleanup change was reviewed, tested, committed as `ece13f6`, and pushed to `origin/master`. Day 11 added six CRUD edge-case tests and the full backend suite passed (**43 passed**); commit `15e89df` is pushed and local `master` is synchronized with `origin/master`. Next, audit validation, filtering, sorting, and pagination requirements as planned for Day 12.
 
 ### Step 1 — Completed: dependency verification
 
@@ -899,11 +902,15 @@ The user verified deadline sorting, `days_remaining`, `is_overdue`, and the `/as
 
 `docs/ER_DIAGRAM.md` has been created and its presence on GitHub under `master` was verified. It documents the `assignments`–`subtasks` relationship.
 
-### Step 5 — Next: CRUD and API edge-case verification
+### Step 5 — Completed: targeted CRUD edge-case verification
 
-Review existing assignment and subtask endpoints for missing-resource behavior, invalid input, response consistency, and partial-update edge cases. Add tests only for confirmed gaps and run the full suite from `backend`.
+Reviewed the existing assignment and subtask API tests and added six tests in `backend/tests/test_assignment_api.py` covering missing assignment updates, listing subtasks for a missing assignment, missing subtask updates/deletes, and empty assignment/subtask PATCH payloads. The full backend suite passed (**43 passed**). The staged diff and `git diff --cached --check` were reviewed before commit `15e89df` (`test: cover CRUD API edge cases`) was pushed to `origin/master`; local `master` and `origin/master` are synchronized.
 
-The Day 10 database connection-cleanup change is committed and pushed as `ece13f6`. Keep `backend/oop_practice.py` untouched and excluded.
+This completes the targeted Day 11 checks only. Broader systematic API validation/error-response review remains outstanding. The Day 10 database connection-cleanup change remains recorded as commit `ece13f6`. Keep `backend/oop_practice.py` untouched and excluded.
+
+### Step 6 — Next: Day 12 requirements audit
+
+Audit existing validation, deadline sorting, and summary behavior against MVP needs. Review filtering and pagination requirements, implement only useful missing behavior, and add tests for any changes. Do not assume filtering or pagination is implemented without checking the current code.
 
 ### Historical verification details
 
@@ -1145,9 +1152,13 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Remote: `origin/master`.
 
-- Latest verified commit: `ece13f6` — `fix: close database connections after initialization`.
+- Latest verified commit: `15e89df` — `test: cover CRUD API edge cases`.
 
-- `ece13f6` was successfully pushed to `origin/master`; local `master` and `origin/master` were verified synchronized.
+- `15e89df` was successfully pushed to `origin/master`; local `master` and `origin/master` were verified synchronized.
+
+- Latest verified complete backend test suite: **43 passed** after the Day 11 CRUD edge-case tests.
+
+- Previous checkpoint: `ece13f6` — `fix: close database connections after initialization`; Day 10's full test suite passed (**37 passed**).
 
 - Previous checkpoint: `74532d1` — `fix: calculate deadline fields in assignment list`.
 
@@ -1163,7 +1174,7 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Day 6 practice merge commit: `c27ba48` — `practice: resolve Git merge conflict`. This commit was on a temporary practice branch and is \***\*not\*\*** part of `master`.
 
-- Latest verified complete test suite: **37 passed** after Day 10 schema verification and the `create_tables()` connection-cleanup change.
+- Historical Day 10 complete test suite: **37 passed** after schema verification and the `create_tables()` connection-cleanup change. Latest verified suite is **43 passed** after Day 11.
 
 - `backend/requirements.txt` includes `httpx2==2.15.1` according to the latest known project state.
 
@@ -1177,8 +1188,8 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - The deadline-summary commit changed `backend/app/main.py`, `backend/app/schemas.py`, `backend/app/services/assignment_service.py`, `backend/tests/test_assignment_api.py`, and `backend/tests/test_assignment_service.py`.
 
-- The Week 2 status file records Day 10 database verification and the completed connection-cleanup fix. The code commit `ece13f6` and status documentation updates are pushed to `origin/master`.
+- The Week 2 status file records Day 10 database verification and Day 11 CRUD edge-case tests. The latest code commit is `15e89df`; it is pushed to `origin/master`.
 
 ---
 
-**Current next action:** Continue Day 11 CRUD edge-case verification: inspect missing-resource responses, invalid inputs, response consistency, and partial-update behavior. Keep `backend/oop_practice.py` untouched and excluded.
+**Current next action:** Begin the Day 12 requirements audit: review validation, sorting, filtering, and pagination against MVP needs. Keep `backend/oop_practice.py` untouched and excluded.
