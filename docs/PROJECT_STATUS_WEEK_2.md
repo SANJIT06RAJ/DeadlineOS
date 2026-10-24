@@ -1,7 +1,7 @@
 # PROJECT STATUS — DEADLINEOS WEEK 2
 
 **Week:** 22–28 October 2026
-**Last updated:** Friday, 23 October 2026
+**Last updated:** Saturday, 24 October 2026
 **Primary project status:** `docs/PROJECT_STATUS.md`
 **Learning schedule:** `ROADMAP.md`
 
@@ -195,14 +195,20 @@ The earlier staged state must not be assumed to reflect the current Git index.
 
 ### Day 11 — Sunday, 25 October 2026
 
-**Planned focus:** CRUD verification.
+**Planned focus:** CRUD verification. **Work session completed:** Saturday, 24 October 2026.
 
 - [x] Assignment CRUD endpoints already exist.
 - [x] Subtask CRUD endpoints already exist.
-- [ ] Review endpoint edge cases and response consistency.
-- [ ] Confirm missing-resource and invalid-input behavior through tests.
+- [x] Added tests for missing assignment update and listing subtasks for a missing assignment (`404`).
+- [x] Added tests for updating and deleting a missing subtask (`404`).
+- [x] Added tests verifying empty assignment and subtask PATCH payloads return `400`.
+- [x] Reviewed the staged diff; `git diff --cached --check` passed.
+- [x] Full backend suite passed after the additions: **43 passed**.
+- [x] Committed as `15e89df` — `test: cover CRUD API edge cases`.
+- [x] Pushed to `origin/master`; local `master` and `origin/master` are synchronized.
+- [x] Kept `backend/oop_practice.py` untouched and excluded.
 
-**Completion criteria:** Existing CRUD behavior verified without duplicating completed implementation.
+**Day 11 outcome:** Six targeted CRUD edge-case tests were added and verified. The broader systematic API error-response review remains unfinished and must not be marked complete yet.
 
 ### Day 12 — Monday, 26 October 2026
 
@@ -254,7 +260,8 @@ The earlier staged state must not be assumed to reflect the current Git index.
 - [x] Keep `backend/oop_practice.py` untouched and excluded from the project commit.
 - [x] Verify fresh-database creation and reproducibility in an isolated temporary directory.
 - [x] Decide to defer migration tooling for the current SQLite MVP until safe changes to existing tables or preservation of deployed data require it.
-- [ ] Continue auditing API validation and error responses.
+- [x] Add targeted CRUD edge-case coverage for missing resources and empty PATCH payloads (Day 11; six new tests, full suite **43 passed**).
+- [ ] Continue the broader systematic audit of API validation and error responses.
 - [ ] Practise API requests using Swagger UI, Postman, or an equivalent client where useful.
 - [ ] Confirm dependency consistency with `backend/requirements.txt` when needed.
 - [ ] Continue frontend development and React–FastAPI integration according to the roadmap.
@@ -303,7 +310,8 @@ Week 2 is complete when:
 - [ ] Validation, sorting, filtering, and pagination requirements are audited.
 - [ ] API error handling and regression tests are reviewed.
 - [ ] API documentation is checked.
-- [x] Backend test suite passed at the latest verified checkpoint: **37 passed**.
+- [x] Day 10 backend test suite passed: **37 passed** (historical checkpoint).
+- [x] Latest verified backend test suite after Day 11: **43 passed**.
 - [x] Intended database test changes were committed and pushed.
 - [ ] Remaining Week 2 verification work is completed and recorded.
 - [ ] The cumulative project status is preserved and updated only when appropriate.
@@ -312,4 +320,4 @@ Week 2 is complete when:
 
 ---
 
-**Next action:** Continue with Day 11 CRUD verification: review endpoint edge cases, response consistency, missing-resource behavior, and invalid-input handling. Keep `backend/oop_practice.py` excluded from all project changes.
+**Next action:** Day 11 targeted CRUD edge-case tests are complete. Begin Day 12's requirements audit for validation, sorting, filtering, and pagination; implement only missing MVP-relevant behavior. Keep `backend/oop_practice.py` excluded from all project changes.
