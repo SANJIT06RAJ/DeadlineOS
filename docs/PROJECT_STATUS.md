@@ -2,7 +2,7 @@
 
 _*Last updated: Sunday, 25 October 2026*_
 
-**Latest remote checkpoint before this status update:** `4bf4ba8` — `docs: update project status after Day 11`. The Day 12 filtering/pagination implementation and its test results have been verified locally (**47 backend tests passed**), but the implementation changes are not yet committed or pushed. `backend/oop_practice.py` remains untracked and intentionally excluded.
+**Latest verified code checkpoint:** `77b135f` — `feat: add assignment filtering and pagination`, pushed to `origin/master`. The committed implementation passed the full backend test suite (**47 passed in 4.39 seconds**). `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -736,7 +736,7 @@ Day 7 result: **manual deadline API verification, response serialization fix, te
 - [x] Verified the full backend suite: **47 passed in 3.81 seconds**.
 - [x] Ran `git diff --check` successfully with no reported whitespace errors.
 
-**Day 12 outcome:** Assignment listing now supports status filtering and pagination, with four new tests covering the added behavior and invalid query parameters. The implementation passed the full backend test suite. The code and documentation changes still require final review and a commit/push.
+**Day 12 outcome:** Assignment listing supports status filtering and pagination, with four tests covering the added behavior and invalid query parameters. The full backend suite passed on the committed version (**47 passed in 4.39 seconds**). Commit `77b135f` was pushed to `origin/master`; local and remote branches were verified synchronized. `backend/oop_practice.py` remains untracked and excluded.
 ## 4. Current Database Design
 
 Defined in `docs/PROJECT_PLAN.md` and previously verified against the local database schema.
@@ -1197,13 +1197,15 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Remote: `origin/master`.
 
-- Latest remote checkpoint before this status-only commit: `4bf4ba8` — `docs: update project status after Day 11`.
+- Latest verified code commit: `77b135f` — `feat: add assignment filtering and pagination`; pushed to `origin/master`.
 
-- Day 12 implementation changes in `backend/app/main.py` and `backend/tests/test_assignment_api.py` were verified locally, but were not yet committed or pushed when this status update was prepared.
+- The committed Day 12 changes include status filtering and `limit`/`offset` pagination for `GET /assignments`, plus four new API tests.
 
-- Latest locally reported complete backend test suite: **47 passed in 3.81 seconds** after the Day 12 filtering and pagination tests.
+- Latest verified full backend test suite on the committed version: **47 passed in 4.39 seconds**.
 
-- This status update records the local Day 12 results; it does not mean the Day 12 code implementation has been committed or pushed.
+- After `git fetch origin`, local `master` and `origin/master` both pointed to `77b135f`. `git diff --check` reported no issues.
+
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 - Previous checkpoint: `ece13f6` — `fix: close database connections after initialization`; Day 10's full test suite passed (**37 passed**).
 
@@ -1239,4 +1241,4 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 ---
 
-**Current next action:** Review the Day 12 implementation and documentation diffs, stage only the four intended files, then commit and push after review. The locally verified backend suite passed (**47 passed**). Keep `backend/oop_practice.py` untouched and excluded.
+**Current next action:** Begin Day 13: systematically review API HTTP status codes and error responses, test invalid payloads and missing resources, verify partial-update edge cases, and run the full regression suite. Record only verified results. Keep `backend/oop_practice.py` untouched and excluded.
