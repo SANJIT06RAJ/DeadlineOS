@@ -245,14 +245,15 @@ The earlier staged state must not be assumed to reflect the current Git index.
 
 #### Git status and remaining work
 
-- [x] Confirmed only `backend/app/main.py` and `backend/tests/test_assignment_api.py` were modified by the implementation at the latest local check.
-- [x] Confirmed `backend/oop_practice.py` remained untracked and excluded.
-- [ ] Review the proposed status-file updates and complete Git diff.
-- [ ] Stage only the intended implementation, test, and Week 2 status files.
-- [ ] Commit and push the reviewed changes.
-- [ ] Verify the resulting commit and synchronization with `origin/master`.
+- [x] Reviewed the intended implementation and Week 2 status changes.
+- [x] Staged only `backend/app/main.py`, `backend/tests/test_assignment_api.py`, and `docs/PROJECT_STATUS_WEEK_2.md`; kept `backend/oop_practice.py` untracked and excluded.
+- [x] Committed the reviewed changes as `77b135f` — `feat: add assignment filtering and pagination`.
+- [x] Pushed the commit to `origin/master`.
+- [x] Verified local `master` and `origin/master` both pointed to `77b135f`.
+- [x] Reran the full backend suite on the committed version: **47 passed in 4.39 seconds**.
+- [x] Ran `git diff --check` successfully.
 
-**Day 12 outcome:** The requirements audit identified missing status filtering and pagination. Both features were implemented and covered by four new API tests. The full backend suite passed with 47 tests. The implementation and documentation updates remain uncommitted until reviewed and verified.
+**Day 12 outcome:** Status filtering and pagination were implemented and covered by four new API tests. The committed version passed all 47 backend tests and was pushed successfully. Local and remote branches were synchronized; `backend/oop_practice.py` remains untouched and excluded.
 
 ### Day 13 — Tuesday, 27 October 2026
 
@@ -351,4 +352,4 @@ Week 2 is complete when:
 
 ---
 
-**Next action:** Day 11 targeted CRUD edge-case tests are complete. Begin Day 12's requirements audit for validation, sorting, filtering, and pagination; implement only missing MVP-relevant behavior. Keep `backend/oop_practice.py` excluded from all project changes.
+**Next action:** Begin Day 13's systematic API error-handling review. Check HTTP status codes, invalid payloads, missing resources, and partial-update edge cases, then run the full regression suite. Do not mark the broader review complete until the checks are performed. Keep `backend/oop_practice.py` excluded from all project changes.
