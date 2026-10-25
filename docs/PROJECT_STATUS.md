@@ -1,8 +1,8 @@
 # PROJECT_STATUS — DeadlineOS
 
-_*Last updated: Saturday, 24 October 2026*_
+_*Last updated: Sunday, 25 October 2026*_
 
-**Latest verified checkpoint:** `15e89df` — `test: cover CRUD API edge cases`, pushed to `origin/master` after the full backend test suite passed (**43 passed**). Local `master` and `origin/master` are synchronized. `backend/oop_practice.py` remains untracked and intentionally excluded.
+**Latest remote checkpoint before this status update:** `4bf4ba8` — `docs: update project status after Day 11`. The Day 12 filtering/pagination implementation and its test results have been verified locally (**47 backend tests passed**), but the implementation changes are not yet committed or pushed. `backend/oop_practice.py` remains untracked and intentionally excluded.
 
 ## 1. Environment
 
@@ -708,6 +708,35 @@ The deadline-summary feature implementation is complete. Manual API verification
 
 Day 7 result: **manual deadline API verification, response serialization fix, test rerun, temporary-data cleanup, and Git push completed.**
 
+
+### Day 12 — Sunday, 25 October 2026: Assignment Filtering and Pagination
+
+#### Requirements audit
+
+- [x] Inspected `backend/app/main.py`, `backend/app/schemas.py`, and `backend/tests/test_assignment_api.py` before changing the implementation.
+- [x] Confirmed that deadline sorting, deadline calculations, summary counts, and assignment status validation already existed.
+- [x] Identified that `GET /assignments` did not yet support status filtering or pagination.
+
+#### Implementation
+
+- [x] Added an optional `status` query parameter to `GET /assignments`, reusing the existing `AssignmentStatus` type.
+- [x] Supported filtering by `pending`, `in_progress`, and `completed`.
+- [x] Added `limit` pagination, defaulting to 10 and accepting values from 1 to 100.
+- [x] Added `offset` pagination, defaulting to 0 and rejecting negative values.
+- [x] Used parameterized SQL values for the status filter, limit, and offset.
+- [x] Preserved the existing response schema and due-date ordering, including placing assignments without due dates last.
+
+#### Automated verification
+
+- [x] Added `test_list_assignments_filters_by_status`.
+- [x] Added `test_list_assignments_supports_limit_and_offset`.
+- [x] Added `test_list_assignments_rejects_invalid_status_filter`.
+- [x] Added `test_list_assignments_rejects_invalid_pagination`.
+- [x] Verified the focused assignment API test file: **32 passed**.
+- [x] Verified the full backend suite: **47 passed in 3.81 seconds**.
+- [x] Ran `git diff --check` successfully with no reported whitespace errors.
+
+**Day 12 outcome:** Assignment listing now supports status filtering and pagination, with four new tests covering the added behavior and invalid query parameters. The implementation passed the full backend test suite. The code and documentation changes still require final review and a commit/push.
 ## 4. Current Database Design
 
 Defined in `docs/PROJECT_PLAN.md` and previously verified against the local database schema.
@@ -826,6 +855,7 @@ Notes:
 - [x] Day 7: Manual Swagger verification, deadline response bug fix, regression tests, and temporary test-data cleanup.
 - [x] Day 10: Fresh-database verification, SQLite initialization cleanup, and regression suite (**37 passed**); commit `ece13f6`.
 - [x] Day 11: Added six CRUD edge-case tests, reran the full suite (**43 passed**), and pushed commit `15e89df`.
+- [x] Day 12: Audited assignment-list requirements and implemented status filtering and pagination; full backend suite passed (**47 passed**). Code changes remain uncommitted and unpushed.
 
 - [x] Basic Python class and object practice exercise executed successfully.
 
@@ -908,9 +938,24 @@ Reviewed the existing assignment and subtask API tests and added six tests in `b
 
 This completes the targeted Day 11 checks only. Broader systematic API validation/error-response review remains outstanding. The Day 10 database connection-cleanup change remains recorded as commit `ece13f6`. Keep `backend/oop_practice.py` untouched and excluded.
 
-### Step 6 — Next: Day 12 requirements audit
+### Step 6 — Day 12 implementation verified; review and commit pending
 
-Audit existing validation, deadline sorting, and summary behavior against MVP needs. Review filtering and pagination requirements, implement only useful missing behavior, and add tests for any changes. Do not assume filtering or pagination is implemented without checking the current code.
+- [x] Audited existing validation, deadline sorting, and summary behavior.
+- [x] Implemented status filtering and pagination for `GET /assignments`.
+- [x] Added four API tests covering filtering, pagination, and invalid query parameters.
+- [x] Verified the complete backend suite: **47 passed in 3.81 seconds**.
+- [x] Verified `git diff --check` reported no whitespace errors.
+- [ ] Review the complete implementation and documentation diffs.
+- [ ] Stage only the intended files: `backend/app/main.py`, `backend/tests/test_assignment_api.py`, `docs/PROJECT_STATUS.md`, and `docs/PROJECT_STATUS_WEEK_2.md`.
+- [ ] Review the staged diff before committing.
+- [ ] Commit and push the reviewed changes.
+- [ ] Verify the resulting commit and synchronization with `origin/master`.
+
+Keep `backend/oop_practice.py` untouched and untracked.
+
+### Next feature after the Day 12 changes are committed
+
+Proceed toward [GitHub issue #5 — Frontend dashboard and forms](https://github.com/SANJIT06RAJ/DeadlineOS/issues/5), following the roadmap and any remaining prerequisites.
 
 ### Historical verification details
 
@@ -1152,11 +1197,13 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Remote: `origin/master`.
 
-- Latest verified commit: `15e89df` — `test: cover CRUD API edge cases`.
+- Latest remote checkpoint before this status-only commit: `4bf4ba8` — `docs: update project status after Day 11`.
 
-- `15e89df` was successfully pushed to `origin/master`; local `master` and `origin/master` were verified synchronized.
+- Day 12 implementation changes in `backend/app/main.py` and `backend/tests/test_assignment_api.py` were verified locally, but were not yet committed or pushed when this status update was prepared.
 
-- Latest verified complete backend test suite: **43 passed** after the Day 11 CRUD edge-case tests.
+- Latest locally reported complete backend test suite: **47 passed in 3.81 seconds** after the Day 12 filtering and pagination tests.
+
+- This status update records the local Day 12 results; it does not mean the Day 12 code implementation has been committed or pushed.
 
 - Previous checkpoint: `ece13f6` — `fix: close database connections after initialization`; Day 10's full test suite passed (**37 passed**).
 
@@ -1192,4 +1239,4 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 ---
 
-**Current next action:** Begin the Day 12 requirements audit: review validation, sorting, filtering, and pagination against MVP needs. Keep `backend/oop_practice.py` untouched and excluded.
+**Current next action:** Review the Day 12 implementation and documentation diffs, stage only the four intended files, then commit and push after review. The locally verified backend suite passed (**47 passed**). Keep `backend/oop_practice.py` untouched and excluded.
