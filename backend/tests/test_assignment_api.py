@@ -447,3 +447,56 @@ def test_update_subtask_with_empty_payload_returns_400(client):
     response = client.patch(f"/subtasks/{subtask['id']}", json={})
 
     assert response.status_code == 400
+
+
+def test_list_assignments_filters_by_status(client):
+    client.post(
+        "/assignments",
+        json={"title": "Pending task", "status": "pending"},
+    )
+    client.post(
+        "/assignments",
+        json={"title": "In progress task", "status": "in_progress"},
+    )
+    client.post(
+        "/assignments",
+        json={"title": "Completed task", "status": "completed"},
+    )
+
+    response = client.get("/assignments?status=pending")
+
+    assert response.status_code == 200
+    assignments = response.json()
+    assert len(assignments) == 1
+    assert assignments[0]["title"] == "Pending task"
+    assert assignments[0]["status"] == "pending"
+
+
+def test_list_assignments_supports_limit_and_offset(client):
+    for index in range(3):
+        client.post(
+            "/assignments",
+            json={
+                "title": f"Assignment {index + 1}",
+                "due_date": f"2026-11-{index + 1:02d}",
+            },
+        )
+
+    response = client.get("/assignments?limit=1&offset=1")
+
+    assert response.status_code == 200
+    assignments = response.json()
+    assert len(assignments) == 1
+    assert assignments[0]["title"] == "Assignment 2"
+
+
+def test_list_assignments_rejects_invalid_status_filter(client):
+    response = client.get("/assignments?status=started")
+
+    assert response.status_code == 422
+
+
+def test_list_assignments_rejects_invalid_pagination(client):
+    response = client.get("/assignments?limit=0")
+
+    assert response.status_code == 422

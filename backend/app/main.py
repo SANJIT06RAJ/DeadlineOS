@@ -8,7 +8,7 @@ from app.services.assignment_service import (
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException, Response, status
+from fastapi import FastAPI, HTTPException, Query, Response, status
 
 from app.database import create_tables, get_connection
 from app.schemas import (
@@ -16,6 +16,7 @@ from app.schemas import (
     AssignmentResponse,
     AssignmentSummary,
     AssignmentUpdate,
+    AssignmentStatus,
     SubtaskCreate,
     SubtaskResponse,
     SubtaskUpdate,
@@ -70,14 +71,36 @@ def health_check():
     return {"status": "healthy"}
 
 
+
 @app.get("/assignments", response_model=list[AssignmentResponse])
-def list_assignments():
+def list_assignments(
+    status_filter: AssignmentStatus | None = Query(
+        default=None,
+        alias="status",
+        description="Filter assignments by status",
+    ),
+    limit: int = Query(default=10, ge=1, le=100),
+    offset: int = Query(default=0, ge=0),
+):
+    query = "SELECT * FROM assignments"
+    parameters = []
+
+    if status_filter is not None:
+        query += " WHERE status = ?"
+        parameters.append(status_filter)
+
+    query += " ORDER BY due_date IS NULL, due_date, id"
+    query += " LIMIT ? OFFSET ?"
+    parameters.extend([limit, offset])
+
     with get_connection() as connection:
         rows = connection.execute(
-            "SELECT * FROM assignments ORDER BY due_date IS NULL, due_date, id"
+            query,
+            parameters,
         ).fetchall()
 
     return [serialize_assignment(row) for row in rows]
+
 
 
 @app.post(

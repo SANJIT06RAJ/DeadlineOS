@@ -212,16 +212,47 @@ The earlier staged state must not be assumed to reflect the current Git index.
 
 ### Day 12 — Monday, 26 October 2026
 
-**Planned focus:** Validation, filtering, sorting, and pagination.
+**Focus:** Validation, filtering, sorting, and pagination.
 
-- [x] Deadline-based assignment sorting already exists.
-- [x] Assignment summary counts already exist.
-- [x] Pydantic validation already exists.
-- [ ] Audit filtering and pagination requirements.
-- [ ] Implement only missing features useful for the MVP.
-- [ ] Add tests for any new behavior.
+#### Requirements audit
 
-**Completion criteria:** Requirements audit completed and any chosen additions tested.
+- [x] Inspected `backend/app/main.py` and `backend/app/schemas.py` to identify existing API functionality.
+- [x] Confirmed assignment listing already sorted by due date, with assignments without due dates listed last.
+- [x] Confirmed `GET /assignments/summary` already provides assignment counts by status and deadline category.
+- [x] Confirmed Pydantic schemas already validate assignment titles and restrict statuses to `pending`, `in_progress`, and `completed`.
+- [x] Identified that `GET /assignments` did not implement status filtering or pagination.
+
+#### Implementation
+
+- [x] Updated `backend/app/main.py` to import FastAPI's `Query` helper.
+- [x] Reused the existing `AssignmentStatus` type to validate the optional `status` query parameter.
+- [x] Added status filtering to `GET /assignments`, supporting `pending`, `in_progress`, and `completed`.
+- [x] Added a `limit` parameter, defaulting to 10 results and accepting values from 1 to 100.
+- [x] Added an `offset` parameter, defaulting to 0 and rejecting negative values.
+- [x] Used parameterized SQL values for the status filter, limit, and offset.
+- [x] Preserved the existing response schema and due-date ordering.
+- [x] Kept assignments without due dates at the end of the ordered results.
+
+#### Automated testing
+
+- [x] Added `test_list_assignments_filters_by_status` to verify that filtering returns only matching assignments.
+- [x] Added `test_list_assignments_supports_limit_and_offset` to verify pagination returns the expected subset of ordered results.
+- [x] Added `test_list_assignments_rejects_invalid_status_filter` to verify an unsupported status returns HTTP 422.
+- [x] Added `test_list_assignments_rejects_invalid_pagination` to verify `limit=0` returns HTTP 422.
+- [x] Verified the assignment API test file: **32 passed**.
+- [x] Verified the full backend test suite: **47 passed in 3.81 seconds**.
+- [x] Ran `git diff --check` successfully with no reported whitespace errors.
+
+#### Git status and remaining work
+
+- [x] Confirmed only `backend/app/main.py` and `backend/tests/test_assignment_api.py` were modified by the implementation at the latest local check.
+- [x] Confirmed `backend/oop_practice.py` remained untracked and excluded.
+- [ ] Review the proposed status-file updates and complete Git diff.
+- [ ] Stage only the intended implementation, test, and Week 2 status files.
+- [ ] Commit and push the reviewed changes.
+- [ ] Verify the resulting commit and synchronization with `origin/master`.
+
+**Day 12 outcome:** The requirements audit identified missing status filtering and pagination. Both features were implemented and covered by four new API tests. The full backend suite passed with 47 tests. The implementation and documentation updates remain uncommitted until reviewed and verified.
 
 ### Day 13 — Tuesday, 27 October 2026
 
