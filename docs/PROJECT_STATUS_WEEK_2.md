@@ -279,7 +279,7 @@ The earlier staged state must not be assumed to reflect the current Git index.
 
 **Day 13 status:** Targeted validation coverage has been added and the reported full suite passed with 51 tests. The local test changes are not yet committed or pushed, and the broader error-handling audit remains unfinished.
 
-# Day 14 — Wednesday, 28 October 2026
+### Day 14 — Wednesday, 28 October 2026
 
 **Planned focus:** Bug fixing and API documentation.
 
