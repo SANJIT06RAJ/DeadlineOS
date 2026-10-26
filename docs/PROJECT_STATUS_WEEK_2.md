@@ -1,7 +1,7 @@
 # PROJECT STATUS — DEADLINEOS WEEK 2
 
 **Week:** 22–28 October 2026
-**Last updated:** Saturday, 24 October 2026
+**Last updated:** Monday, 26 October 2026
 **Primary project status:** `docs/PROJECT_STATUS.md`
 **Learning schedule:** `ROADMAP.md`
 
@@ -255,19 +255,31 @@ The earlier staged state must not be assumed to reflect the current Git index.
 
 **Day 12 outcome:** Status filtering and pagination were implemented and covered by four new API tests. The committed version passed all 47 backend tests and was pushed successfully. Local and remote branches were synchronized; `backend/oop_practice.py` remains untouched and excluded.
 
-### Day 13 — Tuesday, 27 October 2026
+### Day 13 — Monday, 26 October 2026
 
-**Planned focus:** Error handling and API testing.
+**Planned focus:** Error handling and pytest API tests.
 
-- [x] Existing API integration tests are present.
-- [ ] Review HTTP status codes and error responses systematically.
-- [ ] Test invalid payloads and missing resources.
-- [ ] Verify partial-update edge cases.
-- [ ] Run the full regression suite.
+#### Review and targeted tests
 
-**Completion criteria:** Error handling tested and results recorded.
+- [x] Inspected `backend/app/main.py`, `backend/app/schemas.py`, and the existing API tests before changing anything.
+- [x] Confirmed existing coverage for missing resources (`404`), invalid title/status/query parameters (`422`), empty PATCH payloads (`400`), successful creation (`201`), and successful deletion (`204`).
+- [x] Added tests for null assignment status and null subtask completion state; both expect `422`.
+- [x] Added tests for a malformed due date and a missing required assignment title; both expect `422`.
+- [x] Focused API test file passed: **36 passed in 2.08 seconds**.
+- [x] Full backend regression suite reported by the user: **51 passed**.
+- [x] Ran `git diff --check`; no whitespace errors were reported.
+- [x] Confirmed `backend/oop_practice.py` remains untracked and excluded.
 
-### Day 14 — Wednesday, 28 October 2026
+#### Remaining work
+
+- [ ] Complete the systematic review of HTTP status codes and error responses.
+- [ ] Review mixed valid/invalid PATCH payloads and other remaining partial-update edge cases.
+- [ ] Review the local test diff, commit the intended test changes, and verify Git synchronization.
+- [ ] Re-run the full backend suite after any further changes.
+
+**Day 13 status:** Targeted validation coverage has been added and the reported full suite passed with 51 tests. The local test changes are not yet committed or pushed, and the broader error-handling audit remains unfinished.
+
+# Day 14 — Wednesday, 28 October 2026
 
 **Planned focus:** Bug fixing and API documentation.
 
@@ -293,7 +305,7 @@ The earlier staged state must not be assumed to reflect the current Git index.
 - [x] Verify fresh-database creation and reproducibility in an isolated temporary directory.
 - [x] Decide to defer migration tooling for the current SQLite MVP until safe changes to existing tables or preservation of deployed data require it.
 - [x] Add targeted CRUD edge-case coverage for missing resources and empty PATCH payloads (Day 11; six new tests, full suite **43 passed**).
-- [ ] Continue the broader systematic audit of API validation and error responses.
+- [ ] Continue the broader systematic audit of API validation and error responses; four additional validation tests are now present locally, and the user reported 51 backend tests passed.
 - [ ] Practise API requests using Swagger UI, Postman, or an equivalent client where useful.
 - [ ] Confirm dependency consistency with `backend/requirements.txt` when needed.
 - [ ] Continue frontend development and React–FastAPI integration according to the roadmap.
