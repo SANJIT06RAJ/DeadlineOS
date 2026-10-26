@@ -1,8 +1,8 @@
 # PROJECT_STATUS — DeadlineOS
 
-_*Last updated: Sunday, 25 October 2026*_
+_*Last updated: Monday, 26 October 2026*_
 
-**Latest verified code checkpoint:** `77b135f` — `feat: add assignment filtering and pagination`, pushed to `origin/master`. The committed implementation passed the full backend test suite (**47 passed in 4.39 seconds**). `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest verified committed code checkpoint:** `77b135f` — `feat: add assignment filtering and pagination`. The current remote branch also contains the Day 12 status documentation commits. During Day 13, four additional API validation tests were added locally and the user reported **51 backend tests passed**; those test changes are not yet committed or pushed. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -737,6 +737,23 @@ Day 7 result: **manual deadline API verification, response serialization fix, te
 - [x] Ran `git diff --check` successfully with no reported whitespace errors.
 
 **Day 12 outcome:** Assignment listing supports status filtering and pagination, with four tests covering the added behavior and invalid query parameters. The full backend suite passed on the committed version (**47 passed in 4.39 seconds**). Commit `77b135f` was pushed to `origin/master`; local and remote branches were verified synchronized. `backend/oop_practice.py` remains untracked and excluded.
+### Day 13 — Monday, 26 October 2026: API Error-Handling Test Audit
+
+#### Review and targeted tests
+
+- [x] Inspected `backend/app/main.py`, `backend/app/schemas.py`, and the existing API tests before changing anything.
+- [x] Confirmed existing coverage for missing resources (`404`), invalid title/status/query parameters (`422`), empty PATCH payloads (`400`), successful creation (`201`), and successful deletion (`204`).
+- [x] Added `test_update_assignment_rejects_null_status`.
+- [x] Added `test_update_subtask_rejects_null_completion_state`.
+- [x] Added `test_create_assignment_rejects_invalid_due_date`.
+- [x] Added `test_create_assignment_rejects_missing_title`.
+- [x] Focused API test run reported: **36 passed in 2.08 seconds**.
+- [x] Full backend regression run reported by the user: **51 passed**.
+- [x] Reviewed `git diff --check`; no whitespace errors were reported.
+- [x] Confirmed the intended local change is limited to `backend/tests/test_assignment_api.py`; `backend/oop_practice.py` remains untracked and excluded.
+
+**Day 13 status:** Four additional validation tests pass in the reported full suite. The local test changes have not yet been committed or pushed. The broader systematic review of all HTTP responses and partial-update edge cases remains in progress; do not mark Day 13 complete yet.
+
 ## 4. Current Database Design
 
 Defined in `docs/PROJECT_PLAN.md` and previously verified against the local database schema.
