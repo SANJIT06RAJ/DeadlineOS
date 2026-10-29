@@ -1,8 +1,8 @@
 # PROJECT_STATUS — DeadlineOS
 
-_*Last updated: Thursday, 29 October 2026*_
+_*Last updated: Friday, 30 October 2026*_
 
-**Latest verified committed code checkpoint:** `d98bd85` — `test: verify atomic subtask update validation`, pushed to `origin/master` on 29 October 2026. Strengthened the subtask PATCH validation test to send a valid title change together with `is_completed: null`, expect HTTP `422`, and verify the original title and completion state remain unchanged. The targeted API tests passed (**2 passed, 35 deselected**); the full backend suite passed after the change (**52 passed in 2.53 seconds**). `git diff --check` and `git diff --cached --check` reported no whitespace errors. Local `master` and `origin/master` are synchronized at `d98bd85`. The broader API error-handling audit remains unfinished. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest verified committed code checkpoint:** `25ddb94` — `test: cover invalid due date patch atomicity`, pushed to `origin/master` on 30 October 2026. Added a PATCH regression test that combines a valid title change with an invalid `due_date`, expects HTTP `422`, and confirms the original title and due date remain unchanged. The original invalid-date creation test was preserved. Both invalid-date tests passed (**2 passed, 36 deselected**); the full backend suite passed (**53 passed in 2.51 seconds**). `git diff --check` and `git diff --cached --check` reported no whitespace errors. Local `master` and `origin/master` are synchronized at `25ddb94`. The broader API validation/error-handling audit remains unfinished. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -1238,13 +1238,13 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Remote: `origin/master`.
 
-- Latest verified commit: `d98bd85` — `test: verify atomic subtask update validation`; pushed to `origin/master`.
+- Latest verified commit: `25ddb94` — `test: cover invalid due date patch atomicity`; pushed to `origin/master`.
 
-- The strengthened subtask PATCH test verifies HTTP `422` for a mixed valid/`null` payload and confirms no partial title update occurs.
+- The new assignment PATCH test verifies HTTP `422` for a valid title change paired with an invalid due date and confirms the original title and due date remain unchanged. The original invalid-date creation test remains in place.
 
-- Targeted API tests passed: **2 passed, 35 deselected**. The complete backend suite passed after the change: **52 passed in 2.53 seconds**. `git diff --check` and `git diff --cached --check` reported no whitespace errors.
+- Targeted invalid-date tests passed: **2 passed, 36 deselected**. The complete backend suite passed: **53 passed in 2.51 seconds**. `git diff --check` and `git diff --cached --check` reported no whitespace errors.
 
-- Local `master` and `origin/master` were verified synchronized at `d98bd85`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- Local `master` and `origin/master` were verified synchronized at `25ddb94`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 - Previous checkpoint: `ece13f6` — `fix: close database connections after initialization`; Day 10's full test suite passed (**37 passed**).
 
@@ -1280,4 +1280,4 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 ---
 
-**Current next action:** Continue the broader API validation/error-handling audit by checking remaining meaningful partial-update and validation edge cases. The mixed valid/`null` subtask PATCH test is committed and pushed as `d98bd85`; the complete backend suite passed (**52 passed**). Once the remaining audit checks are complete, move to Week 3 React/Vite setup according to `ROADMAP.md`. Keep `backend/oop_practice.py` untouched and excluded.
+**Current next action:** Continue the broader API validation/error-handling audit by checking remaining meaningful partial-update and validation edge cases. The invalid-date PATCH atomicity test is committed and pushed as `25ddb94`; both invalid-date tests passed and the complete backend suite passed (**53 passed in 2.51 seconds**). Once the remaining audit checks are complete, move to Week 3 React/Vite setup according to `ROADMAP.md`. Keep `backend/oop_practice.py` untouched and excluded.
