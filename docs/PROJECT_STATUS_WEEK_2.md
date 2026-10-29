@@ -304,11 +304,12 @@ The earlier staged state must not be assumed to reflect the current Git index.
 - [x] Reran the complete backend test suite after the changes: **52 passed**.
 - [x] Reviewed `git status --short`, `git diff --check`, and the `backend/app/main.py` diff; no whitespace errors were reported.
 - [x] Confirmed that `backend/oop_practice.py` remains untracked and excluded.
-- [ ] Review and commit the intended code change and approved status updates.
+- [x] Committed the intended `backend/app/main.py` documentation change as `2000ce2` — `docs: document API not-found responses`.
+- [x] Pushed the code commit to `origin/master` and verified the local branch was synchronized.
 
 **Findings:** No confirmed functional bug requiring a code fix was identified during this review. The API documentation change clarifies existing missing-resource behavior without intentionally changing endpoint logic.
 
-**Day 14 status:** Swagger review, request/response schema review, seven OpenAPI `404` checks, and regression testing are complete. Final code commit remains pending. The broader API validation/error-handling audit is not yet fully complete.
+**Day 14 status:** Swagger review, request/response schema review, seven OpenAPI `404` checks, regression testing, and code commit/push are complete. Commit `2000ce2` is synchronized with `origin/master`. The broader API validation/error-handling audit is not yet fully complete.
 
 
 ## 5. Known Outstanding Work
@@ -385,4 +386,4 @@ Week 2 is complete when:
 
 ---
 
-**Next action:** Review the final local diff, then commit and push only the intended `backend/app/main.py` and approved status-document changes. Day 14 Swagger/OpenAPI review is complete and the full backend suite passed (**52 passed**), but the code change remains uncommitted. After verifying the commit, continue the broader API validation/error-handling audit before proceeding with Week 3 React/Vite work. Keep `backend/oop_practice.py` untouched and excluded.
+**Next action:** Continue the broader API validation/error-handling audit, checking remaining meaningful partial-update and validation edge cases. Day 14's API documentation change is committed and pushed as `2000ce2`; the full backend suite passed (**52 passed**). Do not mark the broader audit complete until its remaining checks are performed. Keep `backend/oop_practice.py` untouched and excluded.
