@@ -1246,7 +1246,7 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - The user reported the complete backend suite passed: **59 passed in 3.65 seconds**. This result was reported before commit `725ce1b`.
 
-- Local `master` and `origin/master` were verified synchronized at `725ce1b`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- Local `master` and `origin/master` were subsequently verified synchronized at repository head `a4797b4` after the two status-document commits. The latest code commit remains `725ce1b`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 - Previous checkpoint: `ece13f6` — `fix: close database connections after initialization`; Day 10's full test suite passed (**37 passed**).
 
@@ -1264,7 +1264,7 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Day 6 practice merge commit: `c27ba48` — `practice: resolve Git merge conflict`. This commit was on a temporary practice branch and is \***\*not\*\*** part of `master`.
 
-- Historical test checkpoints: Day 10 — **37 passed**; Day 11 — **43 passed**. Latest verified suite after the current validation-test change is **52 passed**.
+- Historical test checkpoints: Day 10 — **37 passed**; Day 11 — **43 passed**. The latest user-reported full backend suite is **59 passed in 3.65 seconds**, reported before code commit `725ce1b`; the two later commits changed documentation only.
 
 - `backend/requirements.txt` includes `httpx2==2.15.1` according to the latest known project state.
 
