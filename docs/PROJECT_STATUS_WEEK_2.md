@@ -414,4 +414,17 @@ Week 2 is complete when:
 
 ---
 
-**Next action:** Continue the broader API validation/error-handling audit, checking remaining meaningful partial-update and validation edge cases. The latest test commit is `25ddb94` — `test: cover invalid due date patch atomicity`, pushed to `origin/master`; the full backend suite passed (**53 passed in 2.51 seconds**). Do not mark the broader audit complete until its remaining checks are performed. Keep `backend/oop_practice.py` untouched and excluded.
+### Validation audit follow-up — Friday, 30 October 2026
+
+- [x] Added title-length validation tests for assignment and subtask creation and updates; committed as `77922e8` — `test: cover title length validation`.
+- [x] Added `test_update_assignment_can_clear_due_date`, verifying that PATCH with `due_date: null` clears the optional deadline.
+- [x] Added `test_update_assignment_rejects_whitespace_title_without_partial_update`, verifying HTTP `422` and preservation of the original title.
+- [x] Ran the complete backend suite: **59 passed in 3.65 seconds** (user-reported result).
+- [x] Reviewed the intended staged diff and ran `git diff --cached --check` without reported whitespace errors.
+- [x] Committed the two latest tests as `725ce1b` — `test: cover assignment patch edge cases`.
+- [x] Pushed to `origin/master` and verified local `master` and `origin/master` are synchronized.
+- [x] Kept `backend/oop_practice.py` untracked, untouched, and excluded.
+
+**Follow-up outcome:** The identified title-validation and optional due-date PATCH cases now have regression coverage. The wider API audit is being paused in favour of frontend development; this does not mean every possible API edge case has been exhaustively audited.
+
+**Next action:** Begin React/Vite setup and component planning according to `ROADMAP.md`, then build the dashboard and navigation. Preserve this Week 2 history and keep the overall project summary in `docs/PROJECT_STATUS.md`. The broader API validation/error-handling audit is paused, not declared fully complete. Keep `backend/oop_practice.py` untouched and excluded.
