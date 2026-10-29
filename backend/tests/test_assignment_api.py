@@ -516,7 +516,7 @@ def test_update_assignment_rejects_null_status(client):
     assert response.status_code == 422
 
 
-def test_update_subtask_rejects_null_completion_state(client):
+def test_update_subtask_rejects_mixed_valid_and_null_fields(client):
     assignment = client.post(
         "/assignments",
         json={"title": "Assignment"},
@@ -524,15 +524,26 @@ def test_update_subtask_rejects_null_completion_state(client):
 
     subtask = client.post(
         f"/assignments/{assignment['id']}/subtasks",
-        json={"title": "Subtask"},
+        json={"title": "Original task"},
     ).json()
 
     response = client.patch(
         f"/subtasks/{subtask['id']}",
-        json={"is_completed": None},
+        json={
+            "title": "Changed task",
+            "is_completed": None,
+        },
     )
 
     assert response.status_code == 422
+
+    subtasks = client.get(
+        f"/assignments/{assignment['id']}/subtasks"
+    ).json()
+
+    assert len(subtasks) == 1
+    assert subtasks[0]["title"] == "Original task"
+    assert subtasks[0]["is_completed"] is False
 
 
 def test_create_assignment_rejects_invalid_due_date(client):
