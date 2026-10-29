@@ -500,3 +500,76 @@ def test_list_assignments_rejects_invalid_pagination(client):
     response = client.get("/assignments?limit=0")
 
     assert response.status_code == 422
+
+
+def test_update_assignment_rejects_null_status(client):
+    created = client.post(
+        "/assignments",
+        json={"title": "Assignment"},
+    ).json()
+
+    response = client.patch(
+        f"/assignments/{created['id']}",
+        json={"status": None},
+    )
+
+    assert response.status_code == 422
+
+
+def test_update_subtask_rejects_null_completion_state(client):
+    assignment = client.post(
+        "/assignments",
+        json={"title": "Assignment"},
+    ).json()
+
+    subtask = client.post(
+        f"/assignments/{assignment['id']}/subtasks",
+        json={"title": "Subtask"},
+    ).json()
+
+    response = client.patch(
+        f"/subtasks/{subtask['id']}",
+        json={"is_completed": None},
+    )
+
+    assert response.status_code == 422
+
+
+def test_create_assignment_rejects_invalid_due_date(client):
+    response = client.post(
+        "/assignments",
+        json={
+            "title": "Invalid date",
+            "due_date": "not-a-date",
+        },
+    )
+
+    assert response.status_code == 422
+
+
+def test_create_assignment_rejects_missing_title(client):
+    response = client.post(
+        "/assignments",
+        json={"description": "Title was omitted"},
+    )
+
+    assert response.status_code == 422
+
+
+def test_update_assignment_rejects_mixed_valid_and_null_fields(client):
+    created = client.post(
+        "/assignments",
+        json={"title": "Original title", "status": "pending"},
+    ).json()
+
+    response = client.patch(
+        f"/assignments/{created['id']}",
+        json={"title": "Changed title", "status": None},
+    )
+
+    assert response.status_code == 422
+
+    unchanged = client.get(f"/assignments/{created['id']}")
+    assert unchanged.status_code == 200
+    assert unchanged.json()["title"] == "Original title"
+    assert unchanged.json()["status"] == "pending"
