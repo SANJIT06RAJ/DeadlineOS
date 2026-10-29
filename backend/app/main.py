@@ -1,12 +1,5 @@
-
-from datetime import date
-
-from app.services.assignment_service import (
-    calculate_days_remaining,
-    is_overdue,
-)
-
 from contextlib import asynccontextmanager
+from datetime import date
 
 from fastapi import FastAPI, HTTPException, Query, Response, status
 
@@ -14,13 +7,18 @@ from app.database import create_tables, get_connection
 from app.schemas import (
     AssignmentCreate,
     AssignmentResponse,
+    AssignmentStatus,
     AssignmentSummary,
     AssignmentUpdate,
-    AssignmentStatus,
     SubtaskCreate,
     SubtaskResponse,
     SubtaskUpdate,
 )
+from app.services.assignment_service import (
+    calculate_days_remaining,
+    is_overdue,
+)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -34,6 +32,7 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan,
 )
+
 
 def serialize_assignment(row):
     data = dict(row)
@@ -58,6 +57,7 @@ def serialize_assignment(row):
 
     return data
 
+
 @app.get("/")
 def home():
     return {
@@ -69,7 +69,6 @@ def home():
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
-
 
 
 @app.get("/assignments", response_model=list[AssignmentResponse])
@@ -100,7 +99,6 @@ def list_assignments(
         ).fetchall()
 
     return [serialize_assignment(row) for row in rows]
-
 
 
 @app.post(
@@ -184,7 +182,11 @@ def get_assignment_summary():
     }
 
 
-@app.get("/assignments/{assignment_id}", response_model=AssignmentResponse)
+@app.get(
+    "/assignments/{assignment_id}",
+    response_model=AssignmentResponse,
+    responses={404: {"description": "Assignment not found"}},
+)
 def get_assignment(assignment_id: int):
     with get_connection() as connection:
         row = connection.execute(
@@ -198,12 +200,19 @@ def get_assignment(assignment_id: int):
     return serialize_assignment(row)
 
 
-@app.patch("/assignments/{assignment_id}", response_model=AssignmentResponse)
+@app.patch(
+    "/assignments/{assignment_id}",
+    response_model=AssignmentResponse,
+    responses={404: {"description": "Assignment not found"}},
+)
 def update_assignment(assignment_id: int, assignment: AssignmentUpdate):
     changes = assignment.model_dump(exclude_unset=True)
 
     if not changes:
-        raise HTTPException(status_code=400, detail="No fields provided to update")
+        raise HTTPException(
+            status_code=400,
+            detail="No fields provided to update",
+        )
 
     if any(
         value is None and key not in {"description", "due_date"}
@@ -249,7 +258,11 @@ def update_assignment(assignment_id: int, assignment: AssignmentUpdate):
     return serialize_assignment(row)
 
 
-@app.delete("/assignments/{assignment_id}", status_code=status.HTTP_204_NO_CONTENT)
+@app.delete(
+    "/assignments/{assignment_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    responses={404: {"description": "Assignment not found"}},
+)
 def delete_assignment(assignment_id: int):
     with get_connection() as connection:
         cursor = connection.execute(
@@ -263,10 +276,10 @@ def delete_assignment(assignment_id: int):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-
 @app.get(
     "/assignments/{assignment_id}/subtasks",
     response_model=list[SubtaskResponse],
+    responses={404: {"description": "Assignment not found"}},
 )
 def list_subtasks(assignment_id: int):
     with get_connection() as connection:
@@ -293,6 +306,7 @@ def list_subtasks(assignment_id: int):
     "/assignments/{assignment_id}/subtasks",
     response_model=SubtaskResponse,
     status_code=status.HTTP_201_CREATED,
+    responses={404: {"description": "Assignment not found"}},
 )
 def create_subtask(assignment_id: int, subtask: SubtaskCreate):
     with get_connection() as connection:
@@ -320,12 +334,19 @@ def create_subtask(assignment_id: int, subtask: SubtaskCreate):
     return {**dict(row), "is_completed": bool(row["is_completed"])}
 
 
-@app.patch("/subtasks/{subtask_id}", response_model=SubtaskResponse)
+@app.patch(
+    "/subtasks/{subtask_id}",
+    response_model=SubtaskResponse,
+    responses={404: {"description": "Subtask not found"}},
+)
 def update_subtask(subtask_id: int, subtask: SubtaskUpdate):
     changes = subtask.model_dump(exclude_unset=True)
 
     if not changes:
-        raise HTTPException(status_code=400, detail="No fields provided to update")
+        raise HTTPException(
+            status_code=400,
+            detail="No fields provided to update",
+        )
 
     if any(value is None for value in changes.values()):
         raise HTTPException(
@@ -363,7 +384,11 @@ def update_subtask(subtask_id: int, subtask: SubtaskUpdate):
     return {**dict(row), "is_completed": bool(row["is_completed"])}
 
 
-@app.delete("/subtasks/{subtask_id}", status_code=status.HTTP_204_NO_CONTENT)
+@app.delete(
+    "/subtasks/{subtask_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    responses={404: {"description": "Subtask not found"}},
+)
 def delete_subtask(subtask_id: int):
     with get_connection() as connection:
         cursor = connection.execute(
