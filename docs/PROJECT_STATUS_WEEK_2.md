@@ -309,7 +309,21 @@ The earlier staged state must not be assumed to reflect the current Git index.
 
 **Findings:** No confirmed functional bug requiring a code fix was identified during this review. The API documentation change clarifies existing missing-resource behavior without intentionally changing endpoint logic.
 
-**Day 14 status:** Swagger review, request/response schema review, seven OpenAPI `404` checks, regression testing, and code commit/push are complete. Commit `2000ce2` is synchronized with `origin/master`. The broader API validation/error-handling audit is not yet fully complete.
+**Day 14 status:** Swagger review, request/response schema review, seven OpenAPI `404` checks, regression testing, and code commit/push are complete. Commit `2000ce2` was synchronized with `origin/master`. The broader API validation/error-handling audit remains unfinished.
+
+### Validation audit follow-up — Thursday, 29 October 2026
+
+- [x] Strengthened the existing subtask PATCH validation test in `backend/tests/test_assignment_api.py` to submit both a valid title change and `is_completed: null`.
+- [x] Verified the request returns HTTP `422`.
+- [x] Verified the invalid request does not partially update the subtask: the original title and `is_completed: false` remain unchanged.
+- [x] Ran the targeted selection: **2 passed, 35 deselected** (the subtask test and its existing assignment analogue).
+- [x] Ran the complete backend test suite: **52 passed in 2.53 seconds**.
+- [x] Reviewed the diff and staged diff; both `git diff --check` and `git diff --cached --check` returned no errors.
+- [x] Committed the test change as `d98bd85` — `test: verify atomic subtask update validation`.
+- [x] Pushed to `origin/master` and verified local `master` and `origin/master` are synchronized.
+- [x] Kept `backend/oop_practice.py` untracked, untouched, and excluded.
+
+**Follow-up outcome:** The mixed valid/invalid subtask update is now covered for atomic rejection. This closes one identified validation gap; it does **not** complete the broader API error-handling audit.
 
 
 ## 5. Known Outstanding Work
@@ -326,7 +340,7 @@ The earlier staged state must not be assumed to reflect the current Git index.
 - [x] Verify fresh-database creation and reproducibility in an isolated temporary directory.
 - [x] Decide to defer migration tooling for the current SQLite MVP until safe changes to existing tables or preservation of deployed data require it.
 - [x] Add targeted CRUD edge-case coverage for missing resources and empty PATCH payloads (Day 11; six new tests, full suite **43 passed**).
-- [ ] Continue the broader systematic audit of API validation and error responses. Five additional validation tests are committed and pushed in `0c0caab`; the user reported 52 backend tests passed. The Day 14 Swagger/OpenAPI review is complete, including seven verified `404` response entries, but the broader audit remains unfinished.
+- [ ] Continue the broader systematic audit of API validation and error responses. The Day 14 Swagger/OpenAPI review is complete, including seven verified `404` response entries. The mixed valid/invalid subtask PATCH regression test is now committed and pushed in `d98bd85`; the complete backend suite passed with **52 passed in 2.53 seconds**. The broader audit remains unfinished.
 - [ ] Practise API requests using Swagger UI, Postman, or an equivalent client where useful.
 - [ ] Confirm dependency consistency with `backend/requirements.txt` when needed.
 - [ ] Continue frontend development and React–FastAPI integration according to the roadmap.
@@ -386,4 +400,4 @@ Week 2 is complete when:
 
 ---
 
-**Next action:** Continue the broader API validation/error-handling audit, checking remaining meaningful partial-update and validation edge cases. Day 14's API documentation change is committed and pushed as `2000ce2`; the full backend suite passed (**52 passed**). Do not mark the broader audit complete until its remaining checks are performed. Keep `backend/oop_practice.py` untouched and excluded.
+**Next action:** Continue the broader API validation/error-handling audit, checking remaining meaningful partial-update and validation edge cases. The latest test commit is `d98bd85` — `test: verify atomic subtask update validation`, pushed to `origin/master`; the full backend suite passed (**52 passed in 2.53 seconds**). Do not mark the broader audit complete until its remaining checks are performed. Keep `backend/oop_practice.py` untouched and excluded.
