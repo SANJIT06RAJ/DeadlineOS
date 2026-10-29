@@ -609,3 +609,70 @@ def test_update_assignment_rejects_mixed_valid_and_null_fields(client):
     assert unchanged.status_code == 200
     assert unchanged.json()["title"] == "Original title"
     assert unchanged.json()["status"] == "pending"
+
+
+def test_create_assignment_rejects_title_over_200_characters(client):
+    response = client.post(
+        "/assignments",
+        json={"title": "A" * 201},
+    )
+
+    assert response.status_code == 422
+
+
+def test_create_subtask_rejects_title_over_200_characters(client):
+    assignment = client.post(
+        "/assignments",
+        json={"title": "Assignment"},
+    ).json()
+
+    response = client.post(
+        f"/assignments/{assignment['id']}/subtasks",
+        json={"title": "A" * 201},
+    )
+
+    assert response.status_code == 422
+
+
+def test_update_assignment_rejects_overlong_title_without_partial_update(client):
+    created = client.post(
+        "/assignments",
+        json={"title": "Original title"},
+    ).json()
+
+    response = client.patch(
+        f"/assignments/{created['id']}",
+        json={"title": "A" * 201},
+    )
+
+    assert response.status_code == 422
+
+    unchanged = client.get(f"/assignments/{created['id']}")
+    assert unchanged.status_code == 200
+    assert unchanged.json()["title"] == "Original title"
+
+
+def test_update_subtask_rejects_overlong_title_without_partial_update(client):
+    assignment = client.post(
+        "/assignments",
+        json={"title": "Assignment"},
+    ).json()
+
+    subtask = client.post(
+        f"/assignments/{assignment['id']}/subtasks",
+        json={"title": "Original subtask"},
+    ).json()
+
+    response = client.patch(
+        f"/subtasks/{subtask['id']}",
+        json={"title": "A" * 201},
+    )
+
+    assert response.status_code == 422
+
+    subtasks = client.get(
+        f"/assignments/{assignment['id']}/subtasks"
+    ).json()
+
+    assert len(subtasks) == 1
+    assert subtasks[0]["title"] == "Original subtask"
