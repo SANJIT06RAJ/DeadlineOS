@@ -2,7 +2,7 @@
 
 _*Last updated: Thursday, 29 October 2026*_
 
-**Latest verified committed code checkpoint:** `0c0caab` — `test: expand API validation edge cases`. Five API validation tests were committed and pushed to `origin/master`. The user reported **52 backend tests passed** after adding the tests. The broader API error-handling audit remains unfinished. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest verified committed code checkpoint:** `0c0caab` — `test: expand API validation edge cases`, pushed to `origin/master`. Five API validation tests were committed in that change. **Latest verified working-tree progress (29 October 2026):** added explicit `404` response documentation to seven assignment/subtask operations in `backend/app/main.py`; verified all seven entries in generated `/openapi.json`; reviewed Swagger request schemas, query parameters, and response examples; and reran the backend suite with **52 passed**. `git diff --check` reported no whitespace errors. The `main.py` documentation changes remain uncommitted and unpushed. The broader API error-handling audit remains unfinished. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -757,6 +757,24 @@ Day 7 result: **manual deadline API verification, response serialization fix, te
 
 **Day 13 status:** Five targeted API validation tests are committed and pushed in `0c0caab`; the user reported 52 backend tests passed. The broader systematic review of HTTP responses and partial-update edge cases remains unfinished, so Day 13 is not yet complete.
 
+### Day 14 — Thursday, 29 October 2026: API Documentation Review
+
+**Planned focus:** Bug fixing and API documentation (scheduled for Wednesday, 28 October; completed review work on 29 October).
+
+- [x] Reviewed `backend/app/main.py`, `backend/app/schemas.py`, and existing API test coverage.
+- [x] Started the backend and confirmed Swagger UI at `/docs` opens successfully.
+- [x] Reviewed the `POST /assignments` request schema, `PATCH /assignments/{assignment_id}` partial-update schema, and `GET /assignments` query parameters.
+- [x] Confirmed the displayed request schemas, query parameters, and response examples looked correct.
+- [x] Added explicit `404` response documentation to seven assignment/subtask operations in `backend/app/main.py`.
+- [x] Retrieved the generated `/openapi.json` and verified `404` documentation for all seven operations.
+- [x] Reran the full backend test suite after the changes: **52 passed**.
+- [x] Reviewed `git status --short`, `git diff --check`, and the `main.py` diff; no whitespace errors were reported. `backend/oop_practice.py` remained untracked and excluded.
+- [ ] Review and commit the intended code change; it remains uncommitted and unpushed.
+
+**Findings:** No confirmed functional bug requiring a code fix was identified in this review. The change documents existing missing-resource behavior without intentionally changing endpoint logic.
+
+**Day 14 status:** Swagger and request/response documentation review, seven OpenAPI `404` checks, and regression testing are complete. Final code commit and the broader API validation/error-handling audit remain outstanding.
+
 ## 4. Current Database Design
 
 Defined in `docs/PROJECT_PLAN.md` and previously verified against the local database schema.
@@ -913,7 +931,9 @@ Notes:
 
 ### Outstanding
 
-- [ ] Review additional API validation and error responses systematically.
+- [ ] Review additional API validation and error responses systematically; the Day 14 Swagger/OpenAPI review is complete, but the broader audit remains unfinished.
+- [x] Review Swagger request schemas, query parameters, and response examples; verify the seven missing-resource `404` responses in OpenAPI.
+- [x] Rerun the full backend suite after the Day 14 documentation changes: **52 passed**.
 - [ ] Practise API requests using Postman or an equivalent client.
 - [ ] Reinforce independent Python object-instance attributes.
 - [ ] Reinforce the two-parent structure of a merge commit.
@@ -1217,13 +1237,13 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Remote: `origin/master`.
 
-- Latest verified code commit: `77b135f` — `feat: add assignment filtering and pagination`; pushed to `origin/master`.
+- Latest verified committed code change: `0c0caab` — `test: expand API validation edge cases`; pushed to `origin/master`.
 
-- The committed Day 12 changes include status filtering and `limit`/`offset` pagination for `GET /assignments`, plus four new API tests.
+- The Day 14 working-tree change in `backend/app/main.py` adds explicit `404` response documentation to seven assignment/subtask operations. All seven entries were verified in generated OpenAPI; Swagger schemas/examples were reviewed.
 
-- Latest verified full backend test suite on the committed version: **47 passed in 4.39 seconds**.
+- Latest user-confirmed full backend test suite after the Day 14 change: **52 passed**. `git diff --check` reported no whitespace errors.
 
-- After `git fetch origin`, local `master` and `origin/master` both pointed to `77b135f`. `git diff --check` reported no issues.
+- The Day 14 `backend/app/main.py` change is still uncommitted and unpushed. Do not treat it as part of the committed checkpoint.
 
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
@@ -1261,4 +1281,4 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 ---
 
-**Current next action:** Continue Day 13's systematic API error-handling review: inspect remaining HTTP status/error responses and meaningful partial-update edge cases, then rerun the full backend suite. After that, review FastAPI `/docs` and API examples. Record only verified results and keep `backend/oop_practice.py` untouched and excluded.
+**Current next action:** Review the final local diff, then commit and push only the intended `backend/app/main.py` and approved status-document changes. The Day 14 Swagger/OpenAPI review is complete and the full backend suite passed (**52 passed**), but the code change is still uncommitted. After the commit is verified, continue the broader API validation/error-handling audit before moving to Week 3 React/Vite work. Keep `backend/oop_practice.py` untouched and excluded.
