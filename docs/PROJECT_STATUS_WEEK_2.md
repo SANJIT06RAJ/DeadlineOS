@@ -325,6 +325,20 @@ The earlier staged state must not be assumed to reflect the current Git index.
 
 **Follow-up outcome:** The mixed valid/invalid subtask update is now covered for atomic rejection. This closes one identified validation gap; it does **not** complete the broader API error-handling audit.
 
+### Validation audit follow-up — Friday, 30 October 2026
+
+- [x] Added `test_update_assignment_rejects_invalid_due_date_without_partial_update` in `backend/tests/test_assignment_api.py`, while preserving the existing invalid-date assignment creation test.
+- [x] Verified an assignment PATCH request containing a valid title change and malformed `due_date` returns HTTP `422`.
+- [x] Verified the rejected request leaves the original assignment title and due date unchanged.
+- [x] Ran both invalid-date tests: **2 passed, 36 deselected**.
+- [x] Ran the complete backend test suite: **53 passed in 2.51 seconds**.
+- [x] Reviewed the staged diff; `git diff --check` and `git diff --cached --check` reported no whitespace errors.
+- [x] Committed as `25ddb94` — `test: cover invalid due date patch atomicity` — and pushed to `origin/master`.
+- [x] Verified local `master` and `origin/master` are synchronized at `25ddb94`.
+- [x] Kept `backend/oop_practice.py` untracked, untouched, and excluded.
+
+**Follow-up outcome:** Invalid-date handling is now covered for both assignment creation and PATCH atomic rejection. This closes another identified test gap; it does **not** complete the broader API validation/error-handling audit.
+
 
 ## 5. Known Outstanding Work
 
@@ -340,7 +354,7 @@ The earlier staged state must not be assumed to reflect the current Git index.
 - [x] Verify fresh-database creation and reproducibility in an isolated temporary directory.
 - [x] Decide to defer migration tooling for the current SQLite MVP until safe changes to existing tables or preservation of deployed data require it.
 - [x] Add targeted CRUD edge-case coverage for missing resources and empty PATCH payloads (Day 11; six new tests, full suite **43 passed**).
-- [ ] Continue the broader systematic audit of API validation and error responses. The Day 14 Swagger/OpenAPI review is complete, including seven verified `404` response entries. The mixed valid/invalid subtask PATCH regression test is now committed and pushed in `d98bd85`; the complete backend suite passed with **52 passed in 2.53 seconds**. The broader audit remains unfinished.
+- [ ] Continue the broader systematic audit of API validation and error responses. The Day 14 Swagger/OpenAPI review is complete, including seven verified `404` response entries. The mixed valid/invalid subtask PATCH test is committed in `d98bd85`; the invalid-date PATCH atomicity test is committed in `25ddb94`; the complete backend suite passed with **53 passed in 2.51 seconds**. The broader audit remains unfinished.
 - [ ] Practise API requests using Swagger UI, Postman, or an equivalent client where useful.
 - [ ] Confirm dependency consistency with `backend/requirements.txt` when needed.
 - [ ] Continue frontend development and React–FastAPI integration according to the roadmap.
@@ -400,4 +414,4 @@ Week 2 is complete when:
 
 ---
 
-**Next action:** Continue the broader API validation/error-handling audit, checking remaining meaningful partial-update and validation edge cases. The latest test commit is `d98bd85` — `test: verify atomic subtask update validation`, pushed to `origin/master`; the full backend suite passed (**52 passed in 2.53 seconds**). Do not mark the broader audit complete until its remaining checks are performed. Keep `backend/oop_practice.py` untouched and excluded.
+**Next action:** Continue the broader API validation/error-handling audit, checking remaining meaningful partial-update and validation edge cases. The latest test commit is `25ddb94` — `test: cover invalid due date patch atomicity`, pushed to `origin/master`; the full backend suite passed (**53 passed in 2.51 seconds**). Do not mark the broader audit complete until its remaining checks are performed. Keep `backend/oop_practice.py` untouched and excluded.
