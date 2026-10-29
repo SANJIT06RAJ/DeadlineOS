@@ -2,7 +2,7 @@
 
 _*Last updated: Friday, 30 October 2026*_
 
-**Latest verified committed code checkpoint:** `25ddb94` — `test: cover invalid due date patch atomicity`, pushed to `origin/master` on 30 October 2026. Added a PATCH regression test that combines a valid title change with an invalid `due_date`, expects HTTP `422`, and confirms the original title and due date remain unchanged. The original invalid-date creation test was preserved. Both invalid-date tests passed (**2 passed, 36 deselected**); the full backend suite passed (**53 passed in 2.51 seconds**). `git diff --check` and `git diff --cached --check` reported no whitespace errors. Local `master` and `origin/master` are synchronized at `25ddb94`. The broader API validation/error-handling audit remains unfinished. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest verified committed code checkpoint:** `725ce1b` — `test: cover assignment patch edge cases`, pushed to `origin/master` on 30 October 2026. Added tests verifying that an assignment's optional due date can be cleared with `null`, and that a whitespace-only title in a PATCH request returns HTTP `422` without partially updating the assignment. The user reported the complete backend suite passed (**59 passed in 3.65 seconds**) before the test commit. The commit was pushed successfully, and local `master` and `origin/master` were verified synchronized. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -1238,13 +1238,15 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Remote: `origin/master`.
 
-- Latest verified commit: `25ddb94` — `test: cover invalid due date patch atomicity`; pushed to `origin/master`.
+- Latest verified commit: `725ce1b` — `test: cover assignment patch edge cases`; pushed to `origin/master`.
 
-- The new assignment PATCH test verifies HTTP `422` for a valid title change paired with an invalid due date and confirms the original title and due date remain unchanged. The original invalid-date creation test remains in place.
+- Added `test_update_assignment_can_clear_due_date`, verifying PATCH with `due_date: null` clears the optional deadline.
 
-- Targeted invalid-date tests passed: **2 passed, 36 deselected**. The complete backend suite passed: **53 passed in 2.51 seconds**. `git diff --check` and `git diff --cached --check` reported no whitespace errors.
+- Added `test_update_assignment_rejects_whitespace_title_without_partial_update`, verifying a whitespace-only title returns HTTP `422` and preserves the original title.
 
-- Local `master` and `origin/master` were verified synchronized at `25ddb94`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- The user reported the complete backend suite passed: **59 passed in 3.65 seconds**. This result was reported before commit `725ce1b`.
+
+- Local `master` and `origin/master` were verified synchronized at `725ce1b`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 - Previous checkpoint: `ece13f6` — `fix: close database connections after initialization`; Day 10's full test suite passed (**37 passed**).
 
@@ -1280,4 +1282,4 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 ---
 
-**Current next action:** Continue the broader API validation/error-handling audit by checking remaining meaningful partial-update and validation edge cases. The invalid-date PATCH atomicity test is committed and pushed as `25ddb94`; both invalid-date tests passed and the complete backend suite passed (**53 passed in 2.51 seconds**). Once the remaining audit checks are complete, move to Week 3 React/Vite setup according to `ROADMAP.md`. Keep `backend/oop_practice.py` untouched and excluded.
+**Current next action:** Pause the broader API validation/error-handling audit and begin Week 3 React/Vite setup and component planning according to `ROADMAP.md`. The latest verified code checkpoint is `725ce1b`, pushed to `origin/master`; the user reported the full backend suite passed (**59 passed in 3.65 seconds**). The broader audit is not declared fully complete. Keep `backend/oop_practice.py` untouched and excluded.
