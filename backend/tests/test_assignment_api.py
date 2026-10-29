@@ -558,6 +558,31 @@ def test_create_assignment_rejects_invalid_due_date(client):
     assert response.status_code == 422
 
 
+def test_update_assignment_rejects_invalid_due_date_without_partial_update(client):
+    created = client.post(
+        "/assignments",
+        json={
+            "title": "Original title",
+            "due_date": "2026-11-15",
+        },
+    ).json()
+
+    response = client.patch(
+        f"/assignments/{created['id']}",
+        json={
+            "title": "Changed title",
+            "due_date": "not-a-date",
+        },
+    )
+
+    assert response.status_code == 422
+
+    unchanged = client.get(f"/assignments/{created['id']}")
+    assert unchanged.status_code == 200
+    assert unchanged.json()["title"] == "Original title"
+    assert unchanged.json()["due_date"] == "2026-11-15"
+
+
 def test_create_assignment_rejects_missing_title(client):
     response = client.post(
         "/assignments",
