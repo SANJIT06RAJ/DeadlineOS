@@ -1,8 +1,8 @@
 # PROJECT_STATUS — DeadlineOS
 
-_*Last updated: Monday, 26 October 2026*_
+_*Last updated: Thursday, 29 October 2026*_
 
-**Latest verified committed code checkpoint:** `77b135f` — `feat: add assignment filtering and pagination`. The current remote branch also contains the Day 12 status documentation commits. During Day 13, four additional API validation tests were added locally and the user reported **51 backend tests passed**; those test changes are not yet committed or pushed. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest verified committed code checkpoint:** `0c0caab` — `test: expand API validation edge cases`. Five API validation tests were committed and pushed to `origin/master`. The user reported **52 backend tests passed** after adding the tests. The broader API error-handling audit remains unfinished. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -748,11 +748,14 @@ Day 7 result: **manual deadline API verification, response serialization fix, te
 - [x] Added `test_create_assignment_rejects_invalid_due_date`.
 - [x] Added `test_create_assignment_rejects_missing_title`.
 - [x] Focused API test run reported: **36 passed in 2.08 seconds**.
-- [x] Full backend regression run reported by the user: **51 passed**.
+- [x] Added `test_update_assignment_rejects_mixed_valid_and_null_fields`, confirming a mixed valid/invalid PATCH returns HTTP 422 and leaves the assignment unchanged.
 - [x] Reviewed `git diff --check`; no whitespace errors were reported.
-- [x] Confirmed the intended local change is limited to `backend/tests/test_assignment_api.py`; `backend/oop_practice.py` remains untracked and excluded.
+- [x] Committed the five API validation tests as `0c0caab` — `test: expand API validation edge cases`.
+- [x] Pushed the commit to `origin/master` and verified local `master` matches `origin/master`.
+- [x] Full backend regression suite reported by the user: **52 passed**.
+- [x] Confirmed `backend/oop_practice.py` remains untracked and excluded.
 
-**Day 13 status:** Four additional validation tests pass in the reported full suite. The local test changes have not yet been committed or pushed. The broader systematic review of all HTTP responses and partial-update edge cases remains in progress; do not mark Day 13 complete yet.
+**Day 13 status:** Five targeted API validation tests are committed and pushed in `0c0caab`; the user reported 52 backend tests passed. The broader systematic review of HTTP responses and partial-update edge cases remains unfinished, so Day 13 is not yet complete.
 
 ## 4. Current Database Design
 
@@ -872,7 +875,7 @@ Notes:
 - [x] Day 7: Manual Swagger verification, deadline response bug fix, regression tests, and temporary test-data cleanup.
 - [x] Day 10: Fresh-database verification, SQLite initialization cleanup, and regression suite (**37 passed**); commit `ece13f6`.
 - [x] Day 11: Added six CRUD edge-case tests, reran the full suite (**43 passed**), and pushed commit `15e89df`.
-- [x] Day 12: Audited assignment-list requirements and implemented status filtering and pagination; full backend suite passed (**47 passed**). Code changes remain uncommitted and unpushed.
+- [x] Day 12: Audited assignment-list requirements and implemented status filtering and pagination; the committed version passed (**47 passed**). Later API validation tests are recorded under Day 13.
 
 - [x] Basic Python class and object practice exercise executed successfully.
 
@@ -1258,4 +1261,4 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 ---
 
-**Current next action:** Begin Day 13: systematically review API HTTP status codes and error responses, test invalid payloads and missing resources, verify partial-update edge cases, and run the full regression suite. Record only verified results. Keep `backend/oop_practice.py` untouched and excluded.
+**Current next action:** Continue Day 13's systematic API error-handling review: inspect remaining HTTP status/error responses and meaningful partial-update edge cases, then rerun the full backend suite. After that, review FastAPI `/docs` and API examples. Record only verified results and keep `backend/oop_practice.py` untouched and excluded.
