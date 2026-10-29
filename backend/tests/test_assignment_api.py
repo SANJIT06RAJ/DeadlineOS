@@ -676,3 +676,38 @@ def test_update_subtask_rejects_overlong_title_without_partial_update(client):
 
     assert len(subtasks) == 1
     assert subtasks[0]["title"] == "Original subtask"
+
+def test_update_assignment_can_clear_due_date(client):
+    created = client.post(
+        "/assignments",
+        json={
+            "title": "Assignment with deadline",
+            "due_date": "2026-11-15",
+        },
+    ).json()
+
+    response = client.patch(
+        f"/assignments/{created['id']}",
+        json={"due_date": None},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["due_date"] is None
+
+
+def test_update_assignment_rejects_whitespace_title_without_partial_update(client):
+    created = client.post(
+        "/assignments",
+        json={"title": "Original title"},
+    ).json()
+
+    response = client.patch(
+        f"/assignments/{created['id']}",
+        json={"title": "   "},
+    )
+
+    assert response.status_code == 422
+
+    unchanged = client.get(f"/assignments/{created['id']}")
+    assert unchanged.status_code == 200
+    assert unchanged.json()["title"] == "Original title"
