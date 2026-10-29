@@ -286,13 +286,30 @@ The earlier staged state must not be assumed to reflect the current Git index.
 
 **Planned focus:** Bug fixing and API documentation.
 
-- [ ] Resolve confirmed Week 2 bugs.
-- [ ] Review FastAPI Swagger documentation at `/docs`.
-- [ ] Review API request and response examples.
-- [ ] Run the complete regression suite.
-- [ ] Review Git changes and record verified progress.
+**Work verified on Thursday, 29 October 2026:**
 
-**Completion criteria:** Backend tested, useful API documentation reviewed, and Week 2 status accurately updated.
+- [x] Reviewed `backend/app/main.py`, `backend/app/schemas.py`, and existing API test coverage.
+- [x] Started the backend and confirmed FastAPI Swagger UI at `/docs` opens successfully.
+- [x] Reviewed the `POST /assignments` request schema, `PATCH /assignments/{assignment_id}` partial-update schema, and `GET /assignments` query parameters.
+- [x] Confirmed the request schemas, query parameters, and displayed response examples looked correct.
+- [x] Added explicit `404` response documentation to seven endpoint operations:
+  - `GET /assignments/{assignment_id}`
+  - `PATCH /assignments/{assignment_id}`
+  - `DELETE /assignments/{assignment_id}`
+  - `GET /assignments/{assignment_id}/subtasks`
+  - `POST /assignments/{assignment_id}/subtasks`
+  - `PATCH /subtasks/{subtask_id}`
+  - `DELETE /subtasks/{subtask_id}`
+- [x] Retrieved the generated `/openapi.json` specification and verified that all seven operations document `404` responses.
+- [x] Reran the complete backend test suite after the changes: **52 passed**.
+- [x] Reviewed `git status --short`, `git diff --check`, and the `backend/app/main.py` diff; no whitespace errors were reported.
+- [x] Confirmed that `backend/oop_practice.py` remains untracked and excluded.
+- [ ] Review and commit the intended code change and approved status updates.
+
+**Findings:** No confirmed functional bug requiring a code fix was identified during this review. The API documentation change clarifies existing missing-resource behavior without intentionally changing endpoint logic.
+
+**Day 14 status:** Swagger review, request/response schema review, seven OpenAPI `404` checks, and regression testing are complete. Final code commit remains pending. The broader API validation/error-handling audit is not yet fully complete.
+
 
 ## 5. Known Outstanding Work
 
@@ -308,7 +325,7 @@ The earlier staged state must not be assumed to reflect the current Git index.
 - [x] Verify fresh-database creation and reproducibility in an isolated temporary directory.
 - [x] Decide to defer migration tooling for the current SQLite MVP until safe changes to existing tables or preservation of deployed data require it.
 - [x] Add targeted CRUD edge-case coverage for missing resources and empty PATCH payloads (Day 11; six new tests, full suite **43 passed**).
-- [ ] Continue the broader systematic audit of API validation and error responses. Five additional validation tests are committed and pushed in `0c0caab`; the user reported 52 backend tests passed. The broader audit remains unfinished.
+- [ ] Continue the broader systematic audit of API validation and error responses. Five additional validation tests are committed and pushed in `0c0caab`; the user reported 52 backend tests passed. The Day 14 Swagger/OpenAPI review is complete, including seven verified `404` response entries, but the broader audit remains unfinished.
 - [ ] Practise API requests using Swagger UI, Postman, or an equivalent client where useful.
 - [ ] Confirm dependency consistency with `backend/requirements.txt` when needed.
 - [ ] Continue frontend development and React–FastAPI integration according to the roadmap.
@@ -356,7 +373,8 @@ Week 2 is complete when:
 - [ ] Existing CRUD behavior is verified, including relevant edge cases.
 - [ ] Validation, sorting, filtering, and pagination requirements are audited.
 - [ ] API error handling and regression tests are reviewed.
-- [ ] API documentation is checked.
+- [x] Swagger request schemas, query parameters, response examples, and seven missing-resource `404` response entries are checked.
+- [ ] The broader API error-handling audit is completed.
 - [x] Day 10 backend test suite passed: **37 passed** (historical checkpoint).
 - [x] Latest verified backend test suite after Day 11: **43 passed**.
 - [x] Intended database test changes were committed and pushed.
@@ -367,4 +385,4 @@ Week 2 is complete when:
 
 ---
 
-**Next action:** Continue the unfinished Day 13 API error-handling audit by reviewing remaining HTTP status/error responses and meaningful validation edge cases. Then complete the Day 14 review of FastAPI `/docs` and API request/response examples, run the regression suite, and update this status only with verified results. Keep `backend/oop_practice.py` excluded from all project changes.
+**Next action:** Review the final local diff, then commit and push only the intended `backend/app/main.py` and approved status-document changes. Day 14 Swagger/OpenAPI review is complete and the full backend suite passed (**52 passed**), but the code change remains uncommitted. After verifying the commit, continue the broader API validation/error-handling audit before proceeding with Week 3 React/Vite work. Keep `backend/oop_practice.py` untouched and excluded.
