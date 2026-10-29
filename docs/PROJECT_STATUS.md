@@ -2,7 +2,7 @@
 
 _*Last updated: Thursday, 29 October 2026*_
 
-**Latest verified committed code checkpoint:** `2000ce2` — `docs: document API not-found responses`, pushed to `origin/master` on 29 October 2026. This commit adds explicit OpenAPI `404` response documentation to seven assignment/subtask operations in `backend/app/main.py`. The generated `/openapi.json` was checked for all seven entries, Swagger request schemas/query parameters/response examples were reviewed, and the full backend suite passed with **52 passed** before the commit. `git diff --check` reported no whitespace errors. The broader API error-handling audit remains unfinished. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest verified committed code checkpoint:** `d98bd85` — `test: verify atomic subtask update validation`, pushed to `origin/master` on 29 October 2026. Strengthened the subtask PATCH validation test to send a valid title change together with `is_completed: null`, expect HTTP `422`, and verify the original title and completion state remain unchanged. The targeted API tests passed (**2 passed, 35 deselected**); the full backend suite passed after the change (**52 passed in 2.53 seconds**). `git diff --check` and `git diff --cached --check` reported no whitespace errors. Local `master` and `origin/master` are synchronized at `d98bd85`. The broader API error-handling audit remains unfinished. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -1238,15 +1238,13 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Remote: `origin/master`.
 
-- Latest verified committed code change: `2000ce2` — `docs: document API not-found responses`; pushed to `origin/master`.
+- Latest verified commit: `d98bd85` — `test: verify atomic subtask update validation`; pushed to `origin/master`.
 
-- Commit `2000ce2` adds explicit `404` response documentation to seven assignment/subtask operations in `backend/app/main.py`. All seven entries were verified in generated OpenAPI; Swagger schemas/examples were reviewed.
+- The strengthened subtask PATCH test verifies HTTP `422` for a mixed valid/`null` payload and confirms no partial title update occurs.
 
-- The full backend suite passed after the Day 14 change: **52 passed**. `git diff --check` reported no whitespace errors.
+- Targeted API tests passed: **2 passed, 35 deselected**. The complete backend suite passed after the change: **52 passed in 2.53 seconds**. `git diff --check` and `git diff --cached --check` reported no whitespace errors.
 
-- The local branch and `origin/master` were verified synchronized at `2000ce2`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
-
-- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- Local `master` and `origin/master` were verified synchronized at `d98bd85`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 - Previous checkpoint: `ece13f6` — `fix: close database connections after initialization`; Day 10's full test suite passed (**37 passed**).
 
@@ -1264,7 +1262,7 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Day 6 practice merge commit: `c27ba48` — `practice: resolve Git merge conflict`. This commit was on a temporary practice branch and is \***\*not\*\*** part of `master`.
 
-- Historical Day 10 complete test suite: **37 passed** after schema verification and the `create_tables()` connection-cleanup change. Latest verified suite is **43 passed** after Day 11.
+- Historical test checkpoints: Day 10 — **37 passed**; Day 11 — **43 passed**. Latest verified suite after the current validation-test change is **52 passed**.
 
 - `backend/requirements.txt` includes `httpx2==2.15.1` according to the latest known project state.
 
@@ -1278,8 +1276,8 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - The deadline-summary commit changed `backend/app/main.py`, `backend/app/schemas.py`, `backend/app/services/assignment_service.py`, `backend/tests/test_assignment_api.py`, and `backend/tests/test_assignment_service.py`.
 
-- The Week 2 status file records Day 10 database verification and Day 11 CRUD edge-case tests. The latest code commit is `15e89df`; it is pushed to `origin/master`.
+- `docs/PROJECT_STATUS_WEEK_2.md` preserves the detailed Week 2 history and now records the follow-up validation-test verification after Day 14.
 
 ---
 
-**Current next action:** Review the final local diff, then commit and push only the intended `backend/app/main.py` and approved status-document changes. The Day 14 Swagger/OpenAPI review is complete and the full backend suite passed (**52 passed**), but the code change is still uncommitted. After the commit is verified, continue the broader API validation/error-handling audit before moving to Week 3 React/Vite work. Keep `backend/oop_practice.py` untouched and excluded.
+**Current next action:** Continue the broader API validation/error-handling audit by checking remaining meaningful partial-update and validation edge cases. The mixed valid/`null` subtask PATCH test is committed and pushed as `d98bd85`; the complete backend suite passed (**52 passed**). Once the remaining audit checks are complete, move to Week 3 React/Vite setup according to `ROADMAP.md`. Keep `backend/oop_practice.py` untouched and excluded.
