@@ -247,7 +247,6 @@ Note: The Day 3 commit hash has not been independently verified here. Retrieve i
 - [x] Practised filtering records with `WHERE`.
 
 - [x] Practised counting records with `COUNT(*)`.
-
 - [x] Practised aggregation with `GROUP BY`.
 
 - [x] Practised joining assignments and subtasks with `JOIN`.
@@ -497,7 +496,6 @@ Schemas implemented:
 - `AssignmentResponse`
 
 - `SubtaskCreate`
-
 - `SubtaskUpdate`
 
 - `SubtaskResponse`
@@ -747,8 +745,7 @@ Day 7 result: **manual deadline API verification, response serialization fix, te
 - [x] Added `test_update_subtask_rejects_null_completion_state`.
 - [x] Added `test_create_assignment_rejects_invalid_due_date`.
 - [x] Added `test_create_assignment_rejects_missing_title`.
-- [x] Focused API test run reported: **36 passed in 2.08 seconds**.
-- [x] Added `test_update_assignment_rejects_mixed_valid_and_null_fields`, confirming a mixed valid/invalid PATCH returns HTTP 422 and leaves the assignment unchanged.
+- [x] Focused API test run reported: **36 passed in 2.08 seconds**.- [x] Added `test_update_assignment_rejects_mixed_valid_and_null_fields`, confirming a mixed valid/invalid PATCH returns HTTP 422 and leaves the assignment unchanged.
 - [x] Reviewed `git diff --check`; no whitespace errors were reported.
 - [x] Committed the five API validation tests as `0c0caab` — `test: expand API validation edge cases`.
 - [x] Pushed the commit to `origin/master` and verified local `master` matches `origin/master`.
@@ -997,7 +994,6 @@ Keep `backend/oop_practice.py` untouched and untracked.
 ### Next feature after the Day 12 changes are committed
 
 Proceed toward [GitHub issue #5 — Frontend dashboard and forms](https://github.com/SANJIT06RAJ/DeadlineOS/issues/5), following the roadmap and any remaining prerequisites.
-
 ### Historical verification details
 
 The previous detailed dependency-verification instructions are retained below only as reference. Do not repeat completed steps unless a fresh check is needed.
@@ -1247,7 +1243,6 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 - The user reported the complete backend suite passed: **59 passed in 3.65 seconds**. This result was reported before commit `725ce1b`.
 
 - Local `master` and `origin/master` were subsequently verified synchronized at repository head `a4797b4` after the two status-document commits. The latest code commit remains `725ce1b`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
-
 - Previous checkpoint: `ece13f6` — `fix: close database connections after initialization`; Day 10's full test suite passed (**37 passed**).
 
 - Previous checkpoint: `74532d1` — `fix: calculate deadline fields in assignment list`.
@@ -1283,3 +1278,45 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 ---
 
 **Current next action:** Pause the broader API validation/error-handling audit and begin Week 3 React/Vite setup and component planning according to `ROADMAP.md`. The latest verified code checkpoint is `725ce1b`, pushed to `origin/master`; the user reported the full backend suite passed (**59 passed in 3.65 seconds**). The broader audit is not declared fully complete. Keep `backend/oop_practice.py` untouched and excluded.
+
+
+## 11. Week 3 Frontend Checkpoint — Day 15 (31 October 2026)
+
+**Status: Day 15 completed.** The user confirmed that the initial frontend pages and navigation render correctly in the browser.
+
+### React/Vite foundation
+
+- [x] Initialized the React + Vite frontend in `frontend/`.
+- [x] Selected ESLint and verified its configuration.
+- [x] Installed `react-router-dom`, `axios`, and `lucide-react`.
+- [x] Created modular directories for common components, assignment components, layout components, pages, services, and hooks.
+- [x] Created layout components: `Sidebar.jsx`, `Header.jsx`, and `AppLayout.jsx`.
+- [x] Created `DashboardPage.jsx` and `AssignmentsPage.jsx`.
+- [x] Configured routes for `/` (Dashboard) and `/assignments` (Assignments).
+- [x] Replaced the Vite starter screen with the initial DeadlineOS layout and responsive styling.
+- [x] User confirmed the dashboard, assignments page, and navigation look correct.
+
+### Verified frontend checks
+
+- Node.js: `v24.18.0`.
+- npm: `11.16.0`.
+- React: `19.3.1`.
+- Vite: `8.3.5`.
+- React Router DOM: `7.18.5`.
+- Axios: `1.21.0`.
+- Lucide React: `1.65.0`.
+- ESLint: `10.14.0`.
+- `npm run lint`: passed with no errors.
+- `npm run build`: passed; 2,041 modules transformed; JavaScript bundle 265.97 kB (84.63 kB gzipped); build completed in 2.67 seconds.
+- Initial `npm audit` after dependency installation reported zero vulnerabilities.
+
+### Scope and remaining work
+
+- Dashboard statistic values are placeholders; the frontend is not connected to FastAPI yet.
+- Assignment creation/editing, functional dashboard data, and API integration remain outstanding.
+- No backend files or backend tests were changed during Day 15.
+- Keep `backend/oop_practice.py` untouched and untracked.
+- Keep the detailed Week 2 history in `docs/PROJECT_STATUS_WEEK_2.md`; it is complete and must not be modified as part of this update.
+- Detailed Week 3 history is maintained separately in `docs/PROJECT_STATUS_WEEK_3.md`.
+
+**Next roadmap task:** Day 16 — Dashboard and navigation. Build on the verified application shell; do not treat the placeholder dashboard statistics as functional backend data.
