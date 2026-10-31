@@ -173,7 +173,7 @@ This is expected before Day 18 integration.
 
 ### Day 18 — React–FastAPI Integration
 
-**Status: COMPLETED AND VERIFIED LOCALLY**
+**Status: COMPLETED, VERIFIED, COMMITTED, AND PUSHED**
 
 Implementation:
 
@@ -269,13 +269,10 @@ The backend API is ready for frontend integration.
 
 ## 6. Outstanding Work
 
-- Connect the frontend to the existing backend using Axios.
-- Replace temporary React assignment state with API-backed data.
-- Implement assignment editing and persistent assignment management.
-- Build functional dashboard data using existing backend endpoints.
-- Implement subtask management UI.
-- Add loading, empty, success and error states.
-- Test the complete frontend/backend workflow.
+- Implement assignment search and status filtering (Day 19).
+- Complete loading, empty, success and error-state refinements (Day 20).
+- Test the complete frontend/backend workflow and fix integration bugs (Day 21).
+- Implement assignment editing, functional dashboard data, and subtask management UI in their planned later tasks.
 
 ## 7. Week 3 Roadmap
 
@@ -293,17 +290,15 @@ The backend API is ready for frontend integration.
 
 ## 8. Git Notes
 
-- Preserve `backend/oop_practice.py` as untracked and untouched unless explicitly instructed otherwise.
-- Review all frontend changes before staging.
-- Do not stage unrelated files.
-- Check Git status and the generated `frontend/dist/` handling before committing.
-- Week 2 status history must remain unchanged.
-- Latest verified committed repository checkpoint before staging the current frontend work: `9ee7859`.
-- The frontend files and this Week 3 status file were untracked at the latest local Git check and still require review before staging and committing.
+- Day 18 frontend integration commit: `bf67fb5` — `feat: integrate React assignments with FastAPI`.
+- The commit was pushed successfully to `origin/master`.
+- Final local verification confirmed `master` and `origin/master` synchronized (`## master...origin/master`).
+- `backend/oop_practice.py` remains untracked, untouched, and excluded from all commits.
+- Week 2 status history remains unchanged.
 
 ---
 
-**Next action:** Day 18 — Connect React to FastAPI using Axios and verify persistent assignment creation and retrieval.
+**Next action:** Day 19 — implement assignment search and status filtering. Day 18 React–FastAPI integration is complete and pushed in `bf67fb5`.
 
 _End of Week 3 status._
 
