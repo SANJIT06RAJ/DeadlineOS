@@ -2,7 +2,7 @@
 
 _*Last updated: Saturday, 31 October 2026*_
 
-**Latest verified repository checkpoint:** `4db8b0a` — `feat: build DeadlineOS React frontend`, pushed successfully to `origin/master` on 31 October 2026. This commit adds the React + Vite frontend and `docs/PROJECT_STATUS_WEEK_3.md`. Frontend `npm run lint` and `npm run build` both passed; the build transformed 2,042 modules. The latest reported backend suite remains **59 passed in 3.65 seconds** (verified before backend commit `725ce1b`; no backend changes were made during Week 3 Days 15–17). Local `master` and `origin/master` were verified synchronized after the push. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest verified code checkpoint before Day 18:** `c3361d9` — `docs: update overall status with week 3 progress`, with local `master` synchronized to `origin/master` at the start of Day 18 (1 November 2026). Day 18 React–FastAPI integration has since been implemented and verified in the local working tree: Axios service, Vite proxy, API-backed assignment retrieval and creation, and persistence after browser refresh. Frontend lint and production build passed; backend regression suite: **59 passed**. The three Day 18 frontend code files remain local changes pending a reviewed code commit/push. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -1234,7 +1234,7 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Remote: `origin/master`.
 
-- Latest verified repository commit: `4db8b0a` — `feat: build DeadlineOS React frontend`; pushed to `origin/master` on 31 October 2026. The latest backend code commit remains `725ce1b`.
+- Latest verified code checkpoint before Day 18: `c3361d9` — `docs: update overall status with week 3 progress`. Day 18 frontend integration is verified locally; its three code files are not yet committed or pushed. The latest backend code commit remains `725ce1b`.
 
 - Added `test_update_assignment_can_clear_due_date`, verifying PATCH with `due_date: null` clears the optional deadline.
 
@@ -1277,7 +1277,7 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 ---
 
-**Current next action:** Begin Week 3 Day 18 — connect the React frontend to the existing FastAPI backend using Axios. The latest verified repository checkpoint is `4db8b0a`, pushed to `origin/master`. Frontend lint and production build passed. The latest reported backend suite remains **59 passed in 3.65 seconds**, with no backend changes during Days 15–17. Keep `backend/oop_practice.py` untouched and excluded.
+**Current next action:** Begin Week 3 Day 19 — implement assignment search and status filtering using the existing API. Courses remain outside the MVP. Day 18 integration has been verified locally; its code changes still require a separate reviewed commit/push. The backend regression suite passed (**59 passed**), and frontend lint/build passed. Keep `backend/oop_practice.py` untouched and excluded.
 
 
 ## 11. Week 3 Frontend Checkpoint — Day 15 (31 October 2026)
@@ -1360,3 +1360,43 @@ Dashboard figures and progress remain placeholders; they are not connected to ba
 - `docs/PROJECT_STATUS_WEEK_2.md` remains unchanged.
 
 **Next roadmap task:** Day 18 — React–FastAPI integration using Axios. Replace temporary assignment state with backend API calls and verify persistent assignment creation and retrieval.
+
+
+## 13. Week 3 — Day 18: React–FastAPI Integration (1 November 2026)
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY.** The frontend now retrieves and creates assignments through the existing FastAPI backend rather than relying on temporary component state.
+
+### Implementation
+
+- [x] Configured a Vite development proxy for `/api` to `http://127.0.0.1:8000`, rewriting the prefix before forwarding requests.
+- [x] Created `frontend/src/services/api.js` with a shared Axios instance and `getAssignments()` / `createAssignment()` functions.
+- [x] Updated `frontend/src/pages/AssignmentsPage.jsx` to fetch assignments on mount with `useEffect`.
+- [x] Replaced local-only assignment creation with `POST /assignments`; the API response (including the database ID) is added to the list.
+- [x] Added initial loading and request-error feedback.
+- [x] Preserved the existing assignment form and backend architecture; no backend code changes were needed.
+
+### Files changed
+
+- `frontend/vite.config.js`
+- `frontend/src/services/api.js` (new)
+- `frontend/src/pages/AssignmentsPage.jsx`
+
+### Verification evidence
+
+- [x] `npm --prefix frontend run lint` — passed with no ESLint errors.
+- [x] `npm --prefix frontend run build` — passed; 2,101 modules transformed.
+- [x] FastAPI started successfully with Uvicorn; `GET /health` returned `healthy`.
+- [x] Vite frontend loaded successfully through the development server.
+- [x] Created a test assignment through the UI; the item appeared in the list.
+- [x] Refreshed the browser; the assignment remained visible, verifying retrieval from persistent backend storage.
+- [x] Direct `GET /assignments` response returned assignment ID `59`, title `Day 18 Integration Test`, description, due date `2026-11-15`, and status `in_progress`.
+- [x] Backend regression suite: **59 passed**.
+
+### Git and remaining synchronization
+
+- At the start of Day 18, local `master` and `origin/master` were synchronized at `c3361d9`.
+- The three frontend implementation files above are verified local changes and have not yet been committed or pushed.
+- This status documentation is being updated directly on `origin/master`; pull these documentation commits into the local VS Code checkout while preserving the three uncommitted frontend changes.
+- `backend/oop_practice.py` remains untracked, untouched, and excluded from staging/commits.
+
+**Next roadmap task:** Day 19 — implement assignment search and status filtering. Do not add course filtering; courses remain deferred from the single-student MVP.
