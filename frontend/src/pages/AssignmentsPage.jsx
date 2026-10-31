@@ -1,20 +1,48 @@
-import { useState } from 'react'
+
+import { useEffect, useState } from 'react'
 import { Plus, ClipboardList } from 'lucide-react'
 import Header from '../components/layout/Header'
 import AssignmentForm from '../components/assignments/AssignmentForm'
+import {
+  getAssignments,
+  createAssignment,
+} from '../services/api'
 
 function AssignmentsPage() {
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [assignments, setAssignments] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState('')
 
-  function handleCreateAssignment(formData) {
-    const newAssignment = {
-      ...formData,
-      id: Date.now(),
+  useEffect(() => {
+    async function loadAssignments() {
+      try {
+        setError('')
+        const data = await getAssignments()
+        setAssignments(data)
+      } catch (error) {
+        console.error('Failed to load assignments:', error)
+        setError('Unable to load assignments. Please try again.')
+      } finally {
+        setIsLoading(false)
+      }
     }
 
-    setAssignments((current) => [...current, newAssignment])
-    setIsFormOpen(false)
+    loadAssignments()
+  }, [])
+
+  async function handleCreateAssignment(formData) {
+    try {
+      setError('')
+
+      const newAssignment = await createAssignment(formData)
+
+      setAssignments((current) => [...current, newAssignment])
+      setIsFormOpen(false)
+    } catch (error) {
+      console.error('Failed to create assignment:', error)
+      setError('Unable to create assignment. Please try again.')
+    }
   }
 
   return (
@@ -37,7 +65,15 @@ function AssignmentsPage() {
         </button>
       </div>
 
-      {assignments.length === 0 ? (
+      {error && (
+        <p className="form-error" role="alert">
+          {error}
+        </p>
+      )}
+
+      {isLoading ? (
+        <p role="status">Loading assignments...</p>
+      ) : assignments.length === 0 ? (
         <section className="empty-state">
           <div className="empty-state-icon">
             <ClipboardList size={30} />
