@@ -1,6 +1,6 @@
 # PROJECT_STATUS — DeadlineOS
 
-_*Last updated: Saturday, 31 October 2026*_
+_*Last updated: Sunday, 1 November 2026*_
 
 **Latest verified code checkpoint before Day 18:** `c3361d9` — `docs: update overall status with week 3 progress`, with local `master` synchronized to `origin/master` at the start of Day 18 (1 November 2026). Day 18 React–FastAPI integration has since been implemented and verified in the local working tree: Axios service, Vite proxy, API-backed assignment retrieval and creation, and persistence after browser refresh. Frontend lint and production build passed; backend regression suite: **59 passed**. The three Day 18 frontend code files remain local changes pending a reviewed code commit/push. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
