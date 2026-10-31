@@ -1,6 +1,6 @@
 # PROJECT_STATUS — DeadlineOS Week 3
 
-_Last updated: Saturday, 31 October 2026_
+_Last updated: Sunday, 1 November 2026_
 
 ## 1. Week 3 Overview
 
@@ -171,6 +171,40 @@ Assignments are currently stored in React component state only. They disappear a
 
 This is expected before Day 18 integration.
 
+### Day 18 — React–FastAPI Integration
+
+**Status: COMPLETED AND VERIFIED LOCALLY**
+
+Implementation:
+
+- [x] Added the Vite `/api` development proxy targeting FastAPI at `http://127.0.0.1:8000`.
+- [x] Created `src/services/api.js` with Axios configuration and assignment list/create functions.
+- [x] Updated `src/pages/AssignmentsPage.jsx` to load assignments on mount and create them through the backend.
+- [x] Added initial loading and request-error feedback.
+- [x] Replaced temporary-only React assignment storage with backend-backed assignment retrieval and creation.
+
+Files changed:
+
+- `frontend/vite.config.js`
+- `frontend/src/services/api.js` (new)
+- `frontend/src/pages/AssignmentsPage.jsx`
+
+Manual integration verification:
+
+- FastAPI started successfully; `GET /health` returned `healthy`.
+- Vite frontend loaded successfully.
+- Created `Day 18 Integration Test` through the UI.
+- Assignment remained visible after browser refresh.
+- Direct `GET /assignments` returned the saved record (ID `59`) with its title, description, due date, and `in_progress` status.
+
+Automated checks:
+
+- `npm --prefix frontend run lint`: PASSED.
+- `npm --prefix frontend run build`: PASSED; 2,101 modules transformed.
+- Backend `python -m pytest -v`: **59 passed**.
+
+No backend source changes were required for this integration.
+
 ## 4. Verification Results
 
 ### Frontend dependencies
@@ -250,8 +284,8 @@ The backend API is ready for frontend integration.
 | Day 15 — 29 Oct | React/Vite setup and component planning     | COMPLETED                                                                     |
 | Day 16 — 30 Oct | Dashboard and navigation                    | COMPLETED                                                                     |
 | Day 17 — 31 Oct | Task creation/editing forms                 | COMPLETED — creation form implemented; editing remains future work            |
-| Day 18 — 1 Nov  | React–FastAPI integration using Axios       | NEXT                                                                          |
-| Day 19 — 2 Nov  | Search and status filters                   | PENDING — course filters deferred because courses are outside the current MVP |
+| Day 18 — 1 Nov  | React–FastAPI integration using Axios       | COMPLETED — API-backed retrieval/creation and refresh persistence verified   |
+| Day 19 — 2 Nov  | Search and status filters                   | NEXT — course filters remain deferred because courses are outside the MVP     |
 | Day 20 — 3 Nov  | Loading, empty, success and error states    | PENDING                                                                       |
 | Day 21 — 4 Nov  | Integration workflow testing and bug fixing | PENDING                                                                       |
 
@@ -272,3 +306,11 @@ The backend API is ready for frontend integration.
 **Next action:** Day 18 — Connect React to FastAPI using Axios and verify persistent assignment creation and retrieval.
 
 _End of Week 3 status._
+
+
+## 9. Day 18 Completion and Next Action
+
+Day 18 integration is complete and manually verified. Assignment creation now persists through FastAPI/SQLite and the frontend reloads the saved assignment after a browser refresh. The backend regression suite remains green (**59 passed**); frontend lint and production build both passed.
+
+**Next:** Day 19 — add assignment search and status filters. Do not add course filters; courses remain deferred from the MVP.
+
