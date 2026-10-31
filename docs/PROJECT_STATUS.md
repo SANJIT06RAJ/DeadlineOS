@@ -2,7 +2,7 @@
 
 _*Last updated: Sunday, 1 November 2026*_
 
-**Latest verified code checkpoint before Day 18:** `c3361d9` — `docs: update overall status with week 3 progress`, with local `master` synchronized to `origin/master` at the start of Day 18 (1 November 2026). Day 18 React–FastAPI integration has since been implemented and verified in the local working tree: Axios service, Vite proxy, API-backed assignment retrieval and creation, and persistence after browser refresh. Frontend lint and production build passed; backend regression suite: **59 passed**. The three Day 18 frontend code files remain local changes pending a reviewed code commit/push. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest verified code checkpoint:** `bf67fb5` — `feat: integrate React assignments with FastAPI`, pushed successfully to `origin/master` on 1 November 2026. Day 18 React–FastAPI integration is implemented, tested, committed, and pushed: Axios service, Vite `/api` proxy, API-backed assignment retrieval and creation, and persistence after browser refresh. Frontend lint and production build passed; backend regression suite: **59 passed**. Final local Git verification showed `master` synchronized with `origin/master` and no modified or staged files. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -1277,7 +1277,7 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 ---
 
-**Current next action:** Begin Week 3 Day 19 — implement assignment search and status filtering using the existing API. Courses remain outside the MVP. Day 18 integration has been verified locally; its code changes still require a separate reviewed commit/push. The backend regression suite passed (**59 passed**), and frontend lint/build passed. Keep `backend/oop_practice.py` untouched and excluded.
+**Current next action:** Begin Week 3 Day 19 — implement assignment search and status filtering using the existing API. Courses remain outside the MVP. Day 18 integration is committed and pushed in `bf67fb5`; backend tests (**59 passed**), frontend lint/build, and browser persistence verification all passed. Keep `backend/oop_practice.py` untouched and excluded.
 
 
 ## 11. Week 3 Frontend Checkpoint — Day 15 (31 October 2026)
@@ -1392,11 +1392,12 @@ Dashboard figures and progress remain placeholders; they are not connected to ba
 - [x] Direct `GET /assignments` response returned assignment ID `59`, title `Day 18 Integration Test`, description, due date `2026-11-15`, and status `in_progress`.
 - [x] Backend regression suite: **59 passed**.
 
-### Git and remaining synchronization
+### Git and synchronization
 
-- At the start of Day 18, local `master` and `origin/master` were synchronized at `c3361d9`.
-- The three frontend implementation files above are verified local changes and have not yet been committed or pushed.
-- This status documentation is being updated directly on `origin/master`; pull these documentation commits into the local VS Code checkout while preserving the three uncommitted frontend changes.
-- `backend/oop_practice.py` remains untracked, untouched, and excluded from staging/commits.
+- Frontend implementation commit: `bf67fb5` — `feat: integrate React assignments with FastAPI`.
+- Push to `origin/master` succeeded; the user's final `git status -sb` showed `## master...origin/master`.
+- `git log -4 --oneline --decorate` confirmed `bf67fb5` as `HEAD`, `origin/master`, and `origin/HEAD`.
+- Only `backend/oop_practice.py` remains untracked; it was not staged or committed.
+- Day 18 implementation and documentation are synchronized to GitHub. This status update records the verified final code checkpoint.
 
 **Next roadmap task:** Day 19 — implement assignment search and status filtering. Do not add course filtering; courses remain deferred from the single-student MVP.
