@@ -1,8 +1,8 @@
 # PROJECT_STATUS — DeadlineOS
 
-_*Last updated: Friday, 30 October 2026*_
+_*Last updated: Saturday, 31 October 2026*_
 
-**Latest verified committed code checkpoint:** `725ce1b` — `test: cover assignment patch edge cases`, pushed to `origin/master` on 30 October 2026. Added tests verifying that an assignment's optional due date can be cleared with `null`, and that a whitespace-only title in a PATCH request returns HTTP `422` without partially updating the assignment. The user reported the complete backend suite passed (**59 passed in 3.65 seconds**) before the test commit. The commit was pushed successfully, and local `master` and `origin/master` were verified synchronized. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest verified repository checkpoint:** `4db8b0a` — `feat: build DeadlineOS React frontend`, pushed successfully to `origin/master` on 31 October 2026. This commit adds the React + Vite frontend and `docs/PROJECT_STATUS_WEEK_3.md`. Frontend `npm run lint` and `npm run build` both passed; the build transformed 2,042 modules. The latest reported backend suite remains **59 passed in 3.65 seconds** (verified before backend commit `725ce1b`; no backend changes were made during Week 3 Days 15–17). Local `master` and `origin/master` were verified synchronized after the push. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -1234,7 +1234,7 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 - Remote: `origin/master`.
 
-- Latest verified commit: `725ce1b` — `test: cover assignment patch edge cases`; pushed to `origin/master`.
+- Latest verified repository commit: `4db8b0a` — `feat: build DeadlineOS React frontend`; pushed to `origin/master` on 31 October 2026. The latest backend code commit remains `725ce1b`.
 
 - Added `test_update_assignment_can_clear_due_date`, verifying PATCH with `due_date: null` clears the optional deadline.
 
@@ -1277,7 +1277,7 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 
 ---
 
-**Current next action:** Pause the broader API validation/error-handling audit and begin Week 3 React/Vite setup and component planning according to `ROADMAP.md`. The latest verified code checkpoint is `725ce1b`, pushed to `origin/master`; the user reported the full backend suite passed (**59 passed in 3.65 seconds**). The broader audit is not declared fully complete. Keep `backend/oop_practice.py` untouched and excluded.
+**Current next action:** Begin Week 3 Day 18 — connect the React frontend to the existing FastAPI backend using Axios. The latest verified repository checkpoint is `4db8b0a`, pushed to `origin/master`. Frontend lint and production build passed. The latest reported backend suite remains **59 passed in 3.65 seconds**, with no backend changes during Days 15–17. Keep `backend/oop_practice.py` untouched and excluded.
 
 
 ## 11. Week 3 Frontend Checkpoint — Day 15 (31 October 2026)
@@ -1320,3 +1320,43 @@ backend\.venv\Scripts\python.exe -c "import sqlite3; c=sqlite3.connect('backend/
 - Detailed Week 3 history is maintained separately in `docs/PROJECT_STATUS_WEEK_3.md`.
 
 **Next roadmap task:** Day 16 — Dashboard and navigation. Build on the verified application shell; do not treat the placeholder dashboard statistics as functional backend data.
+
+
+## 12. Week 3 Checkpoint — Days 16–17 (31 October 2026)
+
+**Status: Days 16 and 17 completed and pushed in commit `4db8b0a`.** Detailed daily history is preserved in `docs/PROJECT_STATUS_WEEK_3.md`.
+
+### Day 16 — Dashboard and Navigation
+
+- [x] Improved the dashboard layout and styling.
+- [x] Added statistic cards, Upcoming Deadlines, and Work Progress sections.
+- [x] Added navigation from the dashboard to the assignments page.
+- [x] User verified the dashboard in the browser.
+- [x] `npm run lint` passed.
+- [x] `npm run build` passed.
+
+Dashboard figures and progress remain placeholders; they are not connected to backend data.
+
+### Day 17 — Assignment Creation Form
+
+- [x] Created `AssignmentForm.jsx` with title, optional description, optional due date, and status fields.
+- [x] Added title validation (required, trimmed, maximum 200 characters) and status validation.
+- [x] Added form error messages, Create Assignment, and Cancel actions.
+- [x] Integrated the form into `AssignmentsPage.jsx`.
+- [x] Added assignment cards and an empty state.
+- [x] User tested the creation flow in the browser.
+- [x] `npm run lint` passed with no errors.
+- [x] `npm run build` passed; 2,042 modules transformed; JavaScript bundle 272.54 kB (86.43 kB gzipped).
+
+**Current limitation:** Assignments are held in temporary React state and disappear after refresh. Axios integration and API-backed persistence are scheduled for Day 18. Assignment editing is not yet implemented.
+
+### Git and synchronization
+
+- Commit: `4db8b0a` — `feat: build DeadlineOS React frontend`.
+- Pushed successfully to `origin/master`.
+- User verified `git status -sb` showed `master...origin/master`.
+- `backend/oop_practice.py` remains the only untracked file and is intentionally excluded.
+- `docs/PROJECT_STATUS_WEEK_3.md` contains the detailed Week 3 history.
+- `docs/PROJECT_STATUS_WEEK_2.md` remains unchanged.
+
+**Next roadmap task:** Day 18 — React–FastAPI integration using Axios. Replace temporary assignment state with backend API calls and verify persistent assignment creation and retrieval.
