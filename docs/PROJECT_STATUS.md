@@ -2,7 +2,7 @@
 
 _*Last updated: Sunday, 1 November 2026*_
 
-**Latest verified code checkpoint:** `bf67fb5` — `feat: integrate React assignments with FastAPI`, pushed successfully to `origin/master` on 1 November 2026. Day 18 React–FastAPI integration is implemented, tested, committed, and pushed: Axios service, Vite `/api` proxy, API-backed assignment retrieval and creation, and persistence after browser refresh. Frontend lint and production build passed; backend regression suite: **59 passed**. Final local Git verification showed `master` synchronized with `origin/master` and no modified or staged files. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest synchronized repository checkpoint before Day 19 work:** `1df86ba` — `docs: finalize Week 3 Day 18 status`. **Latest verified application code checkpoint:** `bf67fb5` — `feat: integrate React assignments with FastAPI`. Day 18 React–FastAPI integration is implemented, tested, committed, and pushed: Axios service, Vite `/api` proxy, API-backed assignment retrieval and creation, and persistence after browser refresh. Frontend lint and production build passed; backend regression suite: **59 passed**. Day 19 search and status-filter changes are currently implemented and verified locally but remain uncommitted; they are not part of the synchronized repository checkpoint yet. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -1400,4 +1400,44 @@ Dashboard figures and progress remain placeholders; they are not connected to ba
 - Only `backend/oop_practice.py` remains untracked; it was not staged or committed.
 - Day 18 implementation and documentation are synchronized to GitHub. This status update records the verified final code checkpoint.
 
-**Next roadmap task:** Day 19 — implement assignment search and status filtering. Do not add course filtering; courses remain deferred from the single-student MVP.
+**Next roadmap task:** Day 20 — refine loading, empty, success, and error states. Day 19 search and status filtering is implemented and verified locally but remains uncommitted. Do not add course filtering; courses remain deferred from the single-student MVP.
+
+
+## 14. Week 3 — Day 19: Assignment Search and Status Filtering (1 November 2026)
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — NOT YET COMMITTED.** Day 19 was completed ahead of its scheduled 2 November slot; the implementation remains in the local working tree.
+
+### Implementation
+
+- [x] Added client-side assignment search by title and description.
+- [x] Added status filtering for All, Pending, In Progress, and Completed.
+- [x] Combined search and status filtering so both criteria apply together.
+- [x] Added a no-matching-assignments state and a Clear filters action.
+- [x] Used useMemo to derive the filtered assignment list from the API-loaded assignments and current controls.
+- [x] Corrected assignment CSS placement so the general assignment styles are outside the existing mobile-only media query; retained responsive rules for narrow screens.
+- [x] Reused the existing FastAPI integration; no backend changes were required.
+- [x] Did not add course filtering because courses remain deferred from the single-student MVP.
+
+### Files changed
+
+- `frontend/src/pages/AssignmentsPage.jsx`
+- `frontend/src/App.css`
+
+### Verification evidence
+
+- [x] Manually tested title search and description search.
+- [x] Manually tested Pending, In Progress, and Completed filters.
+- [x] Manually tested combined search and status filtering.
+- [x] Manually tested the no-results state and Clear filters action.
+- [x] Manually tested assignment creation after adding the filters.
+- [x] `npm run lint` — passed with no ESLint errors.
+- [x] `npm run build` — passed; 2,101 modules transformed.
+- [x] `git diff --check` — passed with no whitespace errors.
+
+### Git state
+
+- Day 19 source changes remain local and uncommitted; they are not included in the GitHub documentation commits.
+- The local branch was synchronized with origin/master at `1df86ba` before Day 19 implementation.
+- `backend/oop_practice.py` remains untracked, untouched, and excluded.
+
+**Next roadmap task:** Day 20 — loading, empty, success, and error states.
