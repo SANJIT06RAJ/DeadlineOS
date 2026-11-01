@@ -269,7 +269,6 @@ The backend API is ready for frontend integration.
 
 ## 6. Outstanding Work
 
-- Implement assignment search and status filtering (Day 19).
 - Complete loading, empty, success and error-state refinements (Day 20).
 - Test the complete frontend/backend workflow and fix integration bugs (Day 21).
 - Implement assignment editing, functional dashboard data, and subtask management UI in their planned later tasks.
@@ -282,7 +281,7 @@ The backend API is ready for frontend integration.
 | Day 16 — 30 Oct | Dashboard and navigation                    | COMPLETED                                                                     |
 | Day 17 — 31 Oct | Task creation/editing forms                 | COMPLETED — creation form implemented; editing remains future work            |
 | Day 18 — 1 Nov  | React–FastAPI integration using Axios       | COMPLETED — API-backed retrieval/creation and refresh persistence verified   |
-| Day 19 — 2 Nov  | Search and status filters                   | NEXT — course filters remain deferred because courses are outside the MVP     |
+| Day 19 — 2 Nov  | Search and status filters                   | COMPLETED LOCALLY — manually tested; lint/build passed; not yet committed      |
 | Day 20 — 3 Nov  | Loading, empty, success and error states    | PENDING                                                                       |
 | Day 21 — 4 Nov  | Integration workflow testing and bug fixing | PENDING                                                                       |
 
@@ -298,7 +297,7 @@ The backend API is ready for frontend integration.
 
 ---
 
-**Next action:** Day 19 — implement assignment search and status filtering. Day 18 React–FastAPI integration is complete and pushed in `bf67fb5`.
+**Next action:** Day 20 — refine loading, empty, success, and error states. Day 19 search and status filtering is implemented and verified locally but remains uncommitted.
 
 _End of Week 3 status._
 
@@ -309,3 +308,39 @@ Day 18 integration is complete and manually verified. Assignment creation now pe
 
 **Next:** Day 19 — add assignment search and status filters. Do not add course filters; courses remain deferred from the MVP.
 
+
+
+## 10. Day 19 — Assignment Search and Status Filtering (1 November 2026)
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — NOT YET COMMITTED.** Completed ahead of the scheduled 2 November slot.
+
+### Implementation
+
+- Added assignment search by title and description.
+- Added status filtering: All, Pending, In Progress, and Completed.
+- Search and status filters work together.
+- Added a no-matching-assignments state with a Clear filters action.
+- Used useMemo to derive filtered assignments.
+- Corrected the assignment CSS section so desktop styles are outside the existing mobile media query; retained responsive styling.
+- Reused the existing API-backed assignment list; no backend changes were required.
+- Course filtering was not added; courses remain deferred from the MVP.
+
+### Files changed
+
+- `frontend/src/pages/AssignmentsPage.jsx`
+- `frontend/src/App.css`
+
+### Verification
+
+- Manual checks passed for title search, description search, each status filter, combined filters, no-results state, clearing filters, and assignment creation.
+- `npm run lint` — PASSED.
+- `npm run build` — PASSED; 2,101 modules transformed.
+- `git diff --check` — PASSED.
+
+### Git state
+
+- Source changes remain local and uncommitted.
+- The working tree also contains the existing untracked `backend/oop_practice.py`, which remains untouched and excluded.
+- No Day 19 source commit or push is recorded yet.
+
+**Next:** Day 20 — loading, empty, success, and error states.
