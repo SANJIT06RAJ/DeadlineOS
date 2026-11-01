@@ -48,7 +48,7 @@ DeadlineOS is a system for tracking academic assignments, deadlines, subtasks, p
 | Fri, 30 Oct | Dashboard and navigation. |
 | Sat, 31 Oct | Task creation/editing forms. |
 | Sun, 1 Nov | React–FastAPI integration using Axios. |
-| Mon, 2 Nov | Course filters, search, and status filters. |
+| Mon, 2 Nov | Assignment search and status filters. |
 | Tue, 3 Nov | Loading, empty, success, and error states. |
 | Wed, 4 Nov | Integration workflow testing and bug fixing. |
 
