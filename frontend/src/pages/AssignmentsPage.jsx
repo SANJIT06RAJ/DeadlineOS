@@ -1,6 +1,6 @@
 
-import { useEffect, useState } from 'react'
-import { Plus, ClipboardList } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { Plus, ClipboardList, Search } from 'lucide-react'
 import Header from '../components/layout/Header'
 import AssignmentForm from '../components/assignments/AssignmentForm'
 import {
@@ -13,6 +13,8 @@ function AssignmentsPage() {
   const [assignments, setAssignments] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [statusFilter, setStatusFilter] = useState('all')
 
   useEffect(() => {
     async function loadAssignments() {
@@ -45,6 +47,23 @@ function AssignmentsPage() {
     }
   }
 
+  const filteredAssignments = useMemo(() => {
+    const normalizedQuery = searchQuery.trim().toLowerCase()
+
+    return assignments.filter((assignment) => {
+      const matchesSearch =
+        assignment.title.toLowerCase().includes(normalizedQuery) ||
+        (assignment.description || '')
+          .toLowerCase()
+          .includes(normalizedQuery)
+
+      const matchesStatus =
+        statusFilter === 'all' || assignment.status === statusFilter
+
+      return matchesSearch && matchesStatus
+    })
+  }, [assignments, searchQuery, statusFilter])
+
   return (
     <>
       <Header
@@ -71,6 +90,33 @@ function AssignmentsPage() {
         </p>
       )}
 
+      {!isLoading && assignments.length > 0 && (
+        <section className="assignment-filters">
+          <div className="assignment-search">
+            <Search size={18} />
+            <input
+              type="search"
+              placeholder="Search assignments..."
+              aria-label="Search assignments by title or description"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+            />
+          </div>
+
+          <select
+            className="assignment-status-filter"
+            aria-label="Filter assignments by status"
+            value={statusFilter}
+            onChange={(event) => setStatusFilter(event.target.value)}
+          >
+            <option value="all">All statuses</option>
+            <option value="pending">Pending</option>
+            <option value="in_progress">In Progress</option>
+            <option value="completed">Completed</option>
+          </select>
+        </section>
+      )}
+
       {isLoading ? (
         <p role="status">Loading assignments...</p>
       ) : assignments.length === 0 ? (
@@ -85,9 +131,32 @@ function AssignmentsPage() {
             Create your first assignment to start organizing your work.
           </p>
         </section>
+      ) : filteredAssignments.length === 0 ? (
+        <section className="empty-state">
+          <div className="empty-state-icon">
+            <Search size={30} />
+          </div>
+
+          <h2>No matching assignments</h2>
+
+          <p>
+            Try another search term or change the status filter.
+          </p>
+
+          <button
+            type="button"
+            className="clear-filters-button"
+            onClick={() => {
+              setSearchQuery('')
+              setStatusFilter('all')
+            }}
+          >
+            Clear filters
+          </button>
+        </section>
       ) : (
         <section className="assignment-list">
-          {assignments.map((assignment) => (
+          {filteredAssignments.map((assignment) => (
             <article className="assignment-card" key={assignment.id}>
               <div>
                 <h3>{assignment.title}</h3>
