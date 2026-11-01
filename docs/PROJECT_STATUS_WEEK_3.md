@@ -306,7 +306,7 @@ _End of Week 3 status._
 
 Day 18 integration is complete and manually verified. Assignment creation now persists through FastAPI/SQLite and the frontend reloads the saved assignment after a browser refresh. The backend regression suite remains green (**59 passed**); frontend lint and production build both passed.
 
-**Next:** Day 19 — add assignment search and status filters. Do not add course filters; courses remain deferred from the MVP.
+**Updated next action after Day 19 completion:** Day 20 — refine loading, empty, success, and error states. Do not add course filters; courses remain deferred from the MVP.
 
 
 
