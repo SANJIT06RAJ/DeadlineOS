@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import {
   Plus,
   ClipboardList,
@@ -15,6 +16,9 @@ import {
 import AssignmentProgress from '../components/assignments/AssignmentProgress'
 
 function AssignmentsPage() {
+  const [searchParams] = useSearchParams()
+  const targetAssignmentId = searchParams.get('assignment')
+
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [assignments, setAssignments] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -46,7 +50,9 @@ function AssignmentsPage() {
         console.error('Failed to load assignments:', error)
 
         if (isMounted) {
-          setLoadError('Unable to load your assignments. Check your connection and try again.')
+          setLoadError(
+            'Unable to load your assignments. Check your connection and try again.'
+          )
         }
       } finally {
         if (isMounted) {
@@ -109,6 +115,38 @@ function AssignmentsPage() {
       return sortOrder === 'latest' ? -comparison : comparison
     })
   }, [assignments, searchQuery, statusFilter, sortOrder])
+
+  useEffect(() => {
+    if (!targetAssignmentId || isLoading || loadError) {
+      return
+    }
+
+    const target = document.getElementById(
+      `assignment-${targetAssignmentId}`
+    )
+
+    if (!target) {
+      return
+    }
+
+    target.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
+
+    target.classList.add('assignment-highlight')
+
+    const timeout = setTimeout(() => {
+      target.classList.remove('assignment-highlight')
+    }, 2500)
+
+    return () => clearTimeout(timeout)
+  }, [
+    targetAssignmentId,
+    isLoading,
+    loadError,
+    filteredAssignments,
+  ])
 
   function getDeadlineMessage(assignment) {
     if (!assignment.due_date) {
@@ -281,7 +319,11 @@ function AssignmentsPage() {
       ) : (
         <section className="assignment-list">
           {filteredAssignments.map((assignment) => (
-            <article className="assignment-card" key={assignment.id}>
+            <article
+              className="assignment-card"
+              id={`assignment-${assignment.id}`}
+              key={assignment.id}
+            >
               <div>
                 <h3>{assignment.title}</h3>
 
@@ -305,6 +347,7 @@ function AssignmentsPage() {
                 >
                   {getDeadlineMessage(assignment)}
                 </div>
+
                 <AssignmentProgress assignmentId={assignment.id} />
               </div>
 

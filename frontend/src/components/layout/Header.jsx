@@ -1,4 +1,4 @@
-import { Bell } from 'lucide-react'
+import NotificationCenter from '../notifications/NotificationCenter'
 
 function Header({ title, description }) {
   return (
@@ -8,13 +8,7 @@ function Header({ title, description }) {
         <p>{description}</p>
       </div>
 
-      <button
-        className="notification-button"
-        type="button"
-        aria-label="Notifications"
-      >
-        <Bell size={20} />
-      </button>
+      <NotificationCenter />
     </header>
   )
 }

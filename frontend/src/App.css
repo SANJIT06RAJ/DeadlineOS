@@ -1398,3 +1398,192 @@
   color: #16a34a;
   font-size: 0.82rem;
 }
+
+/* Day 26: In-app notifications */
+
+.notification-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.notification-button {
+  position: relative;
+}
+
+.notification-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  place-items: center;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border: 2px solid white;
+  border-radius: 20px;
+  background: #dc2626;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.notification-panel {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  z-index: 100;
+  width: 340px;
+  max-width: calc(100vw - 40px);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: white;
+  box-shadow: 0 12px 35px rgb(0 0 0 / 12%);
+}
+
+.notification-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 17px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.notification-panel-header h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 15px;
+}
+
+.notification-panel-header p {
+  margin: 5px 0 0;
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.notification-close {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  border: none;
+  border-radius: 7px;
+  background: #f3f3f8;
+  color: var(--text-secondary);
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.notification-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 145px;
+  padding: 20px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-align: center;
+}
+
+.notification-state strong {
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.notification-error {
+  color: #dc2626;
+}
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.notification-item>svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.notification-item>div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.notification-item strong {
+  overflow-wrap: anywhere;
+  color: var(--text-primary);
+  font-size: 12px;
+}
+
+.notification-item span {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.notification-overdue>svg {
+  color: #dc2626;
+}
+
+.notification-today>svg {
+  color: #d97706;
+}
+
+.notification-upcoming>svg {
+  color: #2563eb;
+}
+
+.notification-footer {
+  display: block;
+  padding: 13px;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+}
+
+.notification-footer:hover {
+  background: #f8f7ff;
+}
+
+@media (max-width: 700px) {
+  .notification-panel {
+    right: -5px;
+    width: 310px;
+  }
+}
+
+/* Day 26: Highlight assignment opened from a reminder */
+
+.assignment-highlight {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+  animation: assignment-highlight-pulse 0.8s ease-in-out 3;
+  scroll-margin-top: 30px;
+}
+
+@keyframes assignment-highlight-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px var(--primary-light);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px rgb(113 98 220 / 20%);
+  }
+}
