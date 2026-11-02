@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard,
   ClipboardList,
+  CalendarDays,
   Settings,
   Clock,
 } from 'lucide-react'
@@ -9,6 +10,7 @@ import {
 const navigation = [
   { name: 'Dashboard', path: '/', icon: LayoutDashboard },
   { name: 'Assignments', path: '/assignments', icon: ClipboardList },
+  { name: 'Calendar', path: '/calendar', icon: CalendarDays },
 ]
 
 function Sidebar() {
