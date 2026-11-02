@@ -61,10 +61,9 @@ No backend implementation changes were required. The frontend uses the existing 
 
 ### Git state
 
-- The Day 22 frontend changes were locally modified and had not yet been committed at the last Git status check.
+- Day 22 frontend changes and this Week 4 status record were committed and pushed in `0450917` — `feat: add due-date sorting and overdue indicators`.
+- Final local Git verification confirmed `master` and `origin/master` synchronized at `0450917`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
-- `docs/PROJECT_STATUS_WEEK_4.md` was created locally and is awaiting its first committed version.
-- No claim is made that the Day 22 changes or this status file have been pushed.
 
 ---
 
