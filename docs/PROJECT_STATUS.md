@@ -2,9 +2,26 @@
 
 _*Last updated: Tuesday, 3 November 2026*_
 
-**Latest committed and pushed application-code checkpoint:** `6c45ae6` — `feat: add weekly assignment calendar`.
+**Latest committed and pushed application-code checkpoint:** `4ffc8c4` — `feat: add assignment progress tracking`.
 
-Week 4 Day 24 — Weekly calendar view — is implemented, verified, committed, and pushed.
+Week 4 Day 25 — Assignment progress tracking — is implemented, verified, committed, and pushed.
+
+Day 25 verification:
+- Backend pytest: **59 passed**.
+- Frontend ESLint: PASSED.
+- Frontend production build: PASSED; 2,103 modules transformed.
+- Browser-tested subtask creation, completion, deletion, and progress calculation.
+- Verified subtask persistence after refresh.
+- Verified subtasks remain isolated between assignments.
+- `git diff --check`: PASSED.
+- Four intended frontend files committed as `4ffc8c4`.
+- Successfully pushed to `origin/master`.
+- Local `master` and `origin/master` synchronized at `4ffc8c4`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+Application commit `4ffc8c4` was successfully pushed to `origin/master`.
+
+**Next roadmap task:** Week 4 Day 26 — In-app reminders and notification states.
 
 Day 23 verification:
 - Backend pytest: **59 passed**.
@@ -1642,3 +1659,51 @@ Assignment editing, live dashboard statistics, and subtask UI remain future work
 - No backend or database files were changed.
 
 **Next roadmap task:** Day 25 — Assignment progress tracking. Course summaries remain deferred.
+
+
+## Day 25 — Assignment Progress Tracking (3 November 2026)
+
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`4ffc8c4`).**
+
+### Implementation
+
+- [x] Added frontend API helpers for retrieving subtasks.
+- [x] Added frontend API helpers for creating, updating, and deleting subtasks.
+- [x] Created `AssignmentProgress.jsx` to manage subtasks for individual assignments.
+- [x] Added subtask creation and deletion.
+- [x] Added completion checkboxes.
+- [x] Added automatic progress percentage calculation.
+- [x] Added a visual progress bar.
+- [x] Added loading, error, empty, and all-completed states.
+- [x] Integrated progress tracking into assignment cards.
+- [x] Added styling for progress tracking and subtasks.
+
+### Files changed
+
+- `frontend/src/services/api.js`
+- `frontend/src/components/assignments/AssignmentProgress.jsx`
+- `frontend/src/pages/AssignmentsPage.jsx`
+- `frontend/src/App.css`
+
+### Verification evidence
+
+- [x] Frontend ESLint — PASSED.
+- [x] Frontend production build — PASSED; 2,103 modules transformed.
+- [x] Backend pytest — **59 passed**.
+- [x] Browser-tested subtask creation.
+- [x] Browser-tested subtask completion and progress recalculation.
+- [x] Browser-tested subtask deletion and progress recalculation.
+- [x] Refreshed the browser and confirmed subtasks persisted.
+- [x] Verified subtasks belonging to different assignments remain separate.
+- [x] `git diff --check` — PASSED.
+
+### Git state
+
+- Four intended frontend files committed as `4ffc8c4` — `feat: add assignment progress tracking`.
+- Successfully pushed to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `4ffc8c4`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next task:** Day 26 — In-app reminders and notification states.
+
+**Scope reminder:** Course summaries remain deferred. DeadlineOS continues as a single-student MVP.
