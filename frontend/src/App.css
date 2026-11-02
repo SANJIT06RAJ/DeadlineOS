@@ -652,6 +652,30 @@
   font-size: 13px;
 }
 
+/* Day 22: Deadline indicators */
+
+.assignment-deadline {
+  margin-top: 9px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.deadline-overdue {
+  color: #dc2626;
+}
+
+.deadline-today {
+  color: #d97706;
+}
+
+.deadline-upcoming {
+  color: #2563eb;
+}
+
+.deadline-completed {
+  color: #16a34a;
+}
+
 .assignment-card p {
   margin-bottom: 8px;
 }

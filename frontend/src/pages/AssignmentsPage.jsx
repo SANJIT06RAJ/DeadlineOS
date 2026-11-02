@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from 'react'
 import {
   Plus,
@@ -27,6 +26,7 @@ function AssignmentsPage() {
   const [reloadKey, setReloadKey] = useState(0)
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
+  const [sortOrder, setSortOrder] = useState('soonest')
 
   useEffect(() => {
     let isMounted = true
@@ -85,7 +85,7 @@ function AssignmentsPage() {
   const filteredAssignments = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase()
 
-    return assignments.filter((assignment) => {
+    const filtered = assignments.filter((assignment) => {
       const matchesSearch =
         assignment.title.toLowerCase().includes(normalizedQuery) ||
         (assignment.description || '')
@@ -97,7 +97,57 @@ function AssignmentsPage() {
 
       return matchesSearch && matchesStatus
     })
-  }, [assignments, searchQuery, statusFilter])
+
+    return [...filtered].sort((a, b) => {
+      if (!a.due_date && !b.due_date) return 0
+      if (!a.due_date) return 1
+      if (!b.due_date) return -1
+
+      const comparison = a.due_date.localeCompare(b.due_date)
+
+      return sortOrder === 'latest' ? -comparison : comparison
+    })
+  }, [assignments, searchQuery, statusFilter, sortOrder])
+
+  function getDeadlineMessage(assignment) {
+    if (!assignment.due_date) {
+      return 'No due date set'
+    }
+
+    if (assignment.status === 'completed') {
+      return 'Completed'
+    }
+
+    if (assignment.is_overdue) {
+      return `Overdue by ${Math.abs(assignment.days_remaining)} day(s)`
+    }
+
+    if (assignment.days_remaining === 0) {
+      return 'Due today'
+    }
+
+    return `Due in ${assignment.days_remaining} day(s)`
+  }
+
+  function getDeadlineClass(assignment) {
+    if (assignment.status === 'completed') {
+      return 'deadline-completed'
+    }
+
+    if (assignment.is_overdue) {
+      return 'deadline-overdue'
+    }
+
+    if (assignment.days_remaining === 0) {
+      return 'deadline-today'
+    }
+
+    if (assignment.days_remaining > 0) {
+      return 'deadline-upcoming'
+    }
+
+    return ''
+  }
 
   return (
     <>
@@ -159,6 +209,16 @@ function AssignmentsPage() {
             <option value="in_progress">In Progress</option>
             <option value="completed">Completed</option>
           </select>
+
+          <select
+            className="assignment-status-filter"
+            aria-label="Sort assignments by due date"
+            value={sortOrder}
+            onChange={(event) => setSortOrder(event.target.value)}
+          >
+            <option value="soonest">Due date: Soonest</option>
+            <option value="latest">Due date: Latest</option>
+          </select>
         </section>
       )}
 
@@ -191,7 +251,6 @@ function AssignmentsPage() {
           </div>
 
           <h2>Your assignments will appear here</h2>
-
           <p>
             Create your first assignment to start organizing your work.
           </p>
@@ -203,7 +262,6 @@ function AssignmentsPage() {
           </div>
 
           <h2>No matching assignments</h2>
-
           <p>
             Try another search term or change the status filter.
           </p>
@@ -225,10 +283,21 @@ function AssignmentsPage() {
             <article className="assignment-card" key={assignment.id}>
               <div>
                 <h3>{assignment.title}</h3>
-                {assignment.description && <p>{assignment.description}</p>}
+
+                {assignment.description && (
+                  <p>{assignment.description}</p>
+                )}
+
                 <small>
                   Due date: {assignment.due_date || 'Not set'}
                 </small>
+
+                <div
+                  className={`assignment-deadline ${getDeadlineClass(assignment)}`}
+                  role="status"
+                >
+                  {getDeadlineMessage(assignment)}
+                </div>
               </div>
 
               <span className={`status-badge status-${assignment.status}`}>
