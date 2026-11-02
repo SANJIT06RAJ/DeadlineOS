@@ -75,11 +75,11 @@ No backend implementation changes were required. The frontend uses the existing 
 | Day 23 | Priority levels and upcoming-deadline summaries | Completed, committed, and pushed (`cf67812`) |
 | Day 24 | Weekly calendar view                           | Completed, committed, and pushed (`6c45ae6`) |
 | Day 25 | Assignment progress tracking                    | Completed, committed, and pushed (`4ffc8c4`) |
-| Day 26 | In-app reminders and notification states        | Pending   |
+| Day 26 | In-app reminders and notification states        | Implemented and verified locally; application changes pending commit/push |
 | Day 27 | Assignment checklist and estimated workload     | Pending   |
 | Day 28 | Date-boundary, overdue, and edge-case testing   | Pending   |
 
-**Next task:** Day 26 — In-app reminders and notification states.
+**Next task:** Day 27 — Assignment checklist and estimated workload.
 
 **Day 23 status:** Implemented, verified, committed as `cf67812`, and pushed to `origin/master`.
 
@@ -233,3 +233,44 @@ Build a useful academic task manager with deadline intelligence, while preservin
 **Next task:** Day 26 — In-app reminders and notification states.
 
 **Scope reminder:** Course summaries remain deferred. DeadlineOS continues as a single-student MVP.
+
+## Day 26 — In-App Reminders and Notification States (3 November 2026)
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — APPLICATION CHANGES PENDING COMMIT/PUSH.**
+
+### Implementation
+
+- [x] Created an in-app notification center using the existing assignment API.
+- [x] Integrated the notification bell and active reminder count into the shared header.
+- [x] Added overdue, due-today, and upcoming-within-7-days reminder classifications.
+- [x] Excluded completed assignments and assignments without due dates.
+- [x] Added loading, error, and empty states.
+- [x] Added a close control and a View assignments link.
+- [x] Added reminder navigation to the selected assignment.
+- [x] Added automatic scrolling and temporary highlighting of the selected assignment.
+
+### Files changed
+
+- `frontend/src/components/notifications/NotificationCenter.jsx` (new)
+- `frontend/src/components/layout/Header.jsx`
+- `frontend/src/pages/AssignmentsPage.jsx`
+- `frontend/src/App.css`
+
+### Verification
+
+- [x] `npm --prefix frontend run lint` — PASSED.
+- [x] `npm --prefix frontend run build` — PASSED; 2,104 modules transformed.
+- [x] Browser-tested upcoming, due-today, and overdue reminder classifications.
+- [x] Browser-tested exclusion of completed assignments.
+- [x] Browser-tested reminder navigation, automatic scrolling, and temporary highlighting.
+- [x] `git diff --check` — PASSED.
+
+No backend or database changes were required.
+
+### Git state
+
+- Day 26 application changes are not yet committed or pushed.
+- The latest verified local Git check showed `master` synchronized with `origin/master` at `ea5c178` before Day 26 application changes.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next task:** Day 27 — Assignment checklist and estimated workload.
