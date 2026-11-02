@@ -1,6 +1,12 @@
 
 import { useEffect, useMemo, useState } from 'react'
-import { Plus, ClipboardList, Search } from 'lucide-react'
+import {
+  Plus,
+  ClipboardList,
+  Search,
+  LoaderCircle,
+  X,
+} from 'lucide-react'
 import Header from '../components/layout/Header'
 import AssignmentForm from '../components/assignments/AssignmentForm'
 import {
@@ -12,38 +18,67 @@ function AssignmentsPage() {
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [assignments, setAssignments] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const [loadError, setLoadError] = useState('')
+  const [createError, setCreateError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
+
+  const [reloadKey, setReloadKey] = useState(0)
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
 
   useEffect(() => {
+    let isMounted = true
+
     async function loadAssignments() {
+      setIsLoading(true)
+      setLoadError('')
+
       try {
-        setError('')
         const data = await getAssignments()
-        setAssignments(data)
+
+        if (isMounted) {
+          setAssignments(data)
+        }
       } catch (error) {
         console.error('Failed to load assignments:', error)
-        setError('Unable to load assignments. Please try again.')
+
+        if (isMounted) {
+          setLoadError('Unable to load your assignments. Check your connection and try again.')
+        }
       } finally {
-        setIsLoading(false)
+        if (isMounted) {
+          setIsLoading(false)
+        }
       }
     }
 
     loadAssignments()
-  }, [])
+
+    return () => {
+      isMounted = false
+    }
+  }, [reloadKey])
 
   async function handleCreateAssignment(formData) {
-    try {
-      setError('')
+    setIsSubmitting(true)
+    setCreateError('')
+    setSuccessMessage('')
 
+    try {
       const newAssignment = await createAssignment(formData)
 
       setAssignments((current) => [...current, newAssignment])
+      setSearchQuery('')
+      setStatusFilter('all')
       setIsFormOpen(false)
+      setSuccessMessage('Assignment created successfully.')
     } catch (error) {
       console.error('Failed to create assignment:', error)
-      setError('Unable to create assignment. Please try again.')
+      setCreateError('Unable to create the assignment. Please try again.')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -77,20 +112,30 @@ function AssignmentsPage() {
         <button
           type="button"
           className="create-assignment-button"
-          onClick={() => setIsFormOpen(true)}
+          onClick={() => {
+            setCreateError('')
+            setIsFormOpen(true)
+          }}
         >
           <Plus size={18} />
           Create Assignment
         </button>
       </div>
 
-      {error && (
-        <p className="form-error" role="alert">
-          {error}
-        </p>
+      {successMessage && (
+        <div className="feedback-banner feedback-success" role="status">
+          <span>{successMessage}</span>
+          <button
+            type="button"
+            aria-label="Dismiss success message"
+            onClick={() => setSuccessMessage('')}
+          >
+            <X size={18} />
+          </button>
+        </div>
       )}
 
-      {!isLoading && assignments.length > 0 && (
+      {!isLoading && !loadError && assignments.length > 0 && (
         <section className="assignment-filters">
           <div className="assignment-search">
             <Search size={18} />
@@ -118,7 +163,27 @@ function AssignmentsPage() {
       )}
 
       {isLoading ? (
-        <p role="status">Loading assignments...</p>
+        <div className="loading-state" role="status" aria-live="polite">
+          <LoaderCircle className="loading-spinner" size={24} />
+          <span>Loading assignments...</span>
+        </div>
+      ) : loadError ? (
+        <section className="empty-state error-state">
+          <div className="empty-state-icon">
+            <ClipboardList size={30} />
+          </div>
+
+          <h2>Couldn't load assignments</h2>
+          <p>{loadError}</p>
+
+          <button
+            type="button"
+            className="clear-filters-button"
+            onClick={() => setReloadKey((current) => current + 1)}
+          >
+            Try again
+          </button>
+        </section>
       ) : assignments.length === 0 ? (
         <section className="empty-state">
           <div className="empty-state-icon">
@@ -178,6 +243,8 @@ function AssignmentsPage() {
         <AssignmentForm
           onSubmit={handleCreateAssignment}
           onCancel={() => setIsFormOpen(false)}
+          isSubmitting={isSubmitting}
+          submissionError={createError}
         />
       )}
     </>

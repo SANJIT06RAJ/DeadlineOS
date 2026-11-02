@@ -1,12 +1,14 @@
 
 import { useState } from 'react'
-import { X } from 'lucide-react'
+import { X, LoaderCircle } from 'lucide-react'
 
 function AssignmentForm({
   initialData,
   onSubmit,
   onCancel,
   isEditing = false,
+  isSubmitting = false,
+  submissionError = '',
 }) {
   const [formData, setFormData] = useState(() => ({
     title: initialData?.title ?? '',
@@ -53,7 +55,7 @@ function AssignmentForm({
   function handleSubmit(event) {
     event.preventDefault()
 
-    if (!validateForm()) {
+    if (isSubmitting || !validateForm()) {
       return
     }
 
@@ -72,6 +74,7 @@ function AssignmentForm({
         role="dialog"
         aria-modal="true"
         aria-labelledby="assignment-form-title"
+        aria-busy={isSubmitting}
       >
         <div className="assignment-form-header">
           <div>
@@ -90,12 +93,19 @@ function AssignmentForm({
             className="form-close-button"
             onClick={onCancel}
             aria-label="Close form"
+            disabled={isSubmitting}
           >
             <X size={20} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} noValidate>
+          {submissionError && (
+            <div className="feedback-banner feedback-error" role="alert">
+              <span>{submissionError}</span>
+            </div>
+          )}
+
           <div className="form-field">
             <label htmlFor="title">
               Assignment Title <span>*</span>
@@ -111,6 +121,7 @@ function AssignmentForm({
               placeholder="e.g. Software Engineering Project"
               aria-invalid={Boolean(errors.title)}
               aria-describedby={errors.title ? 'title-error' : undefined}
+              disabled={isSubmitting}
             />
 
             {errors.title && (
@@ -130,6 +141,7 @@ function AssignmentForm({
               onChange={handleChange}
               rows={4}
               placeholder="Add assignment details or instructions..."
+              disabled={isSubmitting}
             />
           </div>
 
@@ -142,6 +154,7 @@ function AssignmentForm({
               type="date"
               value={formData.due_date}
               onChange={handleChange}
+              disabled={isSubmitting}
             />
           </div>
 
@@ -154,6 +167,7 @@ function AssignmentForm({
               value={formData.status}
               onChange={handleChange}
               aria-invalid={Boolean(errors.status)}
+              disabled={isSubmitting}
             >
               <option value="pending">Pending</option>
               <option value="in_progress">In Progress</option>
@@ -170,12 +184,24 @@ function AssignmentForm({
               type="button"
               className="form-cancel-button"
               onClick={onCancel}
+              disabled={isSubmitting}
             >
               Cancel
             </button>
 
-            <button type="submit" className="form-submit-button">
-              {isEditing ? 'Save Changes' : 'Create Assignment'}
+            <button
+              type="submit"
+              className="form-submit-button"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <LoaderCircle className="loading-spinner" size={16} />
+                  {isEditing ? 'Saving...' : 'Creating...'}
+                </>
+              ) : (
+                isEditing ? 'Save Changes' : 'Create Assignment'
+              )}
             </button>
           </div>
         </form>
