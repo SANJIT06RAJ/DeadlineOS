@@ -75,7 +75,7 @@ No backend implementation changes were required. The frontend uses the existing 
 | Day 23 | Priority levels and upcoming-deadline summaries | Completed, committed, and pushed (`cf67812`) |
 | Day 24 | Weekly calendar view                           | Completed, committed, and pushed (`6c45ae6`) |
 | Day 25 | Assignment progress tracking                    | Completed, committed, and pushed (`4ffc8c4`) |
-| Day 26 | In-app reminders and notification states        | Implemented and verified locally; application changes pending commit/push |
+| Day 26 | In-app reminders and notification states        | Completed, committed, and pushed (`34c8ceb`) |
 | Day 27 | Assignment checklist and estimated workload     | Pending   |
 | Day 28 | Date-boundary, overdue, and edge-case testing   | Pending   |
 
@@ -236,7 +236,7 @@ Build a useful academic task manager with deadline intelligence, while preservin
 
 ## Day 26 — In-App Reminders and Notification States (3 November 2026)
 
-**Status: IMPLEMENTED AND VERIFIED LOCALLY — APPLICATION CHANGES PENDING COMMIT/PUSH.**
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`34c8ceb`).**
 
 ### Implementation
 
@@ -269,8 +269,9 @@ No backend or database changes were required.
 
 ### Git state
 
-- Day 26 application changes are not yet committed or pushed.
-- The latest verified local Git check showed `master` synchronized with `origin/master` at `ea5c178` before Day 26 application changes.
+- Four intended frontend files were committed as `34c8ceb` — `feat: add in-app deadline reminders`.
+- The commit was successfully pushed to `origin/master`; the remote advanced from `bc674e4` to `34c8ceb`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `34c8ceb`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Next task:** Day 27 — Assignment checklist and estimated workload.
