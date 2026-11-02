@@ -73,13 +73,13 @@ No backend implementation changes were required. The frontend uses the existing 
 | ------ | ----------------------------------------------- | --------- |
 | Day 22 | Due-date sorting and overdue detection          | Completed |
 | Day 23 | Priority levels and upcoming-deadline summaries | Completed, committed, and pushed (`cf67812`) |
-| Day 24 | Calendar or weekly deadline view                | Pending   |
+| Day 24 | Weekly calendar view                           | Completed, committed, and pushed (`6c45ae6`) |
 | Day 25 | Progress tracking and course summaries          | Pending   |
 | Day 26 | In-app reminders and notification states        | Pending   |
 | Day 27 | Assignment checklist and estimated workload     | Pending   |
 | Day 28 | Date-boundary, overdue, and edge-case testing   | Pending   |
 
-**Next task:** Day 24 — Calendar or weekly deadline view.
+**Next task:** Day 25 — Assignment progress tracking (course summaries deferred).
 
 **Day 23 status:** Implemented, verified, committed as `cf67812`, and pushed to `origin/master`.
 
@@ -142,6 +142,47 @@ Build a useful academic task manager with deadline intelligence, while preservin
 - The successful push advanced the remote from `7190d21` to `cf67812`.
 - The local branch and remote were confirmed synchronized at `7190d21` before the application commit; the push then updated the remote to `cf67812`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+---
+
+## Day 24 — Weekly Calendar View (3 November 2026)
+
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`6c45ae6`).**
+
+### Implementation
+
+- [x] Created a weekly calendar page with Monday–Sunday columns.
+- [x] Added previous-week and next-week navigation.
+- [x] Added a Today shortcut.
+- [x] Displayed assignments on their due dates.
+- [x] Displayed assignment priority indicators.
+- [x] Added visual states for completed, overdue, due-today, and upcoming assignments.
+- [x] Added empty-day and no-assignment states.
+- [x] Added loading, error, and retry states.
+- [x] Added responsive calendar styling.
+- [x] Added Calendar navigation to the sidebar and application routes.
+
+### Files changed
+
+- `frontend/src/pages/CalendarPage.jsx`
+- `frontend/src/App.jsx`
+- `frontend/src/components/layout/Sidebar.jsx`
+- `frontend/src/App.css`
+
+### Verification
+
+- [x] Frontend ESLint — PASSED.
+- [x] Frontend production build — PASSED; 2,102 modules transformed.
+- [x] `git diff --check` — PASSED.
+- [x] User manually verified calendar loading, dates, navigation, and page appearance.
+
+### Git state
+
+- Four intended frontend files committed as `6c45ae6` — `feat: add weekly assignment calendar`.
+- Successfully pushed to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `6c45ae6`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- No backend or database files were changed.
 
 ---
 
