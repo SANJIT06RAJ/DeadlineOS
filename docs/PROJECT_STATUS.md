@@ -2,9 +2,9 @@
 
 _*Last updated: Tuesday, 3 November 2026*_
 
-**Latest committed and pushed application-code checkpoint:** `cf67812` — `feat: add assignment priorities and dashboard summaries`.
+**Latest committed and pushed application-code checkpoint:** `6c45ae6` — `feat: add weekly assignment calendar`.
 
-Week 4 Day 23 — Priority levels and upcoming-deadline summaries — is implemented, verified, committed, and pushed.
+Week 4 Day 24 — Weekly calendar view — is implemented, verified, committed, and pushed.
 
 Day 23 verification:
 - Backend pytest: **59 passed**.
@@ -17,7 +17,7 @@ Day 23 verification:
 
 Application commit `cf67812` was successfully pushed to `origin/master`; the subsequent documentation-only commits are recorded separately.
 
-**Next roadmap task:** Week 4 Day 24 — Calendar or weekly deadline view.
+**Next roadmap task:** Week 4 Day 25 — Assignment progress tracking (course summaries deferred).
 
 ## 1. Environment
 
@@ -1600,3 +1600,45 @@ Assignment editing, live dashboard statistics, and subtask UI remain future work
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Next roadmap task:** Day 24 — Calendar or weekly deadline view.
+
+
+## 18. Week 4 — Day 24: Weekly Calendar View (3 November 2026)
+
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`6c45ae6`).**
+
+### Implementation
+
+- [x] Created a weekly calendar page with Monday–Sunday columns.
+- [x] Added previous-week and next-week navigation.
+- [x] Added a Today shortcut.
+- [x] Displayed assignments on their due dates.
+- [x] Displayed assignment priority indicators.
+- [x] Added visual states for completed, overdue, due-today, and upcoming assignments.
+- [x] Added empty-day and no-assignment states.
+- [x] Added loading, error, and retry states.
+- [x] Added responsive calendar styling.
+- [x] Added Calendar navigation to the sidebar and application routes.
+
+### Files changed
+
+- `frontend/src/pages/CalendarPage.jsx`
+- `frontend/src/App.jsx`
+- `frontend/src/components/layout/Sidebar.jsx`
+- `frontend/src/App.css`
+
+### Verification evidence
+
+- [x] Frontend ESLint — PASSED.
+- [x] Frontend production build — PASSED; 2,102 modules transformed.
+- [x] `git diff --check` — PASSED.
+- [x] User manually verified calendar loading, dates, navigation, and page appearance.
+
+### Git state
+
+- Four intended frontend files committed as `6c45ae6` — `feat: add weekly assignment calendar`.
+- Successfully pushed to `origin/master`.
+- Final Git verification confirmed `master` and `origin/master` synchronized at `6c45ae6`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- No backend or database files were changed.
+
+**Next roadmap task:** Day 25 — Assignment progress tracking. Course summaries remain deferred.
