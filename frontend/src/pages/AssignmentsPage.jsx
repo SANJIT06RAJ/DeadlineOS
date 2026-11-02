@@ -12,6 +12,7 @@ import {
   getAssignments,
   createAssignment,
 } from '../services/api'
+import AssignmentProgress from '../components/assignments/AssignmentProgress'
 
 function AssignmentsPage() {
   const [isFormOpen, setIsFormOpen] = useState(false)
@@ -304,6 +305,7 @@ function AssignmentsPage() {
                 >
                   {getDeadlineMessage(assignment)}
                 </div>
+                <AssignmentProgress assignmentId={assignment.id} />
               </div>
 
               <span className={`status-badge status-${assignment.status}`}>
