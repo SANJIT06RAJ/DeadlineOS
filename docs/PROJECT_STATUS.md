@@ -1,8 +1,8 @@
 # PROJECT_STATUS — DeadlineOS
 
-_*Last updated: Sunday, 1 November 2026*_
+_*Last updated: Monday, 2 November 2026*_
 
-**Latest synchronized repository checkpoint before Day 19 work:** `1df86ba` — `docs: finalize Week 3 Day 18 status`. **Latest verified application code checkpoint:** `bf67fb5` — `feat: integrate React assignments with FastAPI`. Day 18 React–FastAPI integration is implemented, tested, committed, and pushed: Axios service, Vite `/api` proxy, API-backed assignment retrieval and creation, and persistence after browser refresh. Frontend lint and production build passed; backend regression suite: **59 passed**. Day 19 search and status-filter changes are currently implemented and verified locally but remain uncommitted; they are not part of the synchronized repository checkpoint yet. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest synchronized repository checkpoint:** `c741796` — `feat: add assignment search and status filters`. Day 19 search and status filtering is committed and pushed. Day 20 loading, success, and error-state refinements are implemented and manually tested locally, but remain uncommitted. Frontend lint and production build passed for Day 20. The current local Day 20 changes are in `frontend/src/App.css`, `frontend/src/components/assignments/AssignmentForm.jsx`, and `frontend/src/pages/AssignmentsPage.jsx`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -1405,7 +1405,7 @@ Dashboard figures and progress remain placeholders; they are not connected to ba
 
 ## 14. Week 3 — Day 19: Assignment Search and Status Filtering (1 November 2026)
 
-**Status: IMPLEMENTED AND VERIFIED LOCALLY — NOT YET COMMITTED.** Day 19 was completed ahead of its scheduled 2 November slot; the implementation remains in the local working tree.
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED.** Day 19 was completed ahead of its scheduled 2 November slot and is included in commit `c741796`.
 
 ### Implementation
 
@@ -1436,8 +1436,48 @@ Dashboard figures and progress remain placeholders; they are not connected to ba
 
 ### Git state
 
-- Day 19 source changes remain local and uncommitted; they are not included in the GitHub documentation commits.
+- Day 19 source changes were committed and pushed in `c741796`.
 - The local branch was synchronized with origin/master at `1df86ba` before Day 19 implementation.
 - `backend/oop_practice.py` remains untracked, untouched, and excluded.
 
-**Next roadmap task:** Day 20 — loading, empty, success, and error states.
+**Next roadmap task:** Day 21 — integration workflow testing and bug fixing.
+
+
+
+## 15. Week 3 — Day 20: Loading, Success, and Error States (2 November 2026)
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY.** Day 20 was completed ahead of its scheduled 3 November slot. The changes are local and remain uncommitted.
+
+### Implementation
+
+- [x] Added a loading indicator while assignments are retrieved.
+- [x] Added a load-error state with a retry action.
+- [x] Kept assignment-loading errors separate from assignment-creation errors.
+- [x] Added a dismissible success notification after assignment creation.
+- [x] Added submission loading feedback and disabled form controls while submitting.
+- [x] Kept the form open and preserved entered values when assignment creation fails; displayed the creation error inside the modal.
+- [x] Added a mounted guard and retry handling for assignment retrieval.
+
+### Files changed
+
+- `frontend/src/pages/AssignmentsPage.jsx`
+- `frontend/src/components/assignments/AssignmentForm.jsx`
+- `frontend/src/App.css`
+
+### Verification evidence
+
+- [x] `npm --prefix frontend run lint` — PASSED.
+- [x] `npm --prefix frontend run build` — PASSED; 2,101 modules transformed.
+- [x] `git diff --check` — PASSED.
+- [x] Manually verified assignment loading and display, successful creation, backend-down load error, retry recovery, failed creation feedback inside the modal, preservation of form data, and successful retry after backend recovery.
+- [ ] Empty-state behaviour was not explicitly retested during Day 20.
+- [ ] Submission loading was implemented but its transient visual state was too brief to verify manually.
+- [ ] Rapid double-submission prevention was not deliberately tested.
+
+### Git state
+
+- Day 20 frontend changes remain local and uncommitted.
+- `backend/oop_practice.py` remains untracked, untouched, and excluded.
+- No backend files were changed during Day 20.
+
+**Next roadmap task:** Day 21 — integration workflow testing and bug fixing.
