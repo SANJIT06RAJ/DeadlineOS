@@ -424,7 +424,7 @@ These are verification limitations, not confirmed defects. No application source
 - Before the documentation updates, local `master` was synchronized with `origin/master` at `9828898`.
 - No tracked application files were modified during Day 21.
 - `backend/oop_practice.py` remains untracked, untouched, and excluded.
-- The Day 21 status documentation is being recorded separately from the application-code commits; do not infer that the user's local working copy has been updated until it is pulled.
+- Day 21 status documentation was committed directly to `master` in the documentation updates; the local working copy still needs to pull those commits.
 
 ### Week 3 outcome
 
