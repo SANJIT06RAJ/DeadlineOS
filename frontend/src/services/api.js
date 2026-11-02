@@ -13,6 +13,11 @@ export async function getAssignments() {
   return response.data
 }
 
+export async function getAssignmentSummary() {
+  const response = await api.get('/assignments/summary')
+  return response.data
+}
+
 export async function createAssignment(assignmentData) {
   const response = await api.post('/assignments', assignmentData)
   return response.data

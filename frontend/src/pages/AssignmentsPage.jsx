@@ -292,6 +292,12 @@ function AssignmentsPage() {
                   Due date: {assignment.due_date || 'Not set'}
                 </small>
 
+                <span
+                  className={`priority-badge priority-${assignment.priority || 'medium'}`}
+                >
+                  {(assignment.priority || 'medium').toUpperCase()} PRIORITY
+                </span>
+
                 <div
                   className={`assignment-deadline ${getDeadlineClass(assignment)}`}
                   role="status"

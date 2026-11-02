@@ -15,6 +15,7 @@ function AssignmentForm({
     description: initialData?.description ?? '',
     due_date: initialData?.due_date ?? '',
     status: initialData?.status ?? 'pending',
+    priority: initialData?.priority ?? 'medium',
   }))
 
   const [errors, setErrors] = useState({})
@@ -47,6 +48,10 @@ function AssignmentForm({
       newErrors.status = 'Please select a valid status.'
     }
 
+    if (!['low', 'medium', 'high'].includes(formData.priority)) {
+      newErrors.priority = 'Please select a valid priority.'
+    }
+
     setErrors(newErrors)
 
     return Object.keys(newErrors).length === 0
@@ -64,6 +69,7 @@ function AssignmentForm({
       description: formData.description.trim() || null,
       due_date: formData.due_date || null,
       status: formData.status,
+      priority: formData.priority,
     })
   }
 
@@ -176,6 +182,27 @@ function AssignmentForm({
 
             {errors.status && (
               <small className="form-error">{errors.status}</small>
+            )}
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="priority">Priority</label>
+
+            <select
+              id="priority"
+              name="priority"
+              value={formData.priority}
+              onChange={handleChange}
+              aria-invalid={Boolean(errors.priority)}
+              disabled={isSubmitting}
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+
+            {errors.priority && (
+              <small className="form-error">{errors.priority}</small>
             )}
           </div>
 

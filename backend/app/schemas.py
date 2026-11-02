@@ -6,6 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 AssignmentStatus = Literal["pending", "in_progress", "completed"]
+AssignmentPriority = Literal["low", "medium", "high"]
 
 
 class AssignmentCreate(BaseModel):
@@ -13,6 +14,7 @@ class AssignmentCreate(BaseModel):
     description: str | None = None
     due_date: date | None = None
     status: AssignmentStatus = "pending"
+    priority: AssignmentPriority = "medium"
 
     @field_validator("title")
     @classmethod
@@ -28,6 +30,7 @@ class AssignmentUpdate(BaseModel):
     description: str | None = None
     due_date: date | None = None
     status: AssignmentStatus | None = None
+    priority: AssignmentPriority | None = None
 
     @field_validator("title")
     @classmethod
@@ -41,7 +44,6 @@ class AssignmentUpdate(BaseModel):
         return value
 
 
-
 class AssignmentResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -50,6 +52,7 @@ class AssignmentResponse(BaseModel):
     description: str | None
     due_date: date | None
     status: AssignmentStatus
+    priority: AssignmentPriority
     created_at: str
     days_remaining: int | None = None
     is_overdue: bool = False
@@ -88,6 +91,7 @@ class SubtaskResponse(BaseModel):
     assignment_id: int
     title: str
     is_completed: bool
+
 
 class AssignmentSummary(BaseModel):
     total_assignments: int

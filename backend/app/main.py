@@ -1,3 +1,4 @@
+
 from contextlib import asynccontextmanager
 from datetime import date
 
@@ -112,16 +113,24 @@ def create_assignment(assignment: AssignmentCreate):
     with get_connection() as connection:
         cursor = connection.execute(
             """
-            INSERT INTO assignments (title, description, due_date, status)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO assignments (
+                title,
+                description,
+                due_date,
+                status,
+                priority
+            )
+            VALUES (?, ?, ?, ?, ?)
             """,
             (
                 data["title"],
                 data["description"],
                 data["due_date"].isoformat() if data["due_date"] else None,
                 data["status"],
+                data["priority"],
             ),
         )
+
         row = connection.execute(
             "SELECT * FROM assignments WHERE id = ?",
             (cursor.lastrowid,),
@@ -220,7 +229,7 @@ def update_assignment(assignment_id: int, assignment: AssignmentUpdate):
     ):
         raise HTTPException(
             status_code=422,
-            detail="Title and status cannot be null",
+            detail="Title, status and priority cannot be null",
         )
 
     if "due_date" in changes and changes["due_date"] is not None:
@@ -231,7 +240,9 @@ def update_assignment(assignment_id: int, assignment: AssignmentUpdate):
         "description": "description",
         "due_date": "due_date",
         "status": "status",
+        "priority": "priority",
     }
+
     assignments_sql = ", ".join(
         f"{columns[key]} = ?" for key in changes
     )
@@ -250,6 +261,7 @@ def update_assignment(assignment_id: int, assignment: AssignmentUpdate):
             f"UPDATE assignments SET {assignments_sql} WHERE id = ?",
             (*values, assignment_id),
         )
+
         row = connection.execute(
             "SELECT * FROM assignments WHERE id = ?",
             (assignment_id,),

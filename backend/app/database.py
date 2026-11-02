@@ -12,7 +12,6 @@ def get_connection() -> sqlite3.Connection:
     return connection
 
 
-
 def create_tables() -> None:
     from contextlib import closing
 
@@ -26,9 +25,26 @@ def create_tables() -> None:
                     due_date TEXT,
                     status TEXT NOT NULL DEFAULT 'pending'
                         CHECK (status IN ('pending', 'in_progress', 'completed')),
+                    priority TEXT NOT NULL DEFAULT 'medium'
+                        CHECK (priority IN ('low', 'medium', 'high')),
                     created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
                 )
             """)
+
+            # Safely migrate existing databases.
+            columns = {
+                row["name"]
+                for row in connection.execute(
+                    "PRAGMA table_info(assignments)"
+                ).fetchall()
+            }
+
+            if "priority" not in columns:
+                connection.execute("""
+                    ALTER TABLE assignments
+                    ADD COLUMN priority TEXT NOT NULL DEFAULT 'medium'
+                    CHECK (priority IN ('low', 'medium', 'high'))
+                """)
 
             connection.execute("""
                 CREATE TABLE IF NOT EXISTS subtasks (
