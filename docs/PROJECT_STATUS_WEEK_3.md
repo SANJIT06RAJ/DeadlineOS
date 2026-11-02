@@ -281,7 +281,7 @@ The backend API is ready for frontend integration.
 | Day 17 — 31 Oct | Task creation/editing forms                 | COMPLETED — creation form implemented; editing remains future work            |
 | Day 18 — 1 Nov  | React–FastAPI integration using Axios       | COMPLETED — API-backed retrieval/creation and refresh persistence verified   |
 | Day 19 — 2 Nov  | Search and status filters                   | COMPLETED — committed and pushed in `c741796`                              |
-| Day 20 — 3 Nov  | Loading, empty, success and error states    | COMPLETED LOCALLY — lint/build and listed manual checks passed; noted checks remain unverified |
+| Day 20 — 3 Nov  | Loading, empty, success and error states    | COMPLETED — committed and pushed in `7f48e60`; lint/build and listed manual checks passed; noted checks remain unverified |
 | Day 21 — 4 Nov  | Integration workflow testing and bug fixing | PENDING                                                                       |
 
 **Week 3 deliverable:** Working full-stack task-management MVP.
@@ -347,7 +347,7 @@ Day 18 integration is complete and manually verified. Assignment creation now pe
 
 ## 11. Day 20 — Loading, Success, and Error States (2 November 2026)
 
-**Status: IMPLEMENTED AND VERIFIED LOCALLY.** Completed ahead of the scheduled 3 November slot; frontend changes remain uncommitted.
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED.** Completed ahead of the scheduled 3 November slot; frontend changes were committed and pushed in `7f48e60`. 
 
 ### Implementation
 
@@ -377,7 +377,8 @@ Day 18 integration is complete and manually verified. Assignment creation now pe
 
 ### Git state
 
-- Day 20 frontend changes remain local and uncommitted.
+- Day 20 frontend changes were committed and pushed in `7f48e60` — `feat: improve assignment loading and error states`.
+- Final `git status -sb` confirmed `## master...origin/master`; `git log` confirmed `7f48e60` at `HEAD`, `origin/master`, and `origin/HEAD`.
 - `backend/oop_practice.py` remains untracked, untouched, and excluded.
 - No backend files were changed during Day 20.
 
