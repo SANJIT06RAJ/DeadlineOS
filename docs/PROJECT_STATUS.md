@@ -2,7 +2,7 @@
 
 _*Last updated: Monday, 2 November 2026*_
 
-**Latest synchronized repository checkpoint:** `7f48e60` — `feat: improve assignment loading and error states`. Day 20 loading, success, and error-state refinements are implemented, verified, committed, and pushed. Frontend lint and production build passed; the documented manual checks passed with the listed verification caveats. Local `master` and `origin/master` were verified synchronized at `7f48e60`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest verified application-code checkpoint:** `7f48e60` — `feat: improve assignment loading and error states`. Day 21 integration workflow testing is complete; no application source changes were needed. Before these documentation updates, local `master` and `origin/master` were verified synchronized at `9828898`. Backend tests (59 passed), frontend lint, production build, and the documented manual integration checks passed. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -1482,3 +1482,52 @@ Dashboard figures and progress remain placeholders; they are not connected to ba
 - No backend files were changed during Day 20.
 
 **Next roadmap task:** Day 21 — integration workflow testing and bug fixing.
+
+
+## 16. Week 3 Completion — Day 21 Integration Verification (2 November 2026)
+
+**Status: COMPLETED — full-stack integration workflow verified.**
+
+### Manual integration checks
+
+- [x] FastAPI `/health` returned `healthy`.
+- [x] Existing assignments loaded in the React frontend.
+- [x] Created an assignment through the frontend.
+- [x] Verified assignment persistence after browser refresh.
+- [x] Verified search by assignment title and description.
+- [x] Verified All, Pending, In Progress, and Completed filters.
+- [x] Verified combined search and status filtering.
+- [x] Verified the no-results state.
+- [x] Verified assignment loading errors when the backend was unavailable.
+- [x] Verified recovery through the retry action after restarting FastAPI.
+- [x] Verified failed assignment submission displays an error and preserves form values.
+- [x] Verified successful submission after backend recovery.
+
+### Automated checks
+
+- Backend pytest: **59 passed**.
+- Frontend ESLint: PASSED.
+- Frontend production build: PASSED — 2,101 modules transformed.
+- `git diff --check`: PASSED.
+
+### Verification limitations
+
+- The true empty-assignment state was not separately tested; the no-results state was tested.
+- The transient submission-loading visual state was not separately confirmed.
+- Rapid double-submission prevention was not deliberately tested.
+
+These are verification limitations, not confirmed defects. No application code changes were required during Day 21.
+
+### Git state
+
+- Before the documentation updates, local `master` was synchronized with `origin/master` at `9828898`.
+- No tracked application files were modified during Day 21.
+- `backend/oop_practice.py` remains untracked, untouched, and excluded.
+
+### Week 3 outcome
+
+**Week 3 deliverable achieved:** the DeadlineOS frontend communicates with the FastAPI backend, creates and retrieves persistent assignments, supports search and status filtering, and handles the tested loading and request-error recovery workflows.
+
+Assignment editing, live dashboard statistics, and subtask UI remain future work and are not part of the completed Week 3 scope.
+
+**Next roadmap task:** Week 4 — Advanced Functionality, beginning with due-date sorting and overdue detection.
