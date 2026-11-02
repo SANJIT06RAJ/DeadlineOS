@@ -2,9 +2,20 @@
 
 _*Last updated: Tuesday, 3 November 2026*_
 
-**Latest verified application-code checkpoint:** `0450917` — `feat: add due-date sorting and overdue indicators`. Week 4 Day 22 is implemented, manually verified, committed, and pushed. Frontend ESLint, production build, `git diff --check`, and browser checks for Soonest/Latest sorting, undated assignments, overdue indicators, and completed assignments passed. Local `master` and `origin/master` were verified synchronized at `0450917`. Detailed Day 22 progress is recorded in `docs/PROJECT_STATUS_WEEK_4.md`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest committed application-code checkpoint:** `0450917` — `feat: add due-date sorting and overdue indicators`.
 
-**Next roadmap task:** Week 4 Day 23 — Priority levels and upcoming-deadline summaries.
+**Latest verified local work:** Week 4 Day 23 — Priority levels and upcoming-deadline summaries. Implemented and verified locally, but not yet committed or pushed.
+
+Day 23 verification:
+- Backend pytest: **59 passed**.
+- Frontend ESLint: PASSED.
+- Frontend production build: PASSED.
+- Dashboard browser checks: PASSED, including refresh.
+- `git diff --check`: PASSED.
+- Eight tracked application files modified locally.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next roadmap task:** Week 4 Day 24 — Calendar or weekly deadline view.
 
 ## 1. Environment
 
@@ -1533,3 +1544,56 @@ These are verification limitations, not confirmed defects. No application code c
 Assignment editing, live dashboard statistics, and subtask UI remain future work and are not part of the completed Week 3 scope.
 
 **Next roadmap task:** Week 4 — Advanced Functionality, beginning with due-date sorting and overdue detection.
+
+## 17. Week 4 — Day 23: Priority Levels and Upcoming-Deadline Summaries (3 November 2026)
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — NOT YET COMMITTED OR PUSHED.**
+
+### Implementation
+
+- [x] Added assignment priority levels: `low`, `medium`, and `high`.
+- [x] Added a database migration to introduce the priority column for existing databases, defaulting to `medium`.
+- [x] Updated Pydantic schemas to support priority during assignment creation, updates, and responses.
+- [x] Updated assignment API logic to save and update priority.
+- [x] Added a priority selector to the assignment form.
+- [x] Added priority badges to assignment cards with distinct visual styling.
+- [x] Connected the dashboard to the existing assignment summary API.
+- [x] Replaced placeholder dashboard statistics with backend data.
+- [x] Added upcoming-deadline entries to the dashboard.
+- [x] Added a calculated assignment completion percentage.
+- [x] Added loading, error, and empty states for dashboard data.
+- [x] Added styling for upcoming-deadline entries and dashboard errors.
+
+### Files changed
+
+- `backend/app/database.py`
+- `backend/app/main.py`
+- `backend/app/schemas.py`
+- `frontend/src/App.css`
+- `frontend/src/components/assignments/AssignmentForm.jsx`
+- `frontend/src/pages/AssignmentsPage.jsx`
+- `frontend/src/pages/DashboardPage.jsx`
+- `frontend/src/services/api.js`
+
+### Verification evidence
+
+- [x] Database migration command completed successfully.
+- [x] Priority schema check passed.
+- [x] Backend pytest: **59 passed**.
+- [x] Frontend `npm run lint` — PASSED.
+- [x] Frontend `npm run build` — PASSED; 2,101 modules transformed.
+- [x] Manually verified assignment priority selection and priority badge display.
+- [x] Manually verified dashboard statistics.
+- [x] Manually verified upcoming deadlines and due-date information.
+- [x] Manually verified the work-progress completion percentage.
+- [x] Refreshed the dashboard and confirmed data loaded again.
+- [x] `git diff --check` — PASSED.
+
+### Git state
+
+- Eight tracked application files are modified locally.
+- Local `master` was aligned with `origin/master` before these documentation updates, according to the reported Git status.
+- Day 23 application changes have not yet been committed or pushed.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next roadmap task:** Day 24 — Calendar or weekly deadline view.
