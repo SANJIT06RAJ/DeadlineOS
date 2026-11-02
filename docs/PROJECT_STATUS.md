@@ -1,8 +1,10 @@
 # PROJECT_STATUS — DeadlineOS
 
-_*Last updated: Monday, 2 November 2026*_
+_*Last updated: Tuesday, 3 November 2026*_
 
-**Latest verified application-code checkpoint:** `7f48e60` — `feat: improve assignment loading and error states`. Day 21 integration workflow testing is complete; no application source changes were needed. Before these documentation updates, local `master` and `origin/master` were verified synchronized at `9828898`. Backend tests (59 passed), frontend lint, production build, and the documented manual integration checks passed. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest verified application-code checkpoint:** `0450917` — `feat: add due-date sorting and overdue indicators`. Week 4 Day 22 is implemented, manually verified, committed, and pushed. Frontend ESLint, production build, `git diff --check`, and browser checks for Soonest/Latest sorting, undated assignments, overdue indicators, and completed assignments passed. Local `master` and `origin/master` were verified synchronized at `0450917`. Detailed Day 22 progress is recorded in `docs/PROJECT_STATUS_WEEK_4.md`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next roadmap task:** Week 4 Day 23 — Priority levels and upcoming-deadline summaries.
 
 ## 1. Environment
 
