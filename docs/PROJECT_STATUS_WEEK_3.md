@@ -282,7 +282,7 @@ The backend API is ready for frontend integration.
 | Day 18 — 1 Nov  | React–FastAPI integration using Axios       | COMPLETED — API-backed retrieval/creation and refresh persistence verified   |
 | Day 19 — 2 Nov  | Search and status filters                   | COMPLETED — committed and pushed in `c741796`                              |
 | Day 20 — 3 Nov  | Loading, empty, success and error states    | COMPLETED — committed and pushed in `7f48e60`; lint/build and listed manual checks passed; noted checks remain unverified |
-| Day 21 — 4 Nov  | Integration workflow testing and bug fixing | PENDING                                                                       |
+| Day 21 — 4 Nov  | Integration workflow testing and bug fixing | COMPLETED — manual full-stack workflow checks passed; backend 59 tests, frontend lint, and production build passed |
 
 **Week 3 deliverable:** Working full-stack task-management MVP.
 
@@ -296,7 +296,7 @@ The backend API is ready for frontend integration.
 
 ---
 
-**Next action:** Day 20 — refine loading, empty, success, and error states. Day 19 search and status filtering is implemented and verified locally but remains uncommitted.
+**Week 3 completed:** Day 21 integration workflow testing and bug fixing is verified. Next roadmap task: Week 4 Day 22 — due-date sorting and overdue detection. Assignment editing, live dashboard data, and subtask UI remain future work.
 
 _End of Week 3 status._
 
@@ -383,3 +383,53 @@ Day 18 integration is complete and manually verified. Assignment creation now pe
 - No backend files were changed during Day 20.
 
 **Next:** Day 21 — integration workflow testing and bug fixing.
+
+
+## 12. Day 21 — Integration Workflow Testing and Bug Fixing (2 November 2026)
+
+**Status: COMPLETED — full-stack integration workflow verified.**
+
+### Manual integration checks
+
+- [x] Started FastAPI successfully; `GET /health` returned `healthy`.
+- [x] Confirmed the API returned the existing assignment records and the frontend displayed all seven records present at the time of the check.
+- [x] Created an assignment through the frontend.
+- [x] Refreshed the browser and confirmed the new assignment remained visible.
+- [x] Verified search by assignment title and description.
+- [x] Verified All, Pending, In Progress, and Completed status filters.
+- [x] Verified combined search and status filtering.
+- [x] Verified the no-results message.
+- [x] Stopped FastAPI and confirmed the frontend displayed an assignment-loading error.
+- [x] Restarted FastAPI and confirmed the retry action reloaded assignments without a browser refresh.
+- [x] Stopped FastAPI and submitted an assignment; confirmed an error appeared and the form remained open with entered values preserved.
+- [x] Restarted FastAPI and successfully retried the submission using the preserved form values.
+
+### Automated checks
+
+- Backend `python -m pytest -v`: **59 passed**.
+- `npm --prefix frontend run lint`: PASSED with no ESLint errors.
+- `npm --prefix frontend run build`: PASSED; 2,101 modules transformed.
+- `git diff --check`: PASSED.
+
+### Verification limitations
+
+- The true empty-assignment state was not separately tested; the no-results state was tested.
+- The transient submission-loading visual state was not separately confirmed.
+- Rapid double-submission prevention was not deliberately tested.
+
+These are verification limitations, not confirmed defects. No application source changes were required during Day 21.
+
+### Git state
+
+- Before the documentation updates, local `master` was synchronized with `origin/master` at `9828898`.
+- No tracked application files were modified during Day 21.
+- `backend/oop_practice.py` remains untracked, untouched, and excluded.
+- The Day 21 status documentation is being recorded separately from the application-code commits; do not infer that the user's local working copy has been updated until it is pulled.
+
+### Week 3 outcome
+
+**Week 3 deliverable achieved:** the DeadlineOS frontend communicates with the FastAPI backend, creates and retrieves persistent assignments, supports search and status filtering, and handles the tested loading, request-error, and recovery workflows.
+
+Assignment editing, live dashboard statistics, and subtask UI remain future work and are outside the completed Week 3 scope.
+
+**Next roadmap task:** Week 4 — Advanced Functionality, beginning with due-date sorting and overdue detection.
