@@ -1440,7 +1440,7 @@ Dashboard figures and progress remain placeholders; they are not connected to ba
 - The local branch was synchronized with origin/master at `1df86ba` before Day 19 implementation.
 - `backend/oop_practice.py` remains untracked, untouched, and excluded.
 
-**Next roadmap task:** Day 21 — integration workflow testing and bug fixing.
+**Next roadmap task:** Week 4 — Advanced Functionality, beginning with due-date sorting and overdue detection. Day 21 integration verification is recorded in Section 16.
 
 
 
