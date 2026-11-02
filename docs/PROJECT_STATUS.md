@@ -15,7 +15,7 @@ Day 23 verification:
 - Eight intended application files committed in `cf67812`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
-Local `master` and `origin/master` were confirmed synchronized at `cf67812` by the successful push.
+Application commit `cf67812` was successfully pushed to `origin/master`; the subsequent documentation-only commits are recorded separately.
 
 **Next roadmap task:** Week 4 Day 24 — Calendar or weekly deadline view.
 
@@ -1549,7 +1549,7 @@ Assignment editing, live dashboard statistics, and subtask UI remain future work
 
 ## 17. Week 4 — Day 23: Priority Levels and Upcoming-Deadline Summaries (3 November 2026)
 
-**Status: IMPLEMENTED AND VERIFIED LOCALLY — NOT YET COMMITTED OR PUSHED.**
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`cf67812`).**
 
 ### Implementation
 
