@@ -4,24 +4,18 @@ _*Last updated: Tuesday, 3 November 2026*_
 
 **Latest committed and pushed application-code checkpoint:** `4ffc8c4` — `feat: add assignment progress tracking`.
 
-Week 4 Day 25 — Assignment progress tracking — is implemented, verified, committed, and pushed.
+Week 4 Day 26 — In-app reminders and notification states — is implemented and verified locally. The application changes and status updates are not yet committed or pushed from the local VS Code working tree.
 
-Day 25 verification:
-- Backend pytest: **59 passed**.
+Day 26 verification:
 - Frontend ESLint: PASSED.
-- Frontend production build: PASSED; 2,103 modules transformed.
-- Browser-tested subtask creation, completion, deletion, and progress calculation.
-- Verified subtask persistence after refresh.
-- Verified subtasks remain isolated between assignments.
+- Frontend production build: PASSED; 2,104 modules transformed.
+- Browser-tested upcoming reminders within 7 days, due-today reminders, overdue reminders, and exclusion of completed assignments.
+- Browser-tested reminder navigation to the selected assignment, automatic scrolling, and temporary highlighting.
 - `git diff --check`: PASSED.
-- Four intended frontend files committed as `4ffc8c4`.
-- Successfully pushed to `origin/master`.
-- Local `master` and `origin/master` synchronized at `4ffc8c4`.
+- No backend or database files changed.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
-Application commit `4ffc8c4` was successfully pushed to `origin/master`.
-
-**Next roadmap task:** Week 4 Day 26 — In-app reminders and notification states.
+**Next roadmap task:** Week 4 Day 27 — Assignment checklist and estimated workload.
 
 Day 23 verification:
 - Backend pytest: **59 passed**.
@@ -1705,5 +1699,49 @@ Assignment editing, live dashboard statistics, and subtask UI remain future work
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Next task:** Day 26 — In-app reminders and notification states.
+
+**Scope reminder:** Course summaries remain deferred. DeadlineOS continues as a single-student MVP.
+
+## 19. Week 4 — Day 26: In-App Reminders and Notification States (3 November 2026)
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — PENDING APPLICATION COMMIT/PUSH.**
+
+### Implementation
+
+- [x] Created `NotificationCenter.jsx` to retrieve assignment data through the existing assignment API.
+- [x] Added a notification bell and active reminder count to the shared header.
+- [x] Added reminders for overdue assignments, assignments due today, and upcoming assignments within 7 days.
+- [x] Excluded completed assignments and assignments without due dates.
+- [x] Added loading, error, and empty notification states.
+- [x] Added a close control and a link to view all assignments.
+- [x] Added navigation from a reminder to its assignment using the assignment query parameter.
+- [x] Added automatic scrolling to and temporary highlighting of the selected assignment.
+
+### Files changed
+
+- `frontend/src/components/notifications/NotificationCenter.jsx` (new)
+- `frontend/src/components/layout/Header.jsx`
+- `frontend/src/pages/AssignmentsPage.jsx`
+- `frontend/src/App.css`
+
+### Verification evidence
+
+- [x] Frontend ESLint — PASSED.
+- [x] Frontend production build — PASSED; 2,104 modules transformed.
+- [x] Browser-tested upcoming, due-today, and overdue reminder classifications.
+- [x] Browser-tested that completed assignments are excluded.
+- [x] Browser-tested reminder navigation, automatic scrolling, and temporary highlighting.
+- [x] `git diff --check` — PASSED.
+
+No backend or database changes were required; reminders use the existing assignment API and response fields.
+
+### Git state
+
+- Application changes are present in the local working tree and have not yet been committed or pushed.
+- The latest verified local Git check showed `master` synchronized with `origin/master` at `ea5c178` before the Day 26 changes were committed.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- The Day 26 status updates are being recorded separately from the application-code changes.
+
+**Next task:** Day 27 — Assignment checklist and estimated workload.
 
 **Scope reminder:** Course summaries remain deferred. DeadlineOS continues as a single-student MVP.
