@@ -74,12 +74,12 @@ No backend implementation changes were required. The frontend uses the existing 
 | Day 22 | Due-date sorting and overdue detection          | Completed |
 | Day 23 | Priority levels and upcoming-deadline summaries | Completed, committed, and pushed (`cf67812`) |
 | Day 24 | Weekly calendar view                           | Completed, committed, and pushed (`6c45ae6`) |
-| Day 25 | Progress tracking and course summaries          | Pending   |
+| Day 25 | Assignment progress tracking                    | Completed, committed, and pushed (`4ffc8c4`) |
 | Day 26 | In-app reminders and notification states        | Pending   |
 | Day 27 | Assignment checklist and estimated workload     | Pending   |
 | Day 28 | Date-boundary, overdue, and edge-case testing   | Pending   |
 
-**Next task:** Day 25 — Assignment progress tracking (course summaries deferred).
+**Next task:** Day 26 — In-app reminders and notification states.
 
 **Day 23 status:** Implemented, verified, committed as `cf67812`, and pushed to `origin/master`.
 
@@ -186,3 +186,50 @@ Build a useful academic task manager with deadline intelligence, while preservin
 
 ---
 
+
+## Day 25 — Assignment Progress Tracking (3 November 2026)
+
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`4ffc8c4`).**
+
+### Implementation
+
+- [x] Added frontend API helpers for retrieving subtasks.
+- [x] Added frontend API helpers for creating, updating, and deleting subtasks.
+- [x] Created `AssignmentProgress.jsx` to manage subtasks for individual assignments.
+- [x] Added subtask creation and deletion.
+- [x] Added completion checkboxes.
+- [x] Added automatic progress percentage calculation.
+- [x] Added a visual progress bar.
+- [x] Added loading, error, empty, and all-completed states.
+- [x] Integrated progress tracking into assignment cards.
+- [x] Added styling for progress tracking and subtasks.
+
+### Files changed
+
+- `frontend/src/services/api.js`
+- `frontend/src/components/assignments/AssignmentProgress.jsx`
+- `frontend/src/pages/AssignmentsPage.jsx`
+- `frontend/src/App.css`
+
+### Verification evidence
+
+- [x] Frontend ESLint — PASSED.
+- [x] Frontend production build — PASSED; 2,103 modules transformed.
+- [x] Backend pytest — **59 passed**.
+- [x] Browser-tested subtask creation.
+- [x] Browser-tested subtask completion and progress recalculation.
+- [x] Browser-tested subtask deletion and progress recalculation.
+- [x] Refreshed the browser and confirmed subtasks persisted.
+- [x] Verified subtasks belonging to different assignments remain separate.
+- [x] `git diff --check` — PASSED.
+
+### Git state
+
+- Four intended frontend files committed as `4ffc8c4` — `feat: add assignment progress tracking`.
+- Successfully pushed to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `4ffc8c4`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next task:** Day 26 — In-app reminders and notification states.
+
+**Scope reminder:** Course summaries remain deferred. DeadlineOS continues as a single-student MVP.
