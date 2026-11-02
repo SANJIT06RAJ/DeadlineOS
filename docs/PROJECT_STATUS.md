@@ -2,7 +2,7 @@
 
 _*Last updated: Monday, 2 November 2026*_
 
-**Latest synchronized repository checkpoint:** `c741796` — `feat: add assignment search and status filters`. Day 19 search and status filtering is committed and pushed. Day 20 loading, success, and error-state refinements are implemented and manually tested locally, but remain uncommitted. Frontend lint and production build passed for Day 20. The current local Day 20 changes are in `frontend/src/App.css`, `frontend/src/components/assignments/AssignmentForm.jsx`, and `frontend/src/pages/AssignmentsPage.jsx`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Latest synchronized repository checkpoint:** `7f48e60` — `feat: improve assignment loading and error states`. Day 20 loading, success, and error-state refinements are implemented, verified, committed, and pushed. Frontend lint and production build passed; the documented manual checks passed with the listed verification caveats. Local `master` and `origin/master` were verified synchronized at `7f48e60`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ## 1. Environment
 
@@ -1446,7 +1446,7 @@ Dashboard figures and progress remain placeholders; they are not connected to ba
 
 ## 15. Week 3 — Day 20: Loading, Success, and Error States (2 November 2026)
 
-**Status: IMPLEMENTED AND VERIFIED LOCALLY.** Day 20 was completed ahead of its scheduled 3 November slot. The changes are local and remain uncommitted.
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED.** Day 20 was completed ahead of its scheduled 3 November slot and committed/pushed in `7f48e60`.
 
 ### Implementation
 
@@ -1476,7 +1476,8 @@ Dashboard figures and progress remain placeholders; they are not connected to ba
 
 ### Git state
 
-- Day 20 frontend changes remain local and uncommitted.
+- Day 20 frontend changes were committed and pushed in `7f48e60` — `feat: improve assignment loading and error states`.
+- Final `git status -sb` confirmed `## master...origin/master`; `git log` confirmed `7f48e60` at `HEAD`, `origin/master`, and `origin/HEAD`.
 - `backend/oop_practice.py` remains untracked, untouched, and excluded.
 - No backend files were changed during Day 20.
 
