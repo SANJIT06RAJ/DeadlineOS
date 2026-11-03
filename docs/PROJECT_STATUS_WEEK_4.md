@@ -76,10 +76,10 @@ No backend implementation changes were required. The frontend uses the existing 
 | Day 24 | Weekly calendar view                           | Completed, committed, and pushed (`6c45ae6`) |
 | Day 25 | Assignment progress tracking                    | Completed, committed, and pushed (`4ffc8c4`) |
 | Day 26 | In-app reminders and notification states        | Completed, committed, and pushed (`34c8ceb`) |
-| Day 27 | Assignment checklist and estimated workload     | Pending   |
+| Day 27 | Assignment checklist and estimated workload     | Implemented and verified locally; not committed or pushed |
 | Day 28 | Date-boundary, overdue, and edge-case testing   | Pending   |
 
-**Next task:** Day 27 — Assignment checklist and estimated workload.
+**Next task:** Day 28 — Date-boundary, overdue, and edge-case testing.
 
 **Day 23 status:** Implemented, verified, committed as `cf67812`, and pushed to `origin/master`.
 
@@ -275,3 +275,61 @@ No backend or database changes were required.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Next task:** Day 27 — Assignment checklist and estimated workload.
+
+## Day 27 — Assignment Checklist and Estimated Workload (3 November 2026)
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — NOT YET COMMITTED OR PUSHED.**
+
+### Implementation
+
+- [x] Extended the existing subtask database schema with optional `estimated_minutes`.
+- [x] Added a safe SQLite migration for existing databases.
+- [x] Preserved existing subtasks during migration.
+- [x] Updated Pydantic schemas to validate positive integer estimates.
+- [x] Updated the subtask creation API to accept optional estimates.
+- [x] Updated the subtask update API to edit or clear estimates.
+- [x] Added optional workload estimates when creating subtasks.
+- [x] Added editable workload estimates for existing subtasks.
+- [x] Added total estimated workload calculation.
+- [x] Added completed and remaining workload calculations.
+- [x] Added workload formatting in minutes and hours.
+- [x] Preserved existing checklist progress tracking and subtask functionality.
+
+### Files changed
+
+- `backend/app/database.py`
+- `backend/app/main.py`
+- `backend/app/schemas.py`
+- `backend/tests/test_assignment_api.py`
+- `backend/tests/test_database.py`
+- `frontend/src/components/assignments/AssignmentProgress.jsx`
+- `frontend/src/services/api.js`
+
+### Verification
+
+- [x] Backend pytest: **71 passed, 1 warning**.
+- [x] Frontend ESLint — PASSED.
+- [x] Frontend production build — PASSED; 2,104 modules transformed.
+- [x] Browser-tested subtask creation with an estimate.
+- [x] Browser-tested editing an existing estimate.
+- [x] Browser-tested workload recalculation after editing estimates.
+- [x] Browser-tested completed workload recalculation after completing a subtask.
+- [x] Browser-tested estimate persistence after refreshing.
+- [x] Browser-tested clearing an estimate.
+- [x] Database migration test confirmed existing subtasks survive migration.
+- [x] API tests confirmed invalid estimates are rejected.
+- [x] `git diff --check` — PASSED.
+
+The pytest warning concerned `.pytest_cache` access being denied on Windows; all 71 tests passed.
+
+### Git state
+
+- Seven tracked application files contain Day 27 changes.
+- Changes have not yet been committed or pushed.
+- Local `master` was synchronized with `origin/master` at `185224f` before Day 27 implementation.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next task:** Day 28 — Date-boundary, overdue, and edge-case testing.
+
+**Scope reminder:** DeadlineOS remains a single-student MVP. Courses are deferred and must not be introduced without explicit approval.
+
