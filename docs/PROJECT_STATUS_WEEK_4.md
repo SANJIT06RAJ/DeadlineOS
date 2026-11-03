@@ -77,9 +77,9 @@ No backend implementation changes were required. The frontend uses the existing 
 | Day 25 | Assignment progress tracking                    | Completed, committed, and pushed (`4ffc8c4`) |
 | Day 26 | In-app reminders and notification states        | Completed, committed, and pushed (`34c8ceb`) |
 | Day 27 | Assignment checklist and estimated workload     | Completed, committed, and pushed (`b84a871`) |
-| Day 28 | Date-boundary, overdue, and edge-case testing   | Completed locally; pending commit and push |
+| Day 28 | Date-boundary, overdue, and edge-case testing   | Completed, committed, and pushed (`8f70737`) |
 
-**Day 28 status:** Completed and verified locally; test changes are pending commit and push.
+**Day 28 status:** Completed, verified, committed as `8f70737`, and pushed to `origin/master`.
 
 **Day 23 status:** Implemented, verified, committed as `cf67812`, and pushed to `origin/master`.
 
@@ -360,9 +360,10 @@ The pytest warning concerned `.pytest_cache` access being denied on Windows; all
 - [x] User confirmed all Calendar and Notification Center checks behaved correctly.
 
 ### Git state
-- Day 28 test changes remain local and uncommitted.
+- Day 28 test changes were committed as `8f70737` — `test: cover assignment deadline boundaries`.
+- The commit was successfully pushed to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `8f70737`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
-- No Day 28 commit or push has been performed.
 
 **Next task:** Week 5 — PDF text extraction and malformed-file handling.
 
