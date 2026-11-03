@@ -77,9 +77,9 @@ No backend implementation changes were required. The frontend uses the existing 
 | Day 25 | Assignment progress tracking                    | Completed, committed, and pushed (`4ffc8c4`) |
 | Day 26 | In-app reminders and notification states        | Completed, committed, and pushed (`34c8ceb`) |
 | Day 27 | Assignment checklist and estimated workload     | Completed, committed, and pushed (`b84a871`) |
-| Day 28 | Date-boundary, overdue, and edge-case testing   | Pending   |
+| Day 28 | Date-boundary, overdue, and edge-case testing   | Completed locally; pending commit and push |
 
-**Next task:** Day 28 — Date-boundary, overdue, and edge-case testing.
+**Day 28 status:** Completed and verified locally; test changes are pending commit and push.
 
 **Day 23 status:** Implemented, verified, committed as `cf67812`, and pushed to `origin/master`.
 
@@ -331,4 +331,38 @@ The pytest warning concerned `.pytest_cache` access being denied on Windows; all
 **Next task:** Day 28 — Date-boundary, overdue, and edge-case testing.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Courses are deferred and must not be introduced without explicit approval.
+
+## Day 28 — Date-Boundary, Overdue, and Edge-Case Testing (3 November 2026)
+
+**Status: COMPLETED AND VERIFIED LOCALLY — TEST CHANGES NOT YET COMMITTED OR PUSHED.**
+
+### Implementation
+- [x] Reviewed existing deadline and overdue test coverage.
+- [x] Added parametrized API tests for yesterday, today, and tomorrow deadlines.
+- [x] Verified `days_remaining` returns -1, 0, and 1 for the respective dates.
+- [x] Verified overdue classification is true only for the past deadline among these three cases.
+- [x] Restored the existing invalid-estimate parametrization decorator after detecting a test setup error.
+- [x] Preserved the existing application implementation; no backend application or database code was changed.
+
+### Files changed
+- `backend/tests/test_assignment_api.py`
+
+### Verification
+- [x] Initial backend baseline: **71 passed**.
+- [x] Assignment API tests: **56 passed**.
+- [x] Full backend pytest suite: **74 passed**.
+- [x] `git diff --check` — PASSED.
+- [x] Reviewed the final diff: 31 insertions and no deletions.
+- [x] Browser-tested Calendar date display and week navigation.
+- [x] Browser-tested overdue styling.
+- [x] Browser-tested Notification Center overdue and upcoming reminders.
+- [x] Confirmed completed assignments are excluded from overdue notifications.
+- [x] User confirmed all Calendar and Notification Center checks behaved correctly.
+
+### Git state
+- Day 28 test changes remain local and uncommitted.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- No Day 28 commit or push has been performed.
+
+**Next task:** Week 5 — PDF text extraction and malformed-file handling.
 
