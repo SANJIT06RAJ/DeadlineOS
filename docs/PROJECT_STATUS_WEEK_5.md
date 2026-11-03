@@ -130,3 +130,70 @@ Continue with the existing React + Vite frontend and FastAPI backend architectur
 **Day 31 — Local LLM extraction of assignment title, due date, and requirements.**
 
 Build on the PDF preview workflow using the existing local AI setup. Extract suggested assignment details without saving them automatically; user confirmation will be handled in the following roadmap task.
+
+
+## Day 31 — Local LLM Assignment-Detail Extraction
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — NOT YET COMMITTED OR PUSHED.**
+
+### Objectives
+
+- [x] Connect the existing PDF text-extraction workflow to a local LLM.
+- [x] Extract assignment titles, due dates, and requirements.
+- [x] Validate structured AI responses.
+- [x] Handle missing information and Ollama errors.
+- [x] Ensure extraction does not automatically save assignments.
+
+### Implementation
+
+- [x] Benchmarked local Ollama models.
+- [x] Selected `qwen2.5:3b` as the initial extraction model.
+- [x] Created `backend/app/services/ai_extraction_service.py`.
+- [x] Added the `AssignmentExtraction` Pydantic model.
+- [x] Implemented structured JSON extraction through Ollama.
+- [x] Added configurable Ollama URL and model settings.
+- [x] Added `AssignmentExtractionRequest` to `backend/app/schemas.py`.
+- [x] Added `POST /documents/extract`.
+- [x] Added validation and error handling for invalid model responses and unavailable Ollama.
+- [x] Kept extraction separate from assignment creation and database operations.
+
+### Files changed
+
+- `backend/app/main.py`
+- `backend/app/schemas.py`
+- `backend/app/services/ai_extraction_service.py` (new)
+- `backend/tests/test_ai_extraction.py` (new)
+
+### Testing and verification
+
+- [x] Local Ollama API test — PASSED.
+- [x] Direct Python-to-Ollama extraction test — PASSED.
+- [x] AI service tests: **7 passed**.
+- [x] AI endpoint tests: **5 passed**.
+- [x] Full backend pytest suite: **98 passed**.
+- [x] Full backend suite without pytest cache: **98 passed, no warnings**.
+- [x] Python compilation checks — PASSED.
+- [x] Frontend ESLint — PASSED.
+- [x] Frontend production build — PASSED; 2,105 modules transformed.
+- [x] `git diff --check` — PASSED.
+- [x] Verified through API tests that extraction does not create or save assignments.
+
+### Known limitations
+
+- AI suggestions are not guaranteed to be correct.
+- User confirmation before saving is not implemented yet.
+- OCR for scanned/image-only PDFs remains unsupported.
+- Ollama is optional; the core application must continue working if it is unavailable.
+
+### Git state
+
+- Four intended Day 31 application files are modified or newly created.
+- Local `master` and `origin/master` were synchronized at `438c43f` before this work.
+- Day 31 changes have not yet been committed or pushed.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+### Next task
+
+**Day 32 — Human confirmation before saving extracted assignment details.**
+
+Build a review workflow that allows the user to inspect and edit extracted fields before explicitly confirming assignment creation. Never save AI-generated information automatically.
