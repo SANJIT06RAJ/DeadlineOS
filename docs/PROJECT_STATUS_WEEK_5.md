@@ -68,7 +68,7 @@ Continue with the existing React + Vite frontend and FastAPI backend architectur
 
 ## Day 30 — Assignment-Document Upload and Preview Workflow
 
-**Status: IMPLEMENTED AND VERIFIED LOCALLY — APPLICATION COMMIT AND PUSH PENDING.**
+**Status: COMPLETED, VERIFIED, COMMITTED, AND PUSHED (`c55a181`).**
 
 ### Objectives
 
@@ -120,9 +120,9 @@ Continue with the existing React + Vite frontend and FastAPI backend architectur
 
 ### Git state
 
-- Day 30 application changes are present in the user's local working tree.
-- The Day 30 application changes have not yet been committed or pushed.
-- This documentation update is being recorded separately on `master`.
+- Seven intended application files were committed as `c55a181` — `feat: add PDF assignment document preview`.
+- The application commit was successfully pushed to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `c55a181911d27190669d30d7f8b4d364c122ddb5`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ### Next task

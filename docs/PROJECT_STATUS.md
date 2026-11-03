@@ -2,9 +2,9 @@
 
 _*Last updated: Wednesday, 4 November 2026*_
 
-**Latest committed and pushed application-code checkpoint:** `0832a21` — `feat: add PDF text extraction service`.
+**Latest committed and pushed application-code checkpoint:** `c55a181` — `feat: add PDF assignment document preview`.
 
-**Latest development progress:** Week 5 Day 30 — assignment-document upload and preview workflow — implemented and verified locally; application changes are awaiting commit and push.
+**Latest development progress:** Week 5 Day 30 — assignment-document upload and preview workflow — implemented, verified, committed, and pushed as `c55a181`.
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
@@ -22,7 +22,7 @@ Day 28 verification:
 - Final Git verification confirmed local `master` and `origin/master` synchronized at `8f70737`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
-**Current roadmap progress:** Week 5 Day 30 — assignment-document upload and preview workflow — implementation and verification completed locally; application Git checkpoint pending.
+**Current roadmap progress:** Week 5 Day 30 — assignment-document upload and preview workflow — completed, verified, committed, and pushed as `c55a181`.
 
 **Next roadmap task:** Day 31 — Local LLM extraction of assignment title, due date, and requirements.
 
