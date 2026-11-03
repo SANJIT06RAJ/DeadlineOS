@@ -2,9 +2,9 @@
 
 _*Last updated: Tuesday, 3 November 2026*_
 
-**Latest committed and pushed application-code checkpoint:** `b84a871` — `feat: add subtask workload estimates`.
+**Latest committed and pushed application-code checkpoint:** `0832a21` — `feat: add PDF text extraction service`.
 
-**Latest development progress:** Week 4 Day 28 — Date-boundary, overdue, and edge-case testing — completed, verified, committed, and pushed (`8f70737`).
+**Latest development progress:** Week 5 Day 29 — PDF text extraction and malformed-file handling — completed, verified, committed, and pushed (`0832a21`).
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
@@ -22,7 +22,9 @@ Day 28 verification:
 - Final Git verification confirmed local `master` and `origin/master` synchronized at `8f70737`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
-**Next roadmap topic:** Week 5 — PDF text extraction and malformed-file handling.
+**Current roadmap progress:** Week 5 Day 29 — PDF text extraction and malformed-file handling — completed.
+
+**Next roadmap task:** Day 30 — Assignment-document upload and preview workflow.
 
 ## 1. Environment
 
@@ -1743,7 +1745,7 @@ No backend or database changes were required; reminders use the existing assignm
 
 ### Day 28 — Tuesday, 3 November 2026: Date-Boundary, Overdue, and Edge-Case Testing
 
-**Status: COMPLETED AND VERIFIED LOCALLY — TEST CHANGES NOT YET COMMITTED OR PUSHED.**
+**Status: COMPLETED, VERIFIED, COMMITTED, AND PUSHED (`8f70737`).**
 
 #### Implementation and tests
 - [x] Reviewed existing deadline and overdue test coverage.
@@ -1774,3 +1776,47 @@ No backend or database changes were required; reminders use the existing assignm
 - Final Git verification confirmed local `master` and `origin/master` synchronized at `8f70737`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
+## 20. Week 5 — Day 29: PDF Text Extraction and Malformed-File Handling (3 November 2026)
+
+**Status: COMPLETED, VERIFIED, COMMITTED, AND PUSHED (`0832a21`).**
+
+### Implementation
+
+- [x] Installed the free `pypdf==6.21.4` library inside `backend\\.venv`.
+- [x] Added `pypdf==6.21.4` to `backend/requirements.txt`.
+- [x] Created the independent PDF extraction service at `backend/app/services/pdf_service.py`.
+- [x] Implemented `extract_pdf_text(pdf_bytes)` to extract text page by page.
+- [x] Added handling for empty PDF bytes, malformed PDFs, unreadable PDFs, encrypted PDFs, and PDFs with no extractable text.
+- [x] Kept PDF extraction separate from assignment CRUD and database operations; no assignment data is automatically saved.
+
+### Files changed
+
+- `backend/requirements.txt`
+- `backend/app/services/pdf_service.py` (new)
+- `backend/tests/test_pdf_service.py` (new)
+- `docs/PROJECT_STATUS_WEEK_5.md` (new Week 5 history record)
+
+### Verification evidence
+
+- [x] Verified installed pypdf version: **6.21.4**.
+- [x] Added five automated PDF tests covering successful extraction, empty input, malformed input, no extractable text, and encrypted PDFs.
+- [x] Dedicated PDF test suite: **5 passed**.
+- [x] Full backend pytest suite: **79 passed**.
+- [x] `git diff --check` — PASSED.
+- [x] Reviewed the implementation, tests, and staged changes.
+- [x] Confirmed only the four intended files were staged and committed; `backend/oop_practice.py` was excluded.
+
+### Known limitations
+
+- Scanned/image-only PDFs are not supported because OCR has not been implemented.
+- PDF extraction is currently a standalone backend service.
+- AI extraction and user confirmation before saving assignment details remain future tasks.
+
+### Git state
+
+- Four intended files were committed as `0832a21` — `feat: add PDF text extraction service`.
+- The commit was successfully pushed to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `0832a21`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next roadmap task:** Day 30 — Assignment-document upload and preview workflow. Preserve the existing React + Vite and FastAPI architecture, the single-student MVP scope, and the requirement for explicit user confirmation before saving AI-extracted assignment details.
