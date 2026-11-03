@@ -2,9 +2,9 @@
 
 _*Last updated: Tuesday, 3 November 2026*_
 
-**Latest committed and pushed application-code checkpoint:** `34c8ceb` — `feat: add in-app deadline reminders`.
+**Latest committed and pushed application-code checkpoint:** `b84a871` — `feat: add subtask workload estimates`.
 
-**Latest development progress:** Week 4 Day 27 — Assignment checklist and estimated workload — is implemented and verified locally. The Day 27 application changes are not yet committed or pushed.
+**Latest development progress:** Week 4 Day 27 — Assignment checklist and estimated workload — is implemented, verified, committed, and pushed (`b84a871`).
 
 Day 27 verification:
 - Backend pytest: **71 passed, 1 warning**.
