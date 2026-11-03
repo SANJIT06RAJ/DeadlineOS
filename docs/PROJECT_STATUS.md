@@ -4,7 +4,7 @@ _*Last updated: Tuesday, 3 November 2026*_
 
 **Latest committed and pushed application-code checkpoint:** `b84a871` — `feat: add subtask workload estimates`.
 
-**Latest development progress:** Week 4 Day 28 — Date-boundary, overdue, and edge-case testing — completed and verified locally; test changes are not yet committed or pushed.
+**Latest development progress:** Week 4 Day 28 — Date-boundary, overdue, and edge-case testing — completed, verified, committed, and pushed (`8f70737`).
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
@@ -18,6 +18,8 @@ Day 28 verification:
 - User confirmed all Calendar and Notification Center checks behaved correctly.
 - `git diff --check`: PASSED.
 - Reviewed the test diff: 31 insertions, no deletions, in `backend/tests/test_assignment_api.py`.
+- Committed as `8f70737` — `test: cover assignment deadline boundaries` — and pushed to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `8f70737`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Next roadmap topic:** Week 5 — PDF text extraction and malformed-file handling.
@@ -1767,7 +1769,8 @@ No backend or database changes were required; reminders use the existing assignm
 - [x] User confirmed all Calendar and Notification Center checks behaved correctly.
 
 #### Git state
-- Day 28 test changes remain local and uncommitted.
+- Day 28 test changes were committed as `8f70737` — `test: cover assignment deadline boundaries`.
+- The commit was successfully pushed to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `8f70737`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
-- No Day 28 commit or push has been performed.
 
