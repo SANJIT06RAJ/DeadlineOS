@@ -62,4 +62,19 @@ export async function deleteSubtask(subtaskId) {
   return response.data
 }
 
+
+export async function previewDocument(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+
+  const response = await api.post('/documents/preview', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+
+  return response.data
+}
+
+
 export default api

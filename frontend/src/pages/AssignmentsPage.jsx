@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import {
@@ -9,11 +10,12 @@ import {
 } from 'lucide-react'
 import Header from '../components/layout/Header'
 import AssignmentForm from '../components/assignments/AssignmentForm'
+import AssignmentProgress from '../components/assignments/AssignmentProgress'
+import DocumentUploader from '../components/assignments/DocumentUploader'
 import {
   getAssignments,
   createAssignment,
 } from '../services/api'
-import AssignmentProgress from '../components/assignments/AssignmentProgress'
 
 function AssignmentsPage() {
   const [searchParams] = useSearchParams()
@@ -223,6 +225,9 @@ function AssignmentsPage() {
           </button>
         </div>
       )}
+
+      {/* Day 30: PDF document upload and text preview */}
+      <DocumentUploader />
 
       {!isLoading && !loadError && assignments.length > 0 && (
         <section className="assignment-filters">

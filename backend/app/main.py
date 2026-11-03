@@ -1,8 +1,15 @@
-
 from contextlib import asynccontextmanager
 from datetime import date
 
-from fastapi import FastAPI, HTTPException, Query, Response, status
+from fastapi import (
+    FastAPI,
+    File,
+    HTTPException,
+    Query,
+    Response,
+    UploadFile,
+    status,
+)
 
 from app.database import create_tables, get_connection
 from app.schemas import (
@@ -20,6 +27,7 @@ from app.services.assignment_service import (
     is_overdue,
 )
 
+from app.services.pdf_service import extract_pdf_text
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -71,6 +79,60 @@ def home():
 def health_check():
     return {"status": "healthy"}
 
+MAX_PDF_SIZE = 10 * 1024 * 1024  # 10 MB
+
+
+@app.post("/documents/preview")
+async def preview_document(file: UploadFile = File(...)):
+    """
+    Upload a PDF and return its extracted text for preview.
+
+    This endpoint does not create or save an assignment.
+    """
+
+    if not file.filename or not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(
+            status_code=415,
+            detail="Only PDF files are supported.",
+        )
+
+    try:
+        pdf_bytes = await file.read(MAX_PDF_SIZE + 1)
+
+        if not pdf_bytes:
+            raise HTTPException(
+                status_code=400,
+                detail="The uploaded file is empty.",
+            )
+
+        if len(pdf_bytes) > MAX_PDF_SIZE:
+            raise HTTPException(
+                status_code=413,
+                detail="PDF file exceeds the 10 MB size limit.",
+            )
+
+        if not pdf_bytes.startswith(b"%PDF-"):
+            raise HTTPException(
+                status_code=415,
+                detail="The uploaded file is not a valid PDF.",
+            )
+
+        try:
+            extracted_text = extract_pdf_text(pdf_bytes)
+        except ValueError as exc:
+            raise HTTPException(
+                status_code=400,
+                detail=str(exc),
+            ) from exc
+
+        return {
+            "filename": file.filename,
+            "text": extracted_text,
+            "character_count": len(extracted_text),
+        }
+
+    finally:
+        await file.close()
 
 @app.get("/assignments", response_model=list[AssignmentResponse])
 def list_assignments(

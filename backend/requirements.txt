@@ -3,3 +3,4 @@ uvicorn[standard]
 pytest
 httpx2==2.15.1
 pypdf==6.21.4
+python-multipart==0.0.33
