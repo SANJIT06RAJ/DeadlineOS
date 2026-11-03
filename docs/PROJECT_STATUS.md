@@ -4,31 +4,20 @@ _*Last updated: Tuesday, 3 November 2026*_
 
 **Latest committed and pushed application-code checkpoint:** `34c8ceb` — `feat: add in-app deadline reminders`.
 
-Week 4 Day 26 — In-app reminders and notification states — is implemented, verified, committed, and pushed as `34c8ceb`.
+**Latest development progress:** Week 4 Day 27 — Assignment checklist and estimated workload — is implemented and verified locally. The Day 27 application changes are not yet committed or pushed.
 
-Day 26 verification:
+Day 27 verification:
+- Backend pytest: **71 passed, 1 warning**.
 - Frontend ESLint: PASSED.
 - Frontend production build: PASSED; 2,104 modules transformed.
-- Browser-tested upcoming reminders within 7 days, due-today reminders, overdue reminders, and exclusion of completed assignments.
-- Browser-tested reminder navigation to the selected assignment, automatic scrolling, and temporary highlighting.
+- Browser-tested creating subtasks with optional estimates.
+- Browser-tested editing and clearing estimates.
+- Browser-tested total, completed, and remaining workload calculations.
+- Refreshed the browser and confirmed estimates persist.
 - `git diff --check`: PASSED.
-- No backend or database files changed.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
-**Next roadmap task:** Week 4 Day 27 — Assignment checklist and estimated workload.
-
-Day 23 verification:
-- Backend pytest: **59 passed**.
-- Frontend ESLint: PASSED.
-- Frontend production build: PASSED.
-- Dashboard browser checks: PASSED, including refresh.
-- `git diff --check`: PASSED.
-- Eight intended application files committed in `cf67812`.
-- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
-
-Application commit `cf67812` was successfully pushed to `origin/master`; the subsequent documentation-only commits are recorded separately.
-
-**Next roadmap task:** Week 4 Day 25 — Assignment progress tracking (course summaries deferred).
+**Next roadmap task:** Week 4 Day 28 — Date-boundary, overdue, and edge-case testing.
 
 ## 1. Environment
 
