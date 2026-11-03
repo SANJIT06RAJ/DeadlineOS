@@ -2,9 +2,9 @@
 
 _*Last updated: Wednesday, 4 November 2026*_
 
-**Latest committed and pushed application-code checkpoint:** `c55a181` — `feat: add PDF assignment document preview`.
+**Latest committed and pushed application-code checkpoint:** `7f1f507` — `feat: add local AI assignment extraction`.
 
-**Latest development progress:** Week 5 Day 31 — local LLM assignment-detail extraction — implemented and verified locally; not yet committed or pushed.
+**Latest development progress:** Week 5 Day 31 — local LLM assignment-detail extraction — implemented, verified, committed, and pushed (`7f1f507`).
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
@@ -22,7 +22,7 @@ Day 28 verification:
 - Final Git verification confirmed local `master` and `origin/master` synchronized at `8f70737`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
-**Current roadmap progress:** Week 5 Day 31 — local LLM extraction of assignment title, due date, and requirements — implemented and verified locally; pending documentation sync and Git commit.
+**Current roadmap progress:** Week 5 Day 31 — local LLM extraction of assignment title, due date, and requirements — implemented, verified, committed, and pushed (`7f1f507`).
 
 **Next roadmap task:** Day 32 — Human confirmation before saving extracted assignment details.
 
@@ -1871,9 +1871,9 @@ No backend or database changes were required; reminders use the existing assignm
 
 ### Git state
 
-- Four intended Day 31 application files are modified or newly created.
-- Local `master` was synchronized with `origin/master` at `438c43f` before this work.
-- Day 31 changes have not yet been committed or pushed.
+- Four intended Day 31 application files were committed as `7f1f507` — `feat: add local AI assignment extraction`.
+- The commit was successfully pushed to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `7f1f507`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Next roadmap task:** Day 32 — Human confirmation before saving extracted assignment details.
