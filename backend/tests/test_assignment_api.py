@@ -789,6 +789,37 @@ def test_update_subtask_can_clear_estimated_minutes(client):
     assert response.json()["estimated_minutes"] is None
 
 
+@pytest.mark.parametrize(
+    ("days_offset", "expected_overdue"),
+    [
+        (-1, True),
+        (0, False),
+        (1, False),
+    ],
+)
+def test_assignment_response_handles_deadline_boundaries(
+    client,
+    days_offset,
+    expected_overdue,
+):
+    due_date = date.today() + timedelta(days=days_offset)
+
+    response = client.post(
+        "/assignments",
+        json={
+            "title": "Deadline Boundary Test",
+            "due_date": due_date.isoformat(),
+            "status": "pending",
+        },
+    )
+
+    assert response.status_code == 201
+
+    data = response.json()
+
+    assert data["days_remaining"] == days_offset
+    assert data["is_overdue"] is expected_overdue
+
 @pytest.mark.parametrize("invalid_estimate", [0, -5, 2.5, "30"])
 def test_create_subtask_rejects_invalid_estimated_minutes(
     client, invalid_estimate
