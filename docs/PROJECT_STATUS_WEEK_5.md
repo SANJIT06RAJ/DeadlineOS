@@ -2,7 +2,7 @@
 
 ## Day 29 — PDF Text Extraction and Malformed-File Handling
 
-**Status: COMPLETED AND TESTED LOCALLY — CHANGES NOT YET COMMITTED OR PUSHED.**
+**Status: COMPLETED, VERIFIED, COMMITTED, AND PUSHED (`0832a21`).**
 
 ### Objectives
 
@@ -53,9 +53,11 @@
 
 ### Git status
 
-- Changes have been verified locally but have not yet been committed or pushed.
+- Day 29 changes were committed as `0832a21` — `feat: add PDF text extraction service`.
+- The commit was successfully pushed to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `0832a21`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
-- `docs/PROJECT_STATUS_WEEK_5.md` is being initialized as the Week 5 history record.
+- This Week 5 history record was committed and pushed with the Day 29 implementation.
 
 ### Next task
 
