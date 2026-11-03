@@ -4,7 +4,7 @@ _*Last updated: Wednesday, 4 November 2026*_
 
 **Latest committed and pushed application-code checkpoint:** `c55a181` — `feat: add PDF assignment document preview`.
 
-**Latest development progress:** Week 5 Day 30 — assignment-document upload and preview workflow — implemented, verified, committed, and pushed as `c55a181`.
+**Latest development progress:** Week 5 Day 31 — local LLM assignment-detail extraction — implemented and verified locally; not yet committed or pushed.
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
@@ -22,9 +22,9 @@ Day 28 verification:
 - Final Git verification confirmed local `master` and `origin/master` synchronized at `8f70737`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
-**Current roadmap progress:** Week 5 Day 30 — assignment-document upload and preview workflow — completed, verified, committed, and pushed as `c55a181`.
+**Current roadmap progress:** Week 5 Day 31 — local LLM extraction of assignment title, due date, and requirements — implemented and verified locally; pending documentation sync and Git commit.
 
-**Next roadmap task:** Day 31 — Local LLM extraction of assignment title, due date, and requirements.
+**Next roadmap task:** Day 32 — Human confirmation before saving extracted assignment details.
 
 ## 1. Environment
 
@@ -1820,3 +1820,60 @@ No backend or database changes were required; reminders use the existing assignm
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Next roadmap task:** Day 30 — Assignment-document upload and preview workflow. Preserve the existing React + Vite and FastAPI architecture, the single-student MVP scope, and the requirement for explicit user confirmation before saving AI-extracted assignment details.
+
+
+## 21. Week 5 — Day 31: Local LLM Assignment-Detail Extraction (4 November 2026)
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — NOT YET COMMITTED OR PUSHED.**
+
+### Implementation
+
+- [x] Benchmarked available local Ollama models for assignment-detail extraction.
+- [x] Selected `qwen2.5:3b` as the initial extraction model based on speed and output quality.
+- [x] Verified the local Ollama `/api/generate` endpoint.
+- [x] Created `backend/app/services/ai_extraction_service.py`.
+- [x] Implemented extraction of assignment title, due date, and requirements.
+- [x] Added structured JSON output and Pydantic validation.
+- [x] Added handling for missing due dates, invalid model responses, and Ollama connection failures.
+- [x] Added configurable Ollama URL and model environment variables.
+- [x] Added `AssignmentExtractionRequest` with document-text validation and a 100,000-character limit.
+- [x] Added `POST /documents/extract` to `backend/app/main.py`.
+- [x] Kept AI extraction separate from assignment creation and database saving.
+
+### Files changed
+
+- `backend/app/main.py`
+- `backend/app/schemas.py`
+- `backend/app/services/ai_extraction_service.py` (new)
+- `backend/tests/test_ai_extraction.py` (new)
+
+### Verification evidence
+
+- [x] Ollama model benchmarking completed.
+- [x] Direct Python-to-Ollama extraction test — PASSED.
+- [x] Ollama structured JSON API test — PASSED.
+- [x] AI extraction service tests: **7 passed**.
+- [x] AI extraction API tests: **5 passed**.
+- [x] Full backend pytest suite: **98 passed**.
+- [x] Full backend pytest rerun with `-p no:cacheprovider`: **98 passed, no warnings**.
+- [x] Python compilation checks — PASSED.
+- [x] Frontend ESLint — PASSED.
+- [x] Frontend production build — PASSED; 2,105 modules transformed.
+- [x] `git diff --check` — PASSED.
+- [x] API tests confirmed extraction does not save assignments.
+
+### Known limitations
+
+- AI-generated details may be incorrect and must be reviewed by the user.
+- The endpoint returns extracted suggestions only; user confirmation and assignment creation from confirmed suggestions are not implemented yet.
+- Scanned/image-only PDFs remain unsupported because OCR has not been implemented.
+- The core application must remain usable when Ollama is unavailable.
+
+### Git state
+
+- Four intended Day 31 application files are modified or newly created.
+- Local `master` was synchronized with `origin/master` at `438c43f` before this work.
+- Day 31 changes have not yet been committed or pushed.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next roadmap task:** Day 32 — Human confirmation before saving extracted assignment details.
