@@ -64,3 +64,69 @@
 **Day 30 — Assignment-document upload and preview workflow.**
 
 Continue with the existing React + Vite frontend and FastAPI backend architecture. Preserve the single-student MVP scope and require user confirmation before saving any AI-extracted assignment details.
+
+
+## Day 30 — Assignment-Document Upload and Preview Workflow
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — APPLICATION COMMIT AND PUSH PENDING.**
+
+### Objectives
+
+- [x] Allow users to upload PDF assignment documents.
+- [x] Validate uploaded files and enforce a 10 MB size limit.
+- [x] Extract PDF text using the existing PDF extraction service.
+- [x] Display extracted text and character count in the frontend.
+- [x] Keep document preview separate from assignment creation and saving.
+
+### Implementation
+
+- [x] Installed `python-multipart==0.0.33` in the backend virtual environment.
+- [x] Added `python-multipart==0.0.33` to `backend/requirements.txt`.
+- [x] Added `POST /documents/preview` to `backend/app/main.py`.
+- [x] Added PDF filename, empty-file, file-size, and PDF-signature validation.
+- [x] Reused `extract_pdf_text()` from `backend/app/services/pdf_service.py`.
+- [x] Added `frontend/src/components/assignments/DocumentUploader.jsx`.
+- [x] Added `previewDocument()` to `frontend/src/services/api.js`.
+- [x] Integrated the uploader into `frontend/src/pages/AssignmentsPage.jsx`.
+- [x] Added responsive uploader styling to `frontend/src/App.css`.
+- [x] Kept the existing assignment creation workflow unchanged.
+- [x] Confirmed that previewing a document does not create or save an assignment.
+
+### Files changed
+
+- `backend/app/main.py`
+- `backend/requirements.txt`
+- `backend/tests/test_pdf_upload.py` (new)
+- `frontend/src/App.css`
+- `frontend/src/pages/AssignmentsPage.jsx`
+- `frontend/src/services/api.js`
+- `frontend/src/components/assignments/DocumentUploader.jsx` (new)
+
+### Testing and verification
+
+- [x] Backend upload test suite: **7 passed**.
+- [x] Full backend test suite: **86 passed**.
+- [x] Frontend ESLint: **PASSED**.
+- [x] Frontend production build: **PASSED**.
+- [x] Python compilation check for `backend/app/main.py`: **PASSED**.
+- [x] Manual browser test of PDF upload and preview: **PASSED**.
+
+### Known limitations
+
+- Scanned/image-only PDFs are not supported because OCR has not been implemented.
+- AI extraction of assignment details is not implemented yet.
+- Extracted text is preview-only; no assignment is automatically created or saved.
+- The future AI workflow must allow the user to review and confirm extracted details before saving.
+
+### Git state
+
+- Day 30 application changes are present in the user's local working tree.
+- The Day 30 application changes have not yet been committed or pushed.
+- This documentation update is being recorded separately on `master`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+### Next task
+
+**Day 31 — Local LLM extraction of assignment title, due date, and requirements.**
+
+Build on the PDF preview workflow using the existing local AI setup. Extract suggested assignment details without saving them automatically; user confirmation will be handled in the following roadmap task.

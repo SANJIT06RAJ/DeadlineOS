@@ -1,10 +1,10 @@
 # PROJECT_STATUS — DeadlineOS
 
-_*Last updated: Tuesday, 3 November 2026*_
+_*Last updated: Wednesday, 4 November 2026*_
 
 **Latest committed and pushed application-code checkpoint:** `0832a21` — `feat: add PDF text extraction service`.
 
-**Latest development progress:** Week 5 Day 29 — PDF text extraction and malformed-file handling — completed, verified, committed, and pushed (`0832a21`).
+**Latest development progress:** Week 5 Day 30 — assignment-document upload and preview workflow — implemented and verified locally; application changes are awaiting commit and push.
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
@@ -22,9 +22,9 @@ Day 28 verification:
 - Final Git verification confirmed local `master` and `origin/master` synchronized at `8f70737`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
-**Current roadmap progress:** Week 5 Day 29 — PDF text extraction and malformed-file handling — completed.
+**Current roadmap progress:** Week 5 Day 30 — assignment-document upload and preview workflow — implementation and verification completed locally; application Git checkpoint pending.
 
-**Next roadmap task:** Day 30 — Assignment-document upload and preview workflow.
+**Next roadmap task:** Day 31 — Local LLM extraction of assignment title, due date, and requirements.
 
 ## 1. Environment
 
