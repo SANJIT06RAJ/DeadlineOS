@@ -4,20 +4,23 @@ _*Last updated: Tuesday, 3 November 2026*_
 
 **Latest committed and pushed application-code checkpoint:** `b84a871` — `feat: add subtask workload estimates`.
 
-**Latest development progress:** Week 4 Day 27 — Assignment checklist and estimated workload — is implemented, verified, committed, and pushed (`b84a871`).
+**Latest development progress:** Week 4 Day 28 — Date-boundary, overdue, and edge-case testing — completed and verified locally; test changes are not yet committed or pushed.
 
-Day 27 verification:
-- Backend pytest: **71 passed, 1 warning**.
-- Frontend ESLint: PASSED.
-- Frontend production build: PASSED; 2,104 modules transformed.
-- Browser-tested creating subtasks with optional estimates.
-- Browser-tested editing and clearing estimates.
-- Browser-tested total, completed, and remaining workload calculations.
-- Refreshed the browser and confirmed estimates persist.
+Day 28 verification:
+- Backend baseline: **71 passed**.
+- Added parametrized API tests for yesterday, today, and tomorrow deadlines.
+- Assignment API tests: **56 passed**.
+- Full backend pytest suite: **74 passed**.
+- Verified deadline calculations and overdue classification for all three boundary cases.
+- Browser-tested Calendar date display and navigation.
+- Browser-tested overdue styling and Notification Center classifications.
+- Confirmed completed assignments are excluded from overdue notifications.
+- User confirmed all Calendar and Notification Center checks behaved correctly.
 - `git diff --check`: PASSED.
+- Reviewed the test diff: 31 insertions, no deletions, in `backend/tests/test_assignment_api.py`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
-**Next roadmap task:** Week 4 Day 28 — Date-boundary, overdue, and edge-case testing.
+**Next roadmap topic:** Week 5 — PDF text extraction and malformed-file handling.
 
 ## 1. Environment
 
@@ -1735,3 +1738,36 @@ No backend or database changes were required; reminders use the existing assignm
 **Next task:** Day 27 — Assignment checklist and estimated workload.
 
 **Scope reminder:** Course summaries remain deferred. DeadlineOS continues as a single-student MVP.
+
+### Day 28 — Tuesday, 3 November 2026: Date-Boundary, Overdue, and Edge-Case Testing
+
+**Status: COMPLETED AND VERIFIED LOCALLY — TEST CHANGES NOT YET COMMITTED OR PUSHED.**
+
+#### Implementation and tests
+- [x] Reviewed existing deadline and overdue test coverage.
+- [x] Added parametrized API tests for yesterday, today, and tomorrow deadlines.
+- [x] Verified `days_remaining` returns -1, 0, and 1 for the respective dates.
+- [x] Verified overdue classification is true only for the past deadline among these three cases.
+- [x] Restored the existing invalid-estimate parametrization decorator after detecting a test setup error.
+- [x] Preserved the existing application implementation; no backend application or database code was changed.
+
+#### Files changed
+- `backend/tests/test_assignment_api.py`
+
+#### Verification
+- [x] Initial backend baseline: **71 passed**.
+- [x] Assignment API tests: **56 passed**.
+- [x] Full backend pytest suite: **74 passed**.
+- [x] `git diff --check` — PASSED.
+- [x] Reviewed the final diff: 31 insertions and no deletions.
+- [x] Browser-tested Calendar date display and week navigation.
+- [x] Browser-tested overdue styling.
+- [x] Browser-tested Notification Center overdue and upcoming reminders.
+- [x] Confirmed completed assignments are excluded from overdue notifications.
+- [x] User confirmed all Calendar and Notification Center checks behaved correctly.
+
+#### Git state
+- Day 28 test changes remain local and uncommitted.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- No Day 28 commit or push has been performed.
+
