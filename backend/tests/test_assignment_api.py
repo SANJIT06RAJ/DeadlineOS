@@ -711,3 +711,133 @@ def test_update_assignment_rejects_whitespace_title_without_partial_update(clien
     unchanged = client.get(f"/assignments/{created['id']}")
     assert unchanged.status_code == 200
     assert unchanged.json()["title"] == "Original title"
+
+
+def test_create_subtask_with_estimated_minutes(client):
+    assignment = client.post(
+        "/assignments",
+        json={"title": "Workload Assignment"},
+    ).json()
+
+    response = client.post(
+        f"/assignments/{assignment['id']}/subtasks",
+        json={
+            "title": "Write documentation",
+            "estimated_minutes": 60,
+        },
+    )
+
+    assert response.status_code == 201
+    assert response.json()["estimated_minutes"] == 60
+
+
+def test_create_subtask_without_estimated_minutes(client):
+    assignment = client.post(
+        "/assignments",
+        json={"title": "Workload Assignment"},
+    ).json()
+
+    response = client.post(
+        f"/assignments/{assignment['id']}/subtasks",
+        json={"title": "Review code"},
+    )
+
+    assert response.status_code == 201
+    assert response.json()["estimated_minutes"] is None
+
+
+def test_update_subtask_estimated_minutes(client):
+    assignment = client.post(
+        "/assignments",
+        json={"title": "Workload Assignment"},
+    ).json()
+
+    subtask = client.post(
+        f"/assignments/{assignment['id']}/subtasks",
+        json={"title": "Write tests"},
+    ).json()
+
+    response = client.patch(
+        f"/subtasks/{subtask['id']}",
+        json={"estimated_minutes": 45},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["estimated_minutes"] == 45
+
+
+def test_update_subtask_can_clear_estimated_minutes(client):
+    assignment = client.post(
+        "/assignments",
+        json={"title": "Workload Assignment"},
+    ).json()
+
+    subtask = client.post(
+        f"/assignments/{assignment['id']}/subtasks",
+        json={
+            "title": "Fix bugs",
+            "estimated_minutes": 30,
+        },
+    ).json()
+
+    response = client.patch(
+        f"/subtasks/{subtask['id']}",
+        json={"estimated_minutes": None},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["estimated_minutes"] is None
+
+
+@pytest.mark.parametrize("invalid_estimate", [0, -5, 2.5, "30"])
+def test_create_subtask_rejects_invalid_estimated_minutes(
+    client, invalid_estimate
+):
+    assignment = client.post(
+        "/assignments",
+        json={"title": "Workload Assignment"},
+    ).json()
+
+    response = client.post(
+        f"/assignments/{assignment['id']}/subtasks",
+        json={
+            "title": "Invalid estimate",
+            "estimated_minutes": invalid_estimate,
+        },
+    )
+
+    assert response.status_code == 422
+
+
+def test_update_subtask_rejects_invalid_estimate_without_partial_update(
+    client,
+):
+    assignment = client.post(
+        "/assignments",
+        json={"title": "Workload Assignment"},
+    ).json()
+
+    subtask = client.post(
+        f"/assignments/{assignment['id']}/subtasks",
+        json={
+            "title": "Original task",
+            "estimated_minutes": 30,
+        },
+    ).json()
+
+    response = client.patch(
+        f"/subtasks/{subtask['id']}",
+        json={
+            "title": "Changed task",
+            "estimated_minutes": 0,
+        },
+    )
+
+    assert response.status_code == 422
+
+    unchanged = client.get(
+        f"/assignments/{assignment['id']}/subtasks"
+    ).json()
+
+    assert unchanged[0]["title"] == "Original task"
+    assert unchanged[0]["estimated_minutes"] == 30

@@ -58,8 +58,14 @@ class AssignmentResponse(BaseModel):
     is_overdue: bool = False
 
 
+
 class SubtaskCreate(BaseModel):
     title: str = Field(min_length=1, max_length=200)
+    estimated_minutes: int | None = Field(
+        default=None,
+        ge=1,
+        strict=True,
+    )
 
     @field_validator("title")
     @classmethod
@@ -73,6 +79,11 @@ class SubtaskCreate(BaseModel):
 class SubtaskUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=200)
     is_completed: bool | None = None
+    estimated_minutes: int | None = Field(
+        default=None,
+        ge=1,
+        strict=True,
+    )
 
     @field_validator("title")
     @classmethod
@@ -91,6 +102,8 @@ class SubtaskResponse(BaseModel):
     assignment_id: int
     title: str
     is_completed: bool
+    estimated_minutes: int | None = None
+
 
 
 class AssignmentSummary(BaseModel):

@@ -314,6 +314,7 @@ def list_subtasks(assignment_id: int):
     ]
 
 
+
 @app.post(
     "/assignments/{assignment_id}/subtasks",
     response_model=SubtaskResponse,
@@ -332,10 +333,18 @@ def create_subtask(assignment_id: int, subtask: SubtaskCreate):
 
         cursor = connection.execute(
             """
-            INSERT INTO subtasks (assignment_id, title)
-            VALUES (?, ?)
+            INSERT INTO subtasks (
+                assignment_id,
+                title,
+                estimated_minutes
+            )
+            VALUES (?, ?, ?)
             """,
-            (assignment_id, subtask.title),
+            (
+                assignment_id,
+                subtask.title,
+                subtask.estimated_minutes,
+            ),
         )
 
         row = connection.execute(
@@ -344,6 +353,8 @@ def create_subtask(assignment_id: int, subtask: SubtaskCreate):
         ).fetchone()
 
     return {**dict(row), "is_completed": bool(row["is_completed"])}
+
+
 
 
 @app.patch(
@@ -360,7 +371,10 @@ def update_subtask(subtask_id: int, subtask: SubtaskUpdate):
             detail="No fields provided to update",
         )
 
-    if any(value is None for value in changes.values()):
+    if any(
+        value is None and key != "estimated_minutes"
+        for key, value in changes.items()
+    ):
         raise HTTPException(
             status_code=422,
             detail="Subtask title and completion state cannot be null",
@@ -369,7 +383,12 @@ def update_subtask(subtask_id: int, subtask: SubtaskUpdate):
     if "is_completed" in changes:
         changes["is_completed"] = int(changes["is_completed"])
 
-    columns = {"title": "title", "is_completed": "is_completed"}
+    columns = {
+        "title": "title",
+        "is_completed": "is_completed",
+        "estimated_minutes": "estimated_minutes",
+    }
+
     assignments_sql = ", ".join(
         f"{columns[key]} = ?" for key in changes
     )
@@ -394,6 +413,7 @@ def update_subtask(subtask_id: int, subtask: SubtaskUpdate):
         ).fetchone()
 
     return {**dict(row), "is_completed": bool(row["is_completed"])}
+
 
 
 @app.delete(

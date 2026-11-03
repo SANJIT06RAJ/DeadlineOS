@@ -33,11 +33,19 @@ export async function getSubtasks(assignmentId) {
   return response.data
 }
 
-export async function createSubtask(assignmentId, title) {
+export async function createSubtask(
+  assignmentId,
+  title,
+  estimatedMinutes = null
+) {
   const response = await api.post(
     `/assignments/${assignmentId}/subtasks`,
-    { title }
+    {
+      title,
+      estimated_minutes: estimatedMinutes,
+    }
   )
+
   return response.data
 }
 
