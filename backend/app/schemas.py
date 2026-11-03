@@ -115,3 +115,20 @@ class AssignmentSummary(BaseModel):
     due_today_assignments: int
     upcoming_assignments: int
     no_due_date_assignments: int
+
+
+class AssignmentExtractionRequest(BaseModel):
+    document_text: str = Field(
+        min_length=1,
+        max_length=100_000,
+    )
+
+    @field_validator("document_text")
+    @classmethod
+    def validate_document_text(cls, value: str) -> str:
+        value = value.strip()
+
+        if not value:
+            raise ValueError("Document text cannot be empty.")
+
+        return value

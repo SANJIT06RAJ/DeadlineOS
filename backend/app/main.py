@@ -14,6 +14,7 @@ from fastapi import (
 from app.database import create_tables, get_connection
 from app.schemas import (
     AssignmentCreate,
+    AssignmentExtractionRequest,
     AssignmentResponse,
     AssignmentStatus,
     AssignmentSummary,
@@ -27,6 +28,7 @@ from app.services.assignment_service import (
     is_overdue,
 )
 
+from app.services.ai_extraction_service import extract_assignment_details
 from app.services.pdf_service import extract_pdf_text
 
 @asynccontextmanager
@@ -133,6 +135,41 @@ async def preview_document(file: UploadFile = File(...)):
 
     finally:
         await file.close()
+
+@app.post("/documents/extract")
+def extract_document_details(
+    request: AssignmentExtractionRequest,
+):
+    """
+    Extract assignment details from PDF text using a local AI model.
+
+    This endpoint does not create or save an assignment.
+    """
+
+    try:
+        result = extract_assignment_details(request.document_text)
+
+        return {
+            "title": result.title,
+            "due_date": (
+                result.due_date.isoformat()
+                if result.due_date
+                else None
+            ),
+            "requirements": result.requirements,
+        }
+
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=422,
+            detail=str(exc),
+        ) from exc
+
+    except RuntimeError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=str(exc),
+        ) from exc
 
 @app.get("/assignments", response_model=list[AssignmentResponse])
 def list_assignments(
