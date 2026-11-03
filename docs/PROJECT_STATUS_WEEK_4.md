@@ -76,7 +76,7 @@ No backend implementation changes were required. The frontend uses the existing 
 | Day 24 | Weekly calendar view                           | Completed, committed, and pushed (`6c45ae6`) |
 | Day 25 | Assignment progress tracking                    | Completed, committed, and pushed (`4ffc8c4`) |
 | Day 26 | In-app reminders and notification states        | Completed, committed, and pushed (`34c8ceb`) |
-| Day 27 | Assignment checklist and estimated workload     | Implemented and verified locally; not committed or pushed |
+| Day 27 | Assignment checklist and estimated workload     | Completed, committed, and pushed (`b84a871`) |
 | Day 28 | Date-boundary, overdue, and edge-case testing   | Pending   |
 
 **Next task:** Day 28 — Date-boundary, overdue, and edge-case testing.
@@ -278,7 +278,7 @@ No backend or database changes were required.
 
 ## Day 27 — Assignment Checklist and Estimated Workload (3 November 2026)
 
-**Status: IMPLEMENTED AND VERIFIED LOCALLY — NOT YET COMMITTED OR PUSHED.**
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`b84a871`).**
 
 ### Implementation
 
@@ -324,9 +324,8 @@ The pytest warning concerned `.pytest_cache` access being denied on Windows; all
 
 ### Git state
 
-- Seven tracked application files contain Day 27 changes.
-- Changes have not yet been committed or pushed.
-- Local `master` was synchronized with `origin/master` at `185224f` before Day 27 implementation.
+- Seven intended application files were committed as `b84a871` — `feat: add subtask workload estimates`.
+- The commit was successfully pushed to `origin/master`; the remote advanced from `201bd05` to `b84a871`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Next task:** Day 28 — Date-boundary, overdue, and edge-case testing.
