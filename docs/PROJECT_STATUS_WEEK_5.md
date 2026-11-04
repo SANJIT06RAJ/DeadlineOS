@@ -197,3 +197,51 @@ Build on the PDF preview workflow using the existing local AI setup. Extract sug
 **Day 32 — Human confirmation before saving extracted assignment details.**
 
 Build a review workflow that allows the user to inspect and edit extracted fields before explicitly confirming assignment creation. Never save AI-generated information automatically.
+
+## Day 32 — Human Confirmation Before Saving AI-Extracted Details (4 November 2026)
+
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`d2f5b56`).**
+
+### Objectives
+- [x] Let users review AI-extracted assignment details before saving.
+- [x] Allow editing the suggested title, due date, and requirements.
+- [x] Require an explicit confirmation action before assignment creation.
+- [x] Allow users to discard AI suggestions without saving.
+- [x] Verify that confirmed assignments persist after a browser refresh.
+
+### Implementation
+- [x] Improved the extraction prompt to identify assignment titles, explicit due dates, and relevant requirements more reliably.
+- [x] Added instructions to treat document content as untrusted input.
+- [x] Used the Pydantic `AssignmentExtraction` JSON schema for Ollama structured output and set `temperature: 0`.
+- [x] Added editable fields for the extracted title, due date, and requirements in the document uploader.
+- [x] Added **Confirm & Save Assignment** and discard actions.
+- [x] Connected confirmed details to the existing assignment-creation workflow.
+- [x] Kept the extracted document preview available when assignment saving fails and surfaced the error.
+- [x] Fixed assignment-list visibility: the default list limit is now 100 and results are ordered by newest assignment first.
+
+### Files changed
+- `backend/app/main.py`
+- `backend/app/services/ai_extraction_service.py`
+- `frontend/src/components/assignments/DocumentUploader.jsx`
+- `frontend/src/pages/AssignmentsPage.jsx`
+- `frontend/src/services/api.js`
+
+### Testing and verification
+- [x] Full backend pytest suite: **98 passed**.
+- [x] Frontend ESLint — PASSED.
+- [x] Frontend production build — PASSED; 2,105 modules transformed.
+- [x] `git diff --check` — PASSED.
+- [x] Browser-tested editing the extracted assignment details before confirmation.
+- [x] Browser-tested explicit confirmation and assignment creation.
+- [x] Refreshed the browser and confirmed the saved assignment persisted.
+- [x] Confirmed the assignment-list visibility fix.
+- [x] Confirmed no assignment is created from AI suggestions without the user's confirmation.
+
+### Git state
+- Five intended application files were committed as `d2f5b56` — `feat: add human confirmation for AI assignments`.
+- Successfully pushed to `origin/master`.
+- Final local Git verification confirmed `master` and `origin/master` synchronized at `d2f5b56`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+### Next task
+**Day 33 — Test missing dates, ambiguous instructions, and incorrect AI suggestions.**
