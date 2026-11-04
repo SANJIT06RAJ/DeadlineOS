@@ -2,9 +2,9 @@
 
 _*Last updated: Wednesday, 4 November 2026*_
 
-**Latest committed and pushed application-code checkpoint:** `7f1f507` — `feat: add local AI assignment extraction`.
+**Latest committed and pushed application-code checkpoint:** `d2f5b56` — `feat: add human confirmation for AI assignments`.
 
-**Latest development progress:** Week 5 Day 31 — local LLM assignment-detail extraction — implemented, verified, committed, and pushed (`7f1f507`).
+**Latest development progress:** Week 5 Day 32 — human confirmation before saving AI-extracted assignment details — implemented, verified, committed, and pushed (`d2f5b56`).
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
@@ -22,9 +22,9 @@ Day 28 verification:
 - Final Git verification confirmed local `master` and `origin/master` synchronized at `8f70737`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
-**Current roadmap progress:** Week 5 Day 31 — local LLM extraction of assignment title, due date, and requirements — implemented, verified, committed, and pushed (`7f1f507`).
+**Current roadmap progress:** Week 5 Day 32 — human confirmation before saving AI-extracted assignment details — implemented, verified, committed, and pushed (`d2f5b56`).
 
-**Next roadmap task:** Day 32 — Human confirmation before saving extracted assignment details.
+**Next roadmap task:** Day 33 — Test missing dates, ambiguous instructions, and incorrect AI suggestions.
 
 ## 1. Environment
 
@@ -1877,3 +1877,42 @@ No backend or database changes were required; reminders use the existing assignm
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Next roadmap task:** Day 32 — Human confirmation before saving extracted assignment details.
+
+### Day 32 — Wednesday, 4 November 2026: Human Confirmation Before Saving AI-Extracted Details
+
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`d2f5b56`).**
+
+#### Implementation
+- [x] Improved the local LLM extraction prompt to better identify assignment titles, explicit due dates, and related requirements.
+- [x] Added handling for documents that do not appear to contain assignment details.
+- [x] Used the Pydantic JSON schema for Ollama structured output and set extraction temperature to zero.
+- [x] Added an editable review step for the extracted assignment title, due date, and requirements.
+- [x] Added an explicit **Confirm & Save Assignment** action; AI suggestions are not saved until the user confirms.
+- [x] Added a discard action so users can reject extracted suggestions without creating an assignment.
+- [x] Preserved the document preview when saving fails and displayed the save error.
+- [x] Fixed assignment-list visibility by increasing the default list limit to 100 and ordering the newest assignments first.
+
+#### Files changed
+- `backend/app/main.py`
+- `backend/app/services/ai_extraction_service.py`
+- `frontend/src/components/assignments/DocumentUploader.jsx`
+- `frontend/src/pages/AssignmentsPage.jsx`
+- `frontend/src/services/api.js`
+
+#### Verification evidence
+- [x] Backend pytest suite: **98 passed** (one earlier run reported a Windows pytest-cache permission warning; the rerun with cache disabled completed with no warnings).
+- [x] Frontend ESLint — PASSED.
+- [x] Frontend production build — PASSED; 2,105 modules transformed.
+- [x] `git diff --check` — PASSED.
+- [x] Browser-tested editing AI-generated assignment details and explicitly confirming the save.
+- [x] Refreshed the browser and confirmed the newly created assignment remained persisted.
+- [x] Verified the assignment-list visibility issue was resolved.
+- [x] Confirmed the AI extraction workflow requires explicit user confirmation before saving.
+
+#### Git state
+- Five intended application files were committed as `d2f5b56` — `feat: add human confirmation for AI assignments`.
+- The commit was successfully pushed to `origin/master` after transient GitHub Internal Server Errors.
+- Final local Git verification confirmed `master` and `origin/master` synchronized at `d2f5b56`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next roadmap task:** Day 33 — Test missing dates, ambiguous instructions, and incorrect AI suggestions.
