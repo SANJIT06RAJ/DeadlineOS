@@ -178,7 +178,7 @@ def list_assignments(
         alias="status",
         description="Filter assignments by status",
     ),
-    limit: int = Query(default=10, ge=1, le=100),
+    limit: int = Query(default=100, ge=1, le=100),
     offset: int = Query(default=0, ge=0),
 ):
     query = "SELECT * FROM assignments"
@@ -188,7 +188,7 @@ def list_assignments(
         query += " WHERE status = ?"
         parameters.append(status_filter)
 
-    query += " ORDER BY due_date IS NULL, due_date, id"
+    query += " ORDER BY id DESC"
     query += " LIMIT ? OFFSET ?"
     parameters.extend([limit, offset])
 

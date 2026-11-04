@@ -70,26 +70,34 @@ function AssignmentsPage() {
     }
   }, [reloadKey])
 
-  async function handleCreateAssignment(formData) {
-    setIsSubmitting(true)
-    setCreateError('')
-    setSuccessMessage('')
 
-    try {
-      const newAssignment = await createAssignment(formData)
 
-      setAssignments((current) => [...current, newAssignment])
-      setSearchQuery('')
-      setStatusFilter('all')
-      setIsFormOpen(false)
-      setSuccessMessage('Assignment created successfully.')
-    } catch (error) {
-      console.error('Failed to create assignment:', error)
-      setCreateError('Unable to create the assignment. Please try again.')
-    } finally {
-      setIsSubmitting(false)
-    }
+async function handleCreateAssignment(formData) {
+  setIsSubmitting(true)
+  setCreateError('')
+  setSuccessMessage('')
+
+  try {
+    const newAssignment = await createAssignment(formData)
+
+    setAssignments((current) => [...current, newAssignment])
+    setSearchQuery('')
+    setStatusFilter('all')
+    setIsFormOpen(false)
+    setSuccessMessage('Assignment created successfully.')
+
+    return true
+  } catch (error) {
+    console.error('Failed to create assignment:', error)
+    setCreateError('Unable to create the assignment. Please try again.')
+
+    return false
+  } finally {
+    setIsSubmitting(false)
   }
+}
+
+
 
   const filteredAssignments = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase()
@@ -227,7 +235,7 @@ function AssignmentsPage() {
       )}
 
       {/* Day 30: PDF document upload and text preview */}
-      <DocumentUploader />
+      <DocumentUploader onCreateAssignment={handleCreateAssignment} />
 
       {!isLoading && !loadError && assignments.length > 0 && (
         <section className="assignment-filters">

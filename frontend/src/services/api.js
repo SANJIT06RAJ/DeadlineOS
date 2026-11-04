@@ -76,5 +76,12 @@ export async function previewDocument(file) {
   return response.data
 }
 
+export async function extractAssignmentDetails(documentText) {
+  const response = await api.post('/documents/extract', {
+    document_text: documentText,
+  })
+
+  return response.data
+}
 
 export default api

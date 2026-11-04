@@ -1,15 +1,23 @@
 
 import { useState } from 'react'
 import { FileText, Upload, X, LoaderCircle } from 'lucide-react'
-import { previewDocument } from '../../services/api'
+import {
+  previewDocument,
+  extractAssignmentDetails,
+} from '../../services/api'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024
 
-function DocumentUploader() {
+function DocumentUploader({ onCreateAssignment }) {
   const [loading, setLoading] = useState(false)
   const [preview, setPreview] = useState(null)
   const [error, setError] = useState('')
   const [selectedFile, setSelectedFile] = useState(null)
+  const [aiLoading, setAiLoading] = useState(false)
+  const [aiSuggestions, setAiSuggestions] = useState(null)
+  const [aiError, setAiError] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState('')
 
   async function handleFileChange(event) {
     const file = event.target.files?.[0]
@@ -56,10 +64,76 @@ function DocumentUploader() {
     }
   }
 
+  async function handleAIExtraction() {
+    if (!preview?.text) return
+
+    setAiLoading(true)
+    setAiError('')
+    setAiSuggestions(null)
+
+    try {
+      const result = await extractAssignmentDetails(preview.text)
+
+      setAiSuggestions({
+        title: result.title || '',
+        due_date: result.due_date || '',
+        requirements: result.requirements || [],
+      })
+    } catch (err) {
+      setAiError(
+        err.response?.data?.detail ||
+        'AI extraction failed. Make sure Ollama is running and try again.'
+      )
+    } finally {
+      setAiLoading(false)
+    }
+  }
+
+  async function handleConfirmAndSave() {
+  if (!aiSuggestions?.title.trim()) {
+    setSaveError('Please enter an assignment title.')
+    return
+  }
+
+  setSaving(true)
+  setSaveError('')
+
+  const requirementsText = aiSuggestions.requirements
+    .map((item) => `- ${item}`)
+    .join('\n')
+
+  const description = requirementsText
+    ? `Requirements:\n${requirementsText}`
+    : null
+
+  try {
+    const success = await onCreateAssignment({
+      title: aiSuggestions.title.trim(),
+      description,
+      due_date: aiSuggestions.due_date || null,
+      status: 'pending',
+      priority: 'medium',
+    })
+
+    if (success) {
+      clearPreview()
+    } else {
+      setSaveError('Assignment could not be saved. Please try again.')
+    }
+  } catch {
+    setSaveError('An unexpected error occurred while saving.')
+  } finally {
+    setSaving(false)
+  }
+}
+
   function clearPreview() {
     setSelectedFile(null)
     setPreview(null)
     setError('')
+    setAiSuggestions(null)
+    setAiError('')
+    setSaveError('')
 
     const fileInput = document.getElementById('document-upload')
     if (fileInput) fileInput.value = ''
@@ -147,6 +221,118 @@ function DocumentUploader() {
           )}
 
           <p className="document-preview-note">
+                      <button
+            type="button"
+            className="document-upload-button"
+            onClick={handleAIExtraction}
+            disabled={aiLoading || !preview.text}
+          >
+            {aiLoading ? (
+              <>
+                <LoaderCircle className="loading-spinner" size={17} />
+                Analysing with AI...
+              </>
+            ) : (
+              'Extract assignment details with AI'
+            )}
+          </button>
+
+          {aiError && (
+            <div className="document-error" role="alert">
+              {aiError}
+            </div>
+            )}
+
+                    {aiSuggestions && (
+            <div className="ai-review-section">
+              <h3>Review AI suggestions</h3>
+              <p>
+                Check and correct these details before saving your assignment.
+              </p>
+
+              <label htmlFor="ai-title">Assignment title</label>
+              <input
+                id="ai-title"
+                type="text"
+                maxLength={200}
+                value={aiSuggestions.title}
+                onChange={(event) =>
+                  setAiSuggestions((current) => ({
+                    ...current,
+                    title: event.target.value,
+                  }))
+                }
+                placeholder="Assignment title"
+              />
+
+              <label htmlFor="ai-due-date">Due date</label>
+              <input
+                id="ai-due-date"
+                type="date"
+                value={aiSuggestions.due_date}
+                onChange={(event) =>
+                  setAiSuggestions((current) => ({
+                    ...current,
+                    due_date: event.target.value,
+                  }))
+                }
+              />
+
+              <label htmlFor="ai-requirements">Requirements</label>
+              <textarea
+                id="ai-requirements"
+                rows={5}
+                value={aiSuggestions.requirements.join('\n')}
+                onChange={(event) =>
+                  setAiSuggestions((current) => ({
+                    ...current,
+                    requirements: event.target.value
+                      .split('\n')
+                      .map((item) => item.trim())
+                      .filter(Boolean),
+                  }))
+                }
+                placeholder="One requirement per line"
+              />
+
+              <p className="document-preview-note">
+                AI-generated details may be inaccurate. Review everything before saving.
+              </p>
+              {saveError && (
+  <div className="document-error" role="alert">
+    {saveError}
+  </div>
+)}
+
+<div className="ai-review-actions">
+  <button
+    type="button"
+    className="document-clear-button"
+    onClick={() => setAiSuggestions(null)}
+    disabled={saving}
+  >
+    Discard suggestions
+  </button>
+
+  <button
+    type="button"
+    className="document-upload-button"
+    onClick={handleConfirmAndSave}
+    disabled={saving || !aiSuggestions.title.trim()}
+  >
+    {saving ? (
+      <>
+        <LoaderCircle className="loading-spinner" size={17} />
+        Saving...
+      </>
+    ) : (
+      'Confirm & Save Assignment'
+    )}
+  </button>
+</div>
+
+            </div>
+          )}
             Review the extracted text. It has not been saved to your assignments.
           </p>
         </div>
