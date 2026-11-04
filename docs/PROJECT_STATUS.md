@@ -4,7 +4,23 @@ _*Last updated: Wednesday, 4 November 2026*_
 
 **Latest committed and pushed application-code checkpoint:** `d2f5b56` — `feat: add human confirmation for AI assignments`.
 
-**Latest development progress:** Week 5 Day 32 — human confirmation before saving AI-extracted assignment details — implemented, verified, committed, and pushed (`d2f5b56`).
+**Latest development progress:** Week 5 Day 33 — AI extraction evidence validation — implementation and automated verification completed; live Ollama verification pending.
+
+**Day 33 verification:**
+- Added source-evidence fields for extracted titles, due dates, and requirements.
+- Added evidence validation to reject unsupported extracted values.
+- Added tests for missing dates, ambiguous date instructions, unsupported titles, incorrect title/date evidence, and unsupported requirements.
+- AI extraction test suite: **19 passed**.
+- Full backend pytest suite: **105 passed**.
+- `git diff --check`: PASSED.
+- Reviewed the implementation and test diff.
+- Day 33 application changes remain local and uncommitted; they have not been pushed.
+- Live Ollama/manual extraction verification with a real assignment PDF remains pending.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Current roadmap progress:** Week 5 Day 33 — automated evidence-validation tests passed; live Ollama verification pending.
+
+**Next roadmap task:** Complete live Ollama/manual extraction checks, then proceed with Day 34 — file validation, error handling, and upload limits.
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
