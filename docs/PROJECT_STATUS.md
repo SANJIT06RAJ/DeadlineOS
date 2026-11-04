@@ -1,26 +1,29 @@
 # PROJECT_STATUS — DeadlineOS
 
-_*Last updated: Wednesday, 4 November 2026*_
+_*Last updated: Thursday, 5 November 2026*_
 
-**Latest committed and pushed application-code checkpoint:** `d2f5b56` — `feat: add human confirmation for AI assignments`.
+**Latest committed and pushed application-code checkpoint:** `d2f5b56` — `feat: add human confirmation for AI assignments`. Day 33 application changes are verified locally but remain uncommitted.
 
-**Latest development progress:** Week 5 Day 33 — AI extraction evidence validation — implementation and automated verification completed; live Ollama verification pending.
+**Latest development progress:** Week 5 Day 33 — AI extraction evidence validation — IMPLEMENTED AND VERIFIED.
 
 **Day 33 verification:**
 - Added source-evidence fields for extracted titles, due dates, and requirements.
-- Added evidence validation to reject unsupported extracted values.
-- Added tests for missing dates, ambiguous date instructions, unsupported titles, incorrect title/date evidence, and unsupported requirements.
-- AI extraction test suite: **19 passed**.
-- Full backend pytest suite: **105 passed**.
+- Added validation that rejects unsupported titles, due dates, and requirements.
+- Due-date validation now requires the extracted date to appear on the same evidence line as an explicit deadline indicator, preventing an event date from being accepted as a submission deadline.
+- Added regression coverage for missing dates, ambiguous instructions, unsupported suggestions, incorrect evidence, event dates, and multiple dates in one evidence passage.
+- AI extraction test suite: **21 passed**.
+- Full backend pytest suite: **107 passed**.
+- Python compilation check for `backend/app/services/ai_extraction_service.py`: PASSED.
 - `git diff --check`: PASSED.
-- Reviewed the implementation and test diff.
+- Reviewed the service implementation and regression-test diffs.
+- Manually tested a real assignment PDF through the frontend with local Ollama; title, due date, and requirements appeared correctly.
+- Confirmed the user could review and confirm the extracted details, the assignment was saved, and it remained after refreshing the browser.
 - Day 33 application changes remain local and uncommitted; they have not been pushed.
-- Live Ollama/manual extraction verification with a real assignment PDF remains pending.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
-**Current roadmap progress:** Week 5 Day 33 — automated evidence-validation tests passed; live Ollama verification pending.
+**Current roadmap progress:** Week 5 Day 33 — implementation, automated tests, and live Ollama/manual PDF verification completed.
 
-**Next roadmap task:** Complete live Ollama/manual extraction checks, then proceed with Day 34 — file validation, error handling, and upload limits.
+**Next roadmap task:** Day 34 — file validation, error handling, and upload limits.
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
@@ -1932,3 +1935,42 @@ No backend or database changes were required; reminders use the existing assignm
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Next roadmap task:** Day 33 — Test missing dates, ambiguous instructions, and incorrect AI suggestions.
+
+## Day 33 — Thursday, 5 November 2026: Missing Dates, Ambiguous Instructions, and Incorrect AI Suggestions
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — APPLICATION CHANGES NOT YET COMMITTED OR PUSHED.**
+
+### Implementation
+- [x] Added source-evidence fields for extracted assignment titles, due dates, and requirements.
+- [x] Updated the Ollama prompt to request exact supporting evidence and treat document content as untrusted data.
+- [x] Added normalized source-evidence validation for titles and requirements.
+- [x] Added due-date validation that requires a supported date to appear on the same evidence line as an explicit deadline indicator.
+- [x] Trimmed document content after the `-END-` marker so completed answer-sheet content is excluded from extraction.
+- [x] Discarded unsupported extracted values instead of presenting them as valid suggestions.
+
+### Files changed
+- `backend/app/services/ai_extraction_service.py`
+- `backend/tests/test_ai_extraction.py`
+
+### Verification evidence
+- [x] AI extraction test suite: **21 passed**.
+- [x] Full backend pytest suite: **107 passed**.
+- [x] Python compilation check for `backend/app/services/ai_extraction_service.py`: PASSED.
+- [x] `git diff --check`: PASSED.
+- [x] Reviewed the service and test diffs.
+- [x] Manually tested a real assignment PDF through the frontend using local Ollama; the title, due date, and requirements appeared correctly.
+- [x] Confirmed the extracted details could be reviewed and explicitly confirmed before saving.
+- [x] Confirmed the assignment was saved and remained present after refreshing the browser.
+
+### Known limitations
+- Evidence validation uses conservative normalized substring matching; legitimate paraphrases or unsupported date formats may be rejected.
+- Evidence matching reduces unsupported suggestions but does not guarantee that every AI suggestion is semantically correct.
+- Ollama remains an optional local dependency; the core application must remain usable when it is unavailable.
+
+### Git state
+- The two Day 33 application files remain modified locally and uncommitted.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- The Day 33 application changes have not been pushed.
+
+**Next roadmap task:** Day 34 — File validation, error handling, and upload limits.
+
