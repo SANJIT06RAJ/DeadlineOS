@@ -246,24 +246,24 @@ Build a review workflow that allows the user to inspect and edit extracted field
 ### Next task
 **Day 33 — Test missing dates, ambiguous instructions, and incorrect AI suggestions.**
 
-## Day 33 — Missing Dates, Ambiguous Instructions, and Incorrect AI Suggestions (4 November 2026)
+## Day 33 — Missing Dates, Ambiguous Instructions, and Incorrect AI Suggestions (5 November 2026)
 
-**Status: IMPLEMENTED AND AUTOMATED-TESTED. Live Ollama verification pending.**
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — APPLICATION CHANGES NOT YET COMMITTED OR PUSHED.**
 
 ### Objectives
 - [x] Test documents without explicit due dates.
 - [x] Test ambiguous date instructions.
 - [x] Reject unsupported AI-generated titles.
 - [x] Reject unsupported due dates and requirements.
-- [x] Validate extracted values against evidence found in the source document.
+- [x] Validate extracted values against supporting evidence in the source document.
+- [x] Verify the extraction workflow with a real assignment PDF and local Ollama.
 
 ### Implementation
 - [x] Added title, due-date, and requirement evidence fields to `AssignmentExtraction`.
-- [x] Updated the Ollama extraction prompt to request exact supporting evidence.
-- [x] Added normalized evidence comparison.
-- [x] Added title validation.
-- [x] Added explicit due-date validation against supported date formats.
-- [x] Added requirement validation.
+- [x] Updated the Ollama extraction prompt to request exact supporting evidence and treat document content as untrusted input.
+- [x] Added normalized evidence comparison and validation for titles and requirements.
+- [x] Added due-date validation requiring the date and an explicit deadline indicator on the same evidence line.
+- [x] Added document-boundary handling to exclude content after the `-END-` marker.
 - [x] Discard unsupported extracted values instead of returning them as valid suggestions.
 
 ### Files changed
@@ -271,29 +271,30 @@ Build a review workflow that allows the user to inspect and edit extracted field
 - `backend/tests/test_ai_extraction.py`
 
 ### Testing and verification
-- [x] Tested missing due dates.
-- [x] Tested ambiguous date instructions.
-- [x] Tested unsupported titles.
+- [x] Tested missing due dates and ambiguous date instructions.
+- [x] Tested unsupported titles and incorrect title evidence.
+- [x] Tested unsupported requirements and unrelated evidence.
 - [x] Tested unsupported due-date evidence.
-- [x] Tested unsupported requirements.
-- [x] Tested unrelated evidence being used to justify an incorrect requirement.
-- [x] AI extraction test suite: **19 passed**.
-- [x] Full backend pytest suite: **105 passed**.
+- [x] Tested event dates being mistaken for deadlines, including evidence containing multiple dates.
+- [x] AI extraction test suite: **21 passed**.
+- [x] Full backend pytest suite: **107 passed**.
+- [x] Python compilation check for the AI extraction service — PASSED.
 - [x] `git diff --check` — PASSED.
-- [x] Reviewed the final implementation and test diff.
+- [x] Reviewed the final service and test diffs.
+- [x] Manually tested a real assignment PDF through the frontend using local Ollama; title, due date, and requirements appeared correctly.
+- [x] Confirmed extracted details could be reviewed and explicitly confirmed before saving.
+- [x] Confirmed the assignment was saved and persisted after a browser refresh.
 
 ### Known limitations
-- Evidence validation currently uses strict normalized substring matching.
-- Some legitimate paraphrased requirements or alternative date formats may be rejected.
-- Automated evidence matching is a conservative filter, not proof that an extracted suggestion is correct.
-- Live Ollama/manual extraction verification with a real assignment PDF has not yet been confirmed.
+- Evidence validation uses conservative normalized substring matching; some legitimate paraphrases or alternative date formats may be rejected.
+- Automated evidence matching reduces unsupported suggestions but does not prove semantic correctness.
+- Ollama remains optional; the core application must remain usable when it is unavailable.
 
 ### Git state
-- Day 33 application changes are local and uncommitted.
-- Only `backend/app/services/ai_extraction_service.py` and `backend/tests/test_ai_extraction.py` are modified in the local working tree, based on the latest user-provided Git output.
+- Day 33 application changes remain local and uncommitted.
+- Only `backend/app/services/ai_extraction_service.py` and `backend/tests/test_ai_extraction.py` are modified, based on the latest verified local Git status.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
-- This documentation update is being committed separately; it does not include the local application changes.
+- The status documentation is being updated separately from the application changes.
 
 ### Next task
-Complete live Ollama/manual extraction checks for Day 33. Then proceed to **Day 34 — File validation, error handling, and upload limits**.
-
+**Day 34 — File validation, error handling, and upload limits.**
