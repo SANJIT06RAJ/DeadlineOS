@@ -245,3 +245,55 @@ Build a review workflow that allows the user to inspect and edit extracted field
 
 ### Next task
 **Day 33 — Test missing dates, ambiguous instructions, and incorrect AI suggestions.**
+
+## Day 33 — Missing Dates, Ambiguous Instructions, and Incorrect AI Suggestions (4 November 2026)
+
+**Status: IMPLEMENTED AND AUTOMATED-TESTED. Live Ollama verification pending.**
+
+### Objectives
+- [x] Test documents without explicit due dates.
+- [x] Test ambiguous date instructions.
+- [x] Reject unsupported AI-generated titles.
+- [x] Reject unsupported due dates and requirements.
+- [x] Validate extracted values against evidence found in the source document.
+
+### Implementation
+- [x] Added title, due-date, and requirement evidence fields to `AssignmentExtraction`.
+- [x] Updated the Ollama extraction prompt to request exact supporting evidence.
+- [x] Added normalized evidence comparison.
+- [x] Added title validation.
+- [x] Added explicit due-date validation against supported date formats.
+- [x] Added requirement validation.
+- [x] Discard unsupported extracted values instead of returning them as valid suggestions.
+
+### Files changed
+- `backend/app/services/ai_extraction_service.py`
+- `backend/tests/test_ai_extraction.py`
+
+### Testing and verification
+- [x] Tested missing due dates.
+- [x] Tested ambiguous date instructions.
+- [x] Tested unsupported titles.
+- [x] Tested unsupported due-date evidence.
+- [x] Tested unsupported requirements.
+- [x] Tested unrelated evidence being used to justify an incorrect requirement.
+- [x] AI extraction test suite: **19 passed**.
+- [x] Full backend pytest suite: **105 passed**.
+- [x] `git diff --check` — PASSED.
+- [x] Reviewed the final implementation and test diff.
+
+### Known limitations
+- Evidence validation currently uses strict normalized substring matching.
+- Some legitimate paraphrased requirements or alternative date formats may be rejected.
+- Automated evidence matching is a conservative filter, not proof that an extracted suggestion is correct.
+- Live Ollama/manual extraction verification with a real assignment PDF has not yet been confirmed.
+
+### Git state
+- Day 33 application changes are local and uncommitted.
+- Only `backend/app/services/ai_extraction_service.py` and `backend/tests/test_ai_extraction.py` are modified in the local working tree, based on the latest user-provided Git output.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- This documentation update is being committed separately; it does not include the local application changes.
+
+### Next task
+Complete live Ollama/manual extraction checks for Day 33. Then proceed to **Day 34 — File validation, error handling, and upload limits**.
+
