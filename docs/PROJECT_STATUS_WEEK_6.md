@@ -44,14 +44,9 @@ _Last updated: Friday, 6 November 2026_
 
 ### Git state at Day 36 checkpoint
 
-- The two security lab files are included in the Day 36 changes.
-- `docs/PROJECT_STATUS_WEEK_6.md` records the Week 6 progress.
-- `backend/oop_practice.py` remains untouched and intentionally excluded.
-- Commit and push status will be verified after the changes are committed.
-
-- The two security lab files are untracked and have not been committed.
-- `docs/PROJECT_STATUS_WEEK_6.md` is a new weekly status file.
-- `backend/oop_practice.py` remains untouched and intentionally excluded.
-- Git commit and push status must be verified after the status updates are reviewed.
+- The two security lab files and this Week 6 status file were committed as `6c8aa81` — `security: add Argon2id password hashing lab`.
+- The commit was successfully pushed to `origin/master`.
+- `backend/oop_practice.py` remains untouched, untracked, and intentionally excluded.
+- The overall project status will be synchronized separately.
 
 **Next roadmap task:** Day 37 — User-level access controls. Keep the exercise within the existing single-student MVP scope unless a scope change is explicitly approved.
