@@ -1,36 +1,24 @@
 # PROJECT_STATUS — DeadlineOS
 
-_*Last updated: Thursday, 5 November 2026*_
+_Last updated: Friday, 6 November 2026_
 
-**Latest benchmark implementation commit:** `1e7a0b8` — `test: add local AI extraction benchmark`.
+**Latest development commit:** `6c8aa81` — `security: add Argon2id password hashing lab`.
 
-**Week 5 status documentation:** committed and pushed after Day 35 verification.
+**Latest development progress:** Week 6 Day 36 — Authentication, sessions, and password handling — isolated security learning lab completed, tested, committed, and pushed.
 
-**Latest committed and pushed application-code checkpoint:** `711793f` — `test: improve PDF upload validation and frontend reset`.
+**Day 36 verification:**
+- Argon2id password hashing and verification implemented in an isolated learning lab.
+- Dedicated security lab tests: **6 passed**.
+- Correct passwords accepted; incorrect passwords and malformed hashes rejected.
+- Empty passwords rejected; identical passwords produce different salted hashes.
+- `argon2-cffi==25.1.0` remains a local learning dependency and was not added to `backend/requirements.txt`.
+- No production login, registration, session, or user-account functionality was added.
 
-**Latest development progress:** Week 5 Day 35 — AI extraction benchmark — IMPLEMENTED, MEASURED, AND DOCUMENTED.
+**Week 6 status:** Day 36 completed. Detailed history is recorded in `docs/PROJECT_STATUS_WEEK_6.md`.
 
-**Day 35 benchmark results (local Ollama, `qwen2.5:3b`):**
-- Four controlled benchmark cases: clear assignment, assignment without a deadline, multiple dates, and a non-assignment notice.
-- Case results: **4/4 passed**; execution errors: **0**.
-- Title accuracy: **4/4 (100%)**.
-- Due-date accuracy: **4/4 (100%)**.
-- Requirements accuracy: **4/4 (100%)**.
-- Response time: average **16.90s**, median **13.80s**, fastest **7.55s**, slowest **32.45s**.
-- Requirement comparison ignores leading list numbering/bullets to avoid false failures caused only by formatting differences.
-- The non-assignment notice contained an unrelated date; no due date was accepted because the evidence did not identify it as a deadline.
-- Benchmark limitation: four synthetic controlled cases are a small smoke-test sample, not proof of production accuracy or broad real-world reliability.
+**Current roadmap progress:** Week 6 — Day 36 completed.
 
-**Day 35 regression verification:**
-- Full backend pytest suite: **108 passed, 1 warning**. The warning was a Windows permission error while pytest attempted to write its cache; all tests passed.
-- Frontend ESLint: PASSED.
-- Frontend production build: PASSED; 2,105 modules transformed.
-- Added `backend/scripts/benchmark_ai_extraction.py` for repeatable local inference measurements.
-- `backend/oop_practice.py` remains untouched and intentionally excluded.
-
-**Current roadmap progress:** Week 5 — Days 31–35 completed. Week 5 is complete.
-
-**Next roadmap task:** Week 6 Day 36 — authentication, sessions, and password handling. Check the project plan and Week 6 status before implementation; do not expand the single-student MVP scope without approval.
+**Next roadmap task:** Week 6 Day 37 — User-level access controls. Keep this as an isolated learning exercise; the initial DeadlineOS MVP remains single-student with authentication and multiple-user accounts out of scope unless explicitly approved.
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
