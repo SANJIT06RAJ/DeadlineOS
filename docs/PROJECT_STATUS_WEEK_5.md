@@ -300,7 +300,7 @@ Build a review workflow that allows the user to inspect and edit extracted field
 
 ## Day 34 — File Validation, Error Handling, and Upload Limits (5 November 2026)
 
-**Status: IMPLEMENTED AND VERIFIED LOCALLY; NOT YET COMMITTED OR PUSHED.**
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`711793f`).**
 
 ### Objectives
 - [x] Verify the existing PDF upload validation and error-handling baseline.
@@ -331,10 +331,10 @@ Build a review workflow that allows the user to inspect and edit extracted field
 - [x] Reviewed both intended file diffs.
 
 ### Git state
-- Day 34 changes are present locally in the two files listed above.
-- Changes have not been staged, committed, or pushed.
+- Day 34 changes were committed as `711793f` — `test: improve PDF upload validation and frontend reset`.
+- Successfully pushed to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `711793f`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
-- The Day 34 status documentation is being recorded separately; it does not imply the application changes have been committed.
 
 ### Next task
 **Day 35 — Measure extraction success, errors, and response time.**
