@@ -53,7 +53,7 @@ _Last updated: Friday, 6 November 2026_
 
 ## Week 6 — Day 37: User-Level Access Controls (6 November 2026)
 
-**Status: IMPLEMENTED AND VERIFIED LOCALLY — NOT YET COMMITTED OR PUSHED.**
+**Status: IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`9bdc7b2`).**
 
 ### Learning
 - [x] Reviewed resource ownership and user-level authorization.
@@ -86,9 +86,39 @@ _Last updated: Friday, 6 November 2026_
 - `backend/tests/test_security_lab_access_control.py`
 
 ### Git state
-- Both Day 37 files are currently untracked locally.
+- `backend/scripts/security_lab_access_control.py` and `backend/tests/test_security_lab_access_control.py` were committed as `9bdc7b2` — `security: add user-level access control lab`.
+- The commit was successfully pushed to `origin/master`.
+- Local `master` and `origin/master` were verified synchronized at `9bdc7b2`.
 - `backend/oop_practice.py` remains untouched, untracked, and intentionally excluded.
-- Day 37 changes have not been committed or pushed.
 
 **Next roadmap task:** Day 38 — Unit tests for deadline logic and business rules.
+
+## Week 6 — Day 38: Unit Tests for Deadline Logic and Business Rules (6 November 2026)
+
+**Status: COMPLETED, VERIFIED, COMMITTED, AND PUSHED (`5ed6388`).**
+
+### Implementation
+- [x] Expanded `backend/tests/test_assignment_service.py` with four additional boundary tests.
+- [x] Added leap-year deadline calculation coverage.
+- [x] Added year-boundary deadline calculation coverage.
+- [x] Added overdue classification coverage for an in-progress assignment.
+- [x] Added coverage confirming a completed assignment due today is not overdue.
+
+### Verification
+- [x] Assignment service test suite: **14 passed**.
+- [x] Full backend pytest regression suite: **122 passed**.
+- [x] `git diff --check`: PASSED.
+- [x] Reviewed the final diff and confirmed only the intended test file was staged.
+- [x] Confirmed `backend/oop_practice.py` remained untouched and excluded.
+
+### Files changed
+- `backend/tests/test_assignment_service.py`
+
+### Git state
+- The test changes were committed as `5ed6388` — `test: expand assignment service boundary coverage`.
+- The commit was successfully pushed to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `5ed6388`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next roadmap task:** Day 39 — API integration and frontend workflow tests.
 
