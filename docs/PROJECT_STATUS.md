@@ -2,25 +2,28 @@
 
 _Last updated: Friday, 6 November 2026_
 
-**Latest development commit:** `6c8aa81` — `security: add Argon2id password hashing lab`.
+**Latest development commit:** `5ed6388` — `test: expand assignment service boundary coverage`.
 
-**Latest verified local progress:** Week 6 Day 37 — User-level access controls — isolated security learning lab implemented and verified locally. Not yet committed or pushed.
+**Latest verified progress:** Week 6 Day 38 — Unit tests for deadline logic and business rules — completed, committed, and pushed.
 
-**Day 37 verification:**
-- Resource ownership checks implemented in an isolated security lab.
-- Own-resource access allowed.
-- Access to another user's resource blocked with HTTP 403.
-- Missing resources return HTTP 404.
-- Dedicated access-control tests: **4 passed**.
-- Standalone security lab execution: PASSED.
-- Full backend pytest suite: **118 passed**.
-- No production authentication, user-account, or multi-user functionality added.
+**Day 38 verification:**
+- Added four boundary tests to `backend/tests/test_assignment_service.py`.
+- Covered leap-year deadline calculations.
+- Covered year-boundary deadline calculations.
+- Covered overdue classification for in-progress assignments.
+- Covered completed assignments due today.
+- Assignment service tests: **14 passed**.
+- Full backend pytest suite: **122 passed**.
+- `git diff --check`: PASSED.
+- Commit `5ed6388` pushed successfully to `origin/master`.
 
-**Week 6 status:** Days 36 and 37 verified locally. Detailed history is recorded in `docs/PROJECT_STATUS_WEEK_6.md`.
+**Week 6 status:** Days 36–38 completed and pushed. Detailed history is recorded in `docs/PROJECT_STATUS_WEEK_6.md`.
 
-**Current roadmap progress:** Week 6 — Day 37 completed locally; Git commit and push pending.
+**Current roadmap progress:** Week 6 — Day 38 completed.
 
-**Next roadmap task:** Week 6 Day 38 — Unit tests for deadline logic and business rules.
+**Next roadmap task:** Week 6 Day 39 — API integration and frontend workflow tests.
+
+**Git state:** Local `master` and `origin/master` synchronized at `5ed6388`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
@@ -498,7 +501,6 @@ One concept remains to reinforce: distinguish a merge commit's two parents from 
 - [x] Defined the first implementation priorities: assignment CRUD, subtask CRUD, validation, API testing, and frontend integration.
 
 - [x] Created six GitHub issues for the planned MVP work.
-
 GitHub issues:
 
 1. [Assignment CRUD API](https://github.com/SANJIT06RAJ/DeadlineOS/issues/1)
@@ -997,7 +999,6 @@ The deadline-sorting and summary feature has been implemented, tested, committed
 ### Step 1 — Completed: dependency verification
 
 `backend/requirements.txt` includes `httpx2==2.15.1` according to the latest known project state. The latest reported `pip check` result was `No broken requirements found.`
-
 ### Step 2 — Completed: regression tests
 
 The full test suite was rerun after the Day 7 assignment-list fix and reported **36 passed**.
@@ -1497,7 +1498,6 @@ Dashboard figures and progress remain placeholders; they are not connected to ba
 - [x] Added submission loading feedback and disabled form controls while submitting.
 - [x] Kept the form open and preserved entered values when assignment creation fails; displayed the creation error inside the modal.
 - [x] Added a mounted guard and retry handling for assignment retrieval.
-
 ### Files changed
 
 - `frontend/src/pages/AssignmentsPage.jsx`
@@ -1972,4 +1972,3 @@ No backend or database changes were required; reminders use the existing assignm
 - The Day 33 application changes have not been pushed.
 
 **Next roadmap task:** Day 34 — File validation, error handling, and upload limits.
-
