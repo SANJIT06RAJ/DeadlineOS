@@ -337,4 +337,61 @@ Build a review workflow that allows the user to inspect and edit extracted field
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 ### Next task
-**Day 35 — Measure extraction success, errors, and response time.**
+**Week 6 Day 36 — Authentication, sessions, and password handling.**
+
+
+## Day 35 — AI Extraction Benchmark and Measurement (5 November 2026)
+
+**Status: IMPLEMENTED, MEASURED, AND VERIFIED LOCALLY.**
+
+### Objectives
+- [x] Measure extraction success across representative controlled document cases.
+- [x] Measure title, due-date, and requirement field correctness.
+- [x] Record execution errors and model response time.
+- [x] Run the full backend regression suite and frontend checks.
+- [x] Record benchmark limitations and the next roadmap task.
+
+### Implementation
+- [x] Added `backend/scripts/benchmark_ai_extraction.py`.
+- [x] Benchmarked the installed local Ollama model `qwen2.5:3b`.
+- [x] Included four controlled cases: clear assignment, assignment without a deadline, multiple dates, and a non-assignment notice.
+- [x] Normalized leading list numbering and bullets when comparing requirements, preventing formatting-only false negatives.
+- [x] Printed field-level results, evidence, individual response times, and aggregate timing statistics.
+- [x] The benchmark calls the extraction service directly; it does not create or save assignments.
+
+### Benchmark results
+- [x] Cases passed: **4/4 (100%)**.
+- [x] Execution errors: **0**.
+- [x] Title accuracy: **4/4 (100%)**.
+- [x] Due-date accuracy: **4/4 (100%)**.
+- [x] Requirements accuracy: **4/4 (100%)**.
+- [x] Average response time: **16.90 seconds**.
+- [x] Median response time: **13.80 seconds**.
+- [x] Fastest response: **7.55 seconds**.
+- [x] Slowest response: **32.45 seconds**.
+- [x] Confirmed that an unrelated date in the non-assignment notice was not accepted as a due date because it lacked explicit deadline evidence.
+
+### Regression verification
+- [x] Full backend pytest suite: **108 passed, 1 warning**.
+- [x] The warning was a pytest cache permission warning on Windows; it did not cause test failures.
+- [x] Frontend ESLint: PASSED.
+- [x] Frontend production build: PASSED; 2,105 modules transformed.
+
+### Limitations
+- Four synthetic controlled documents provide a small repeatable smoke-test sample, not a statistically meaningful measure of production accuracy.
+- Requirement comparison ignores leading numbering and bullet markers; it does not evaluate semantic equivalence.
+- Model response time can vary with local machine load and Ollama state.
+- The existing automated tests use mocked Ollama responses; this benchmark measures real local inference for these four cases only.
+
+### Git state
+- Added `backend/scripts/benchmark_ai_extraction.py`.
+- Benchmark script was committed and pushed to `master` as `1e7a0b8` — `test: add local AI extraction benchmark`.
+- `backend/oop_practice.py` remains untouched and excluded.
+- The status documentation is being updated separately.
+
+### Week 5 completion
+**Week 5 is complete.** Days 31–35 have been implemented and verified according to the available progress evidence.
+
+### Next task
+**Week 6 Day 36 — Authentication, sessions, and password handling.** Review `docs/PROJECT_PLAN.md` and the Week 6 status file before deciding implementation scope.
+
