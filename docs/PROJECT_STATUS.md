@@ -2,30 +2,27 @@
 
 _*Last updated: Thursday, 5 November 2026*_
 
-**Latest committed and pushed application-code checkpoint:** `7d32c29` — `feat: validate AI extraction evidence`. Day 33 application changes are committed and pushed.
+**Latest committed and pushed application-code checkpoint:** `7d32c29` — `feat: validate AI extraction evidence`. Day 34 application changes are verified locally but are not yet committed or pushed.
 
-**Latest development progress:** Week 5 Day 33 — AI extraction evidence validation — IMPLEMENTED AND VERIFIED.
+**Latest development progress:** Week 5 Day 34 — file validation, error handling, and upload limits — IMPLEMENTED AND VERIFIED LOCALLY.
 
-**Day 33 verification:**
-- Added source-evidence fields for extracted titles, due dates, and requirements.
-- Added validation that rejects unsupported titles, due dates, and requirements.
-- Due-date validation now requires the extracted date to appear on the same evidence line as an explicit deadline indicator, preventing an event date from being accepted as a submission deadline.
-- Added regression coverage for missing dates, ambiguous instructions, unsupported suggestions, incorrect evidence, event dates, and multiple dates in one evidence passage.
-- AI extraction test suite: **21 passed**.
-- Full backend pytest suite: **107 passed**.
-- Python compilation check for `backend/app/services/ai_extraction_service.py`: PASSED.
+**Day 34 verification:**
+- Added an encrypted-PDF upload regression test.
+- Confirmed encrypted PDFs are rejected with HTTP 400 and an encryption-related error message.
+- PDF upload test suite: **8 passed**.
+- Full backend pytest suite: **108 passed** (up from 107 at the Day 33 checkpoint).
+- Updated `DocumentUploader` to clear stale preview data, AI suggestions, and related errors when selecting a new file.
+- Frontend ESLint: PASSED.
+- Frontend production build: PASSED.
+- Manually tested valid PDF preview, non-PDF rejection, and clearing previous AI results after selecting another file.
 - `git diff --check`: PASSED.
-- Reviewed the service implementation and regression-test diffs.
-- Manually tested a real assignment PDF through the frontend with local Ollama; title, due date, and requirements appeared correctly.
-- Confirmed the user could review and confirm the extracted details, the assignment was saved, and it remained after refreshing the browser.
-- Day 33 application changes were committed as `7d32c29` — `feat: validate AI extraction evidence` — and pushed to `origin/master`.
-- Final Git verification confirmed local `master` and `origin/master` synchronized at `7d32c29`.
-- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- Reviewed both intended diffs: `backend/tests/test_pdf_upload.py` and `frontend/src/components/assignments/DocumentUploader.jsx`.
+- Day 34 changes remain local, modified, and uncommitted; no files were staged.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
-**Current roadmap progress:** Week 5 Day 33 — implementation, automated tests, and live Ollama/manual PDF verification completed.
+**Current roadmap progress:** Week 5 Day 34 — implementation, automated tests, frontend lint/build, and manual verification completed.
 
-**Next roadmap task:** Day 34 — file validation, error handling, and upload limits.
+**Next roadmap task:** Day 35 — measure extraction success, errors, and response time.
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
