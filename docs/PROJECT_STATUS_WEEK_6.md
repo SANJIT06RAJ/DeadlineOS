@@ -50,3 +50,45 @@ _Last updated: Friday, 6 November 2026_
 - The overall project status will be synchronized separately.
 
 **Next roadmap task:** Day 37 — User-level access controls. Keep the exercise within the existing single-student MVP scope unless a scope change is explicitly approved.
+
+## Week 6 — Day 37: User-Level Access Controls (6 November 2026)
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — NOT YET COMMITTED OR PUSHED.**
+
+### Learning
+- [x] Reviewed resource ownership and user-level authorization.
+- [x] Practised allowing users to access only resources they own.
+- [x] Distinguished between HTTP 403 (forbidden) and HTTP 404 (not found).
+
+### Implementation
+- [x] Created `backend/scripts/security_lab_access_control.py`.
+- [x] Implemented a `Resource` data class with resource ID, owner ID, and title.
+- [x] Implemented `get_owned_resource()` to verify resource ownership.
+- [x] Returned HTTP 404 when a resource does not exist.
+- [x] Returned HTTP 403 when a user attempts to access another user's resource.
+- [x] Created `backend/tests/test_security_lab_access_control.py`.
+
+### Verification
+- [x] Confirmed a user can access their own resource.
+- [x] Confirmed access to another user's resource is blocked with HTTP 403.
+- [x] Confirmed missing resources return HTTP 404.
+- [x] Dedicated access-control tests: **4 passed**.
+- [x] Standalone security lab execution: PASSED.
+- [x] Full backend pytest suite: **118 passed**.
+
+### Scope decisions
+- The exercise remains an isolated security learning lab.
+- No production authentication, user accounts, database ownership fields, or multi-user functionality were added.
+- The initial DeadlineOS MVP remains single-student.
+
+### Files created
+- `backend/scripts/security_lab_access_control.py`
+- `backend/tests/test_security_lab_access_control.py`
+
+### Git state
+- Both Day 37 files are currently untracked locally.
+- `backend/oop_practice.py` remains untouched, untracked, and intentionally excluded.
+- Day 37 changes have not been committed or pushed.
+
+**Next roadmap task:** Day 38 — Unit tests for deadline logic and business rules.
+
