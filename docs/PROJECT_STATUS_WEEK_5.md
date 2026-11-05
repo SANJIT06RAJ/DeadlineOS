@@ -297,3 +297,44 @@ Build a review workflow that allows the user to inspect and edit extracted field
 
 ### Next task
 **Day 34 — File validation, error handling, and upload limits.**
+
+## Day 34 — File Validation, Error Handling, and Upload Limits (5 November 2026)
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY; NOT YET COMMITTED OR PUSHED.**
+
+### Objectives
+- [x] Verify the existing PDF upload validation and error-handling baseline.
+- [x] Add regression coverage for encrypted PDF uploads.
+- [x] Improve frontend state cleanup when selecting a new document.
+- [x] Run backend and frontend regression checks.
+- [x] Manually verify the document upload and preview workflow.
+
+### Implementation
+- [x] Added `test_reject_encrypted_pdf` to `backend/tests/test_pdf_upload.py`.
+- [x] Verified the upload endpoint rejects an encrypted PDF with HTTP 400 and an encryption-related error message.
+- [x] Updated `frontend/src/components/assignments/DocumentUploader.jsx` to clear previous AI suggestions, AI errors, save errors, preview data, and selected-file state when a new file is selected.
+- [x] Preserved the existing review-and-confirm-before-save workflow; no automatic assignment saving was introduced.
+
+### Files changed
+- `backend/tests/test_pdf_upload.py`
+- `frontend/src/components/assignments/DocumentUploader.jsx`
+
+### Testing and verification
+- [x] PDF upload test suite: **8 passed**.
+- [x] Full backend pytest suite: **108 passed**.
+- [x] Frontend ESLint: PASSED.
+- [x] Frontend production build: PASSED; 2,105 modules transformed.
+- [x] `git diff --check`: PASSED.
+- [x] Manually tested valid PDF preview.
+- [x] Manually tested non-PDF rejection.
+- [x] Manually selected another PDF and confirmed previous AI suggestions and errors were cleared.
+- [x] Reviewed both intended file diffs.
+
+### Git state
+- Day 34 changes are present locally in the two files listed above.
+- Changes have not been staged, committed, or pushed.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- The Day 34 status documentation is being recorded separately; it does not imply the application changes have been committed.
+
+### Next task
+**Day 35 — Measure extraction success, errors, and response time.**
