@@ -189,3 +189,26 @@ def test_reject_pdf_without_extractable_text(client):
 
     assert response.status_code == 400
     assert "no extractable text" in response.json()["detail"]
+
+
+def test_reject_encrypted_pdf(client):
+    writer = PdfWriter()
+    writer.add_blank_page(width=612, height=792)
+    writer.encrypt(user_password="test-password")
+
+    output = BytesIO()
+    writer.write(output)
+
+    response = client.post(
+        "/documents/preview",
+        files={
+            "file": (
+                "encrypted.pdf",
+                output.getvalue(),
+                "application/pdf",
+            )
+        },
+    )
+
+    assert response.status_code == 400
+    assert "encrypted" in response.json()["detail"].lower()

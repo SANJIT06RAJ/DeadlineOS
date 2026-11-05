@@ -26,6 +26,10 @@ function DocumentUploader({ onCreateAssignment }) {
 
     setError('')
     setPreview(null)
+    setAiSuggestions(null)
+    setAiError('')
+    setSaveError('')
+    setSelectedFile(null)
 
     if (!file.name.toLowerCase().endsWith('.pdf')) {
       setError('Please select a PDF file.')
