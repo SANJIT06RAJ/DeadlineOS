@@ -2,7 +2,9 @@
 
 _*Last updated: Thursday, 5 November 2026*_
 
-**Latest repository commit:** `1e7a0b8` — `test: add local AI extraction benchmark`.
+**Latest repository commit:** `6873059` — `docs: record week 5 completion and benchmark results`.
+
+**Day 35 benchmark-script commit:** `1e7a0b8` — `test: add local AI extraction benchmark`.
 
 **Latest committed and pushed application-code checkpoint:** `711793f` — `test: improve PDF upload validation and frontend reset`.
 
