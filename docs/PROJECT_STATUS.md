@@ -4,26 +4,26 @@ _Last updated: Friday, 6 November 2026_
 
 **Latest development commit:** `5ed6388` — `test: expand assignment service boundary coverage`.
 
-**Latest verified progress:** Week 6 Day 38 — Unit tests for deadline logic and business rules — completed, committed, and pushed.
+**Latest verified progress:** Week 6 Day 39 — Frontend workflow testing — verified locally, not yet committed or pushed.
 
-**Day 38 verification:**
-- Added four boundary tests to `backend/tests/test_assignment_service.py`.
-- Covered leap-year deadline calculations.
-- Covered year-boundary deadline calculations.
-- Covered overdue classification for in-progress assignments.
-- Covered completed assignments due today.
-- Assignment service tests: **14 passed**.
-- Full backend pytest suite: **122 passed**.
+**Day 39 verification:**
+- Configured Vitest with jsdom and React Testing Library.
+- Added seven AssignmentForm tests.
+- Added six AssignmentsPage workflow tests.
+- Frontend test suite: **13 passed**.
+- Frontend ESLint: PASSED.
+- Frontend production build: PASSED; 2,105 modules transformed.
 - `git diff --check`: PASSED.
-- Commit `5ed6388` pushed successfully to `origin/master`.
+- Local Git branch `master` remains synchronized with `origin/master` at `515e9ce`.
+- Day 39 changes remain uncommitted and unpushed.
 
-**Week 6 status:** Days 36–38 completed and pushed. Detailed history is recorded in `docs/PROJECT_STATUS_WEEK_6.md`.
+**Week 6 status:** Days 36–38 completed and pushed. Day 39 frontend testing verified locally.
 
-**Current roadmap progress:** Week 6 — Day 38 completed.
+**Current roadmap progress:** Week 6 — Day 39 frontend workflow testing.
 
-**Next roadmap task:** Week 6 Day 39 — API integration and frontend workflow tests.
+**Next roadmap task:** Day 40 — Invalid-input, missing-field, upload, and permission tests.
 
-**Git state:** Day 38 application/test commit `5ed6388` was pushed successfully. The overall and Week 6 status documentation was then updated directly on GitHub in separate commits. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Git state:** Six intended frontend testing/configuration paths contain local changes. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
