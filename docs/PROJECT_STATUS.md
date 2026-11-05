@@ -2,28 +2,33 @@
 
 _*Last updated: Thursday, 5 November 2026*_
 
+**Latest repository commit:** `1e7a0b8` — `test: add local AI extraction benchmark`.
+
 **Latest committed and pushed application-code checkpoint:** `711793f` — `test: improve PDF upload validation and frontend reset`.
 
-**Latest development progress:** Week 5 Day 34 — file validation, error handling, and upload limits — IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`711793f`).
+**Latest development progress:** Week 5 Day 35 — AI extraction benchmark — IMPLEMENTED, MEASURED, AND DOCUMENTED.
 
-**Day 34 verification:**
-- Added an encrypted-PDF upload regression test.
-- Confirmed encrypted PDFs are rejected with HTTP 400 and an encryption-related error message.
-- PDF upload test suite: **8 passed**.
-- Full backend pytest suite: **108 passed** (up from 107 at the Day 33 checkpoint).
-- Updated `DocumentUploader` to clear stale preview data, AI suggestions, and related errors when selecting a new file.
+**Day 35 benchmark results (local Ollama, `qwen2.5:3b`):**
+- Four controlled benchmark cases: clear assignment, assignment without a deadline, multiple dates, and a non-assignment notice.
+- Case results: **4/4 passed**; execution errors: **0**.
+- Title accuracy: **4/4 (100%)**.
+- Due-date accuracy: **4/4 (100%)**.
+- Requirements accuracy: **4/4 (100%)**.
+- Response time: average **16.90s**, median **13.80s**, fastest **7.55s**, slowest **32.45s**.
+- Requirement comparison ignores leading list numbering/bullets to avoid false failures caused only by formatting differences.
+- The non-assignment notice contained an unrelated date; no due date was accepted because the evidence did not identify it as a deadline.
+- Benchmark limitation: four synthetic controlled cases are a small smoke-test sample, not proof of production accuracy or broad real-world reliability.
+
+**Day 35 regression verification:**
+- Full backend pytest suite: **108 passed, 1 warning**. The warning was a Windows permission error while pytest attempted to write its cache; all tests passed.
 - Frontend ESLint: PASSED.
-- Frontend production build: PASSED.
-- Manually tested valid PDF preview, non-PDF rejection, and clearing previous AI results after selecting another file.
-- `git diff --check`: PASSED.
-- Reviewed both intended diffs: `backend/tests/test_pdf_upload.py` and `frontend/src/components/assignments/DocumentUploader.jsx`.
-- Day 34 application changes were committed as `711793f` — `test: improve PDF upload validation and frontend reset` — and successfully pushed to `origin/master`.
-- Final Git verification confirmed local `master` and `origin/master` synchronized at `711793f`.
-- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- Frontend production build: PASSED; 2,105 modules transformed.
+- Added `backend/scripts/benchmark_ai_extraction.py` for repeatable local inference measurements.
+- `backend/oop_practice.py` remains untouched and intentionally excluded.
 
-**Current roadmap progress:** Week 5 Day 34 — implementation, automated tests, frontend lint/build, and manual verification completed.
+**Current roadmap progress:** Week 5 — Days 31–35 completed. Week 5 is complete.
 
-**Next roadmap task:** Day 35 — measure extraction success, errors, and response time.
+**Next roadmap task:** Week 6 Day 36 — authentication, sessions, and password handling. Check the project plan and Week 6 status before implementation; do not expand the single-student MVP scope without approval.
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
