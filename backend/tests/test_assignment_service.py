@@ -1,4 +1,3 @@
-
 from datetime import date
 
 import pytest
@@ -74,4 +73,34 @@ def test_assignment_due_today_is_not_overdue():
         date(2026, 10, 16),
         "pending",
         date(2026, 10, 16),
+    ) is False
+
+
+def test_leap_year_deadline_calculation():
+    assert calculate_days_remaining(
+        date(2024, 3, 1),
+        date(2024, 2, 28),
+    ) == 2
+
+
+def test_year_boundary_deadline_calculation():
+    assert calculate_days_remaining(
+        date(2027, 1, 1),
+        date(2026, 12, 31),
+    ) == 1
+
+
+def test_in_progress_assignment_with_past_due_date_is_overdue():
+    assert is_overdue(
+        date(2026, 11, 5),
+        "in_progress",
+        date(2026, 11, 6),
+    ) is True
+
+
+def test_completed_assignment_due_today_is_not_overdue():
+    assert is_overdue(
+        date(2026, 11, 6),
+        "completed",
+        date(2026, 11, 6),
     ) is False
