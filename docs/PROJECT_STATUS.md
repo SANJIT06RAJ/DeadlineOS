@@ -2,9 +2,9 @@
 
 _*Last updated: Thursday, 5 November 2026*_
 
-**Latest committed and pushed application-code checkpoint:** `7d32c29` — `feat: validate AI extraction evidence`. Day 34 application changes are verified locally but are not yet committed or pushed.
+**Latest committed and pushed application-code checkpoint:** `711793f` — `test: improve PDF upload validation and frontend reset`.
 
-**Latest development progress:** Week 5 Day 34 — file validation, error handling, and upload limits — IMPLEMENTED AND VERIFIED LOCALLY.
+**Latest development progress:** Week 5 Day 34 — file validation, error handling, and upload limits — IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`711793f`).
 
 **Day 34 verification:**
 - Added an encrypted-PDF upload regression test.
@@ -17,7 +17,8 @@ _*Last updated: Thursday, 5 November 2026*_
 - Manually tested valid PDF preview, non-PDF rejection, and clearing previous AI results after selecting another file.
 - `git diff --check`: PASSED.
 - Reviewed both intended diffs: `backend/tests/test_pdf_upload.py` and `frontend/src/components/assignments/DocumentUploader.jsx`.
-- Day 34 changes remain local, modified, and uncommitted; no files were staged.
+- Day 34 application changes were committed as `711793f` — `test: improve PDF upload validation and frontend reset` — and successfully pushed to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `711793f`.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Current roadmap progress:** Week 5 Day 34 — implementation, automated tests, frontend lint/build, and manual verification completed.
