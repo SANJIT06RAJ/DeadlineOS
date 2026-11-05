@@ -4,21 +4,25 @@ _Last updated: Friday, 6 November 2026_
 
 **Latest development commit:** `6c8aa81` — `security: add Argon2id password hashing lab`.
 
-**Latest development progress:** Week 6 Day 36 — Authentication, sessions, and password handling — isolated security learning lab completed, tested, committed, and pushed.
+**Latest verified local progress:** Week 6 Day 37 — User-level access controls — isolated security learning lab implemented and verified locally. Not yet committed or pushed.
 
-**Day 36 verification:**
-- Argon2id password hashing and verification implemented in an isolated learning lab.
-- Dedicated security lab tests: **6 passed**.
-- Correct passwords accepted; incorrect passwords and malformed hashes rejected.
-- Empty passwords rejected; identical passwords produce different salted hashes.
-- `argon2-cffi==25.1.0` remains a local learning dependency and was not added to `backend/requirements.txt`.
-- No production login, registration, session, or user-account functionality was added.
+**Day 37 verification:**
+- Resource ownership checks implemented in an isolated security lab.
+- Own-resource access allowed.
+- Access to another user's resource blocked with HTTP 403.
+- Missing resources return HTTP 404.
+- Dedicated access-control tests: **4 passed**.
+- Standalone security lab execution: PASSED.
+- Full backend pytest suite: **118 passed**.
+- No production authentication, user-account, or multi-user functionality added.
 
-**Week 6 status:** Day 36 completed. Detailed history is recorded in `docs/PROJECT_STATUS_WEEK_6.md`.
+**Week 6 status:** Days 36 and 37 verified locally. Detailed history is recorded in `docs/PROJECT_STATUS_WEEK_6.md`.
 
-**Current roadmap progress:** Week 6 — Day 36 completed.
+**Current roadmap progress:** Week 6 — Day 37 completed locally; Git commit and push pending.
 
-**Next roadmap task:** Week 6 Day 37 — User-level access controls. Keep this as an isolated learning exercise; the initial DeadlineOS MVP remains single-student with authentication and multiple-user accounts out of scope unless explicitly approved.
+**Next roadmap task:** Week 6 Day 38 — Unit tests for deadline logic and business rules.
+
+**Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
