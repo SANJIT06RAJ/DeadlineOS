@@ -122,3 +122,61 @@ _Last updated: Friday, 6 November 2026_
 
 **Next roadmap task:** Day 39 — API integration and frontend workflow tests.
 
+## Week 6 — Day 39: API Integration and Frontend Workflow Tests
+
+**Status: FRONTEND WORKFLOW TESTS IMPLEMENTED AND VERIFIED LOCALLY — NOT YET COMMITTED OR PUSHED.**
+
+### Implementation
+- [x] Installed Vitest and React Testing Library dependencies.
+- [x] Configured Vitest with the jsdom environment.
+- [x] Created the shared test setup file.
+- [x] Added frontend test scripts.
+- [x] Created AssignmentForm component tests.
+- [x] Created AssignmentsPage workflow tests.
+- [x] Mocked API service functions to isolate frontend workflow behaviour.
+
+### Test coverage
+
+**AssignmentForm — 7 tests**
+- Form rendering.
+- Empty-title validation.
+- Input trimming and submission.
+- Existing assignment data in edit mode.
+- Cancel callback.
+- Disabled controls during submission.
+- Submission error display.
+
+**AssignmentsPage — 6 tests**
+- Assignment loading and display.
+- Search by title and description.
+- Status filtering.
+- Assignment creation and success message.
+- Assignment loading error.
+- Retry after loading failure.
+
+### Verification
+- [x] Frontend test suite: **13 passed**.
+- [x] Frontend ESLint: PASSED.
+- [x] Vite production build: PASSED; 2,105 modules transformed.
+- [x] `git diff --check`: PASSED.
+- [x] Reviewed the frontend testing configuration and both test files.
+
+### Files changed
+- `frontend/package.json`
+- `frontend/package-lock.json`
+- `frontend/vite.config.js`
+- `frontend/src/test/setup.js`
+- `frontend/src/components/assignments/AssignmentForm.test.jsx`
+- `frontend/src/pages/AssignmentsPage.test.jsx`
+
+### Testing scope note
+- Frontend API calls are mocked in the AssignmentsPage tests.
+- These tests verify frontend workflows and API-service interactions, not a live end-to-end connection against FastAPI.
+- Existing backend API integration tests remain separate.
+
+### Git state
+- Day 39 changes remain local, uncommitted, and unpushed.
+- Local `master` and `origin/master` were last verified synchronized at `515e9ce`, before the status-document commits.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next roadmap task:** Day 40 — Invalid-input, missing-field, upload, and permission tests.
