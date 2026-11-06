@@ -1,26 +1,31 @@
 # PROJECT_STATUS — DeadlineOS
 
-_Last updated: Friday, 6 November 2026_
+_Last updated: Saturday, 7 November 2026_
 
-**Latest development commit:** `c22197f` — `test: add PDF document preview API tests`.
+**Latest development commit:** 90e90be — security: limit Ollama response size.
 
-**Latest verified progress:** Week 6 Day 40 — Invalid-input, missing-field, upload, and permission tests — completed, verified, committed, and pushed.
+**Latest verified progress:** Week 6 Day 41 — Dependency checks and OWASP guidance — IN PROGRESS. Dependency auditing and an Ollama response-size safeguard have been completed, tested, committed, and pushed. The broader security review is not yet complete.
 
-**Day 40 verification:**
-- Added seven PDF document preview API tests covering missing uploads, invalid extensions, empty files, invalid PDF signatures, oversized uploads, PDFs without extractable text, and successful previews.
-- Full backend pytest suite: **129 passed**.
-- `git diff --check` and `git diff --cached --check`: PASSED.
-- Committed the intended test file as `c22197f`.
-- Successfully pushed `c22197f` to `origin/master`.
-- Final local verification confirmed `HEAD` and `origin/master` both point to `c22197f`.
+**Day 41 verified progress:**
+- Installed pip-audit in the local backend virtual environment only; it was not added to backend/requirements.txt.
+- Initial pip audit reported 12 vulnerability findings associated with the old pip 24.2 installation. Upgraded pip to 26.3; the subsequent pip-audit scan reported **No known vulnerabilities found**.
+- pip check: **No broken requirements found**.
+- Frontend npm audit reported four moderate findings in the ESLint development dependency chain, involving minimatch and advisory GHSA-g3hv-75wg-m249. npm audit --omit=dev reported **0 vulnerabilities**. No forced ESLint downgrade or dependency fix was applied because the suggested --force fix would introduce a breaking ESLint major-version downgrade.
+- Added a **1 MB maximum Ollama response size** in backend/app/services/ai_extraction_service.py. The service reads at most the configured limit plus one byte and raises RuntimeError when the response is oversized.
+- Added a regression test in backend/tests/test_ai_extraction.py for oversized Ollama responses.
+- Focused AI extraction tests: **22 passed**.
+- Full backend pytest suite: **130 passed**.
+- git diff --check and git diff --cached --check: PASSED.
+- Committed the two intended files as 90e90be and successfully pushed to origin/master.
+- Final local Git verification confirmed HEAD, origin/master, and master synchronized at 90e90be.
 
-**Week 6 status:** Days 36–40 completed. Day 40 PDF document preview API tests are committed and pushed.
+**Week 6 status:** Days 36–40 completed. Day 41 is in progress; dependency audit and Ollama response-size protection are verified and pushed. CORS configuration and deployment exposure review remain outstanding.
 
-**Current roadmap progress:** Week 6 — Day 40 invalid-input and upload API testing.
+**Current roadmap progress:** Week 6 — Day 41 security review.
 
-**Next roadmap task:** Day 41 — Dependency checks and OWASP guidance.
+**Next task:** Continue Day 41 by reviewing CORS configuration and the actual backend/frontend deployment and network exposure. Do not start Day 42 until the remaining Day 41 review is completed and verified.
 
-**Git state:** No pending tracked changes. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Git state:** Local master and origin/master are synchronized at 90e90be. backend/oop_practice.py remains untracked, untouched, and intentionally excluded.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
