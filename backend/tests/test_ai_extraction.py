@@ -10,6 +10,7 @@ from app.database import create_tables
 from app.main import app
 from app.services.ai_extraction_service import (
     AssignmentExtraction,
+    MAX_OLLAMA_RESPONSE_SIZE,
     extract_assignment_details,
 )
 
@@ -233,6 +234,26 @@ def test_ollama_connection_failure():
         with pytest.raises(RuntimeError, match="communicate with Ollama"):
             extract_assignment_details("Some assignment text")
 
+def test_ollama_response_exceeding_size_limit():
+    mock_response = MagicMock()
+    mock_response.__enter__.return_value = mock_response
+    mock_response.read.return_value = (
+        b"x" * (MAX_OLLAMA_RESPONSE_SIZE + 1)
+    )
+
+    with patch(
+        "app.services.ai_extraction_service.urlopen",
+        return_value=mock_response,
+    ):
+        with pytest.raises(
+            RuntimeError,
+            match="exceeded the 1 MB size limit",
+        ):
+            extract_assignment_details("Some assignment text")
+
+    mock_response.read.assert_called_once_with(
+        MAX_OLLAMA_RESPONSE_SIZE + 1
+    )
 
 def test_invalid_response_structure():
     response_data = {

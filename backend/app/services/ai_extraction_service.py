@@ -18,6 +18,7 @@ OLLAMA_MODEL = os.getenv(
     "qwen2.5:3b",
 )
 
+MAX_OLLAMA_RESPONSE_SIZE = 1 * 1024 * 1024  # 1 MB
 
 class AssignmentExtraction(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -259,7 +260,12 @@ Document:
 
     try:
         with urlopen(request, timeout=120) as response:
-            ollama_result = json.loads(response.read().decode("utf-8"))
+            response_bytes = response.read(MAX_OLLAMA_RESPONSE_SIZE + 1)
+
+            if len(response_bytes) > MAX_OLLAMA_RESPONSE_SIZE:
+                raise RuntimeError("Ollama response exceeded the 1 MB size limit.")
+
+            ollama_result = json.loads(response_bytes.decode("utf-8"))
 
         model_output = json.loads(ollama_result["response"])
 
