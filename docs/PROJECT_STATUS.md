@@ -2,28 +2,25 @@
 
 _Last updated: Friday, 6 November 2026_
 
-**Latest development commit:** `7512b24` — `test: add frontend assignment workflow tests`.
+**Latest development commit:** `c22197f` — `test: add PDF document preview API tests`.
 
-**Latest verified progress:** Week 6 Day 39 — Frontend workflow testing — completed, verified, committed, and pushed.
+**Latest verified progress:** Week 6 Day 40 — Invalid-input, missing-field, upload, and permission tests — completed, verified, committed, and pushed.
 
-**Day 39 verification:**
-- Configured Vitest with jsdom and React Testing Library.
-- Added seven AssignmentForm tests and six AssignmentsPage workflow tests.
-- Frontend test suite: **13 passed**.
-- Frontend ESLint: PASSED.
-- Frontend production build: PASSED; 2,105 modules transformed.
+**Day 40 verification:**
+- Added seven PDF document preview API tests covering missing uploads, invalid extensions, empty files, invalid PDF signatures, oversized uploads, PDFs without extractable text, and successful previews.
+- Full backend pytest suite: **129 passed**.
 - `git diff --check` and `git diff --cached --check`: PASSED.
-- Committed the six intended frontend testing/configuration files as `7512b24`.
-- Successfully pushed `7512b24` to `origin/master`.
-- Final local verification confirmed `HEAD` and `origin/master` both point to `7512b24`.
+- Committed the intended test file as `c22197f`.
+- Successfully pushed `c22197f` to `origin/master`.
+- Final local verification confirmed `HEAD` and `origin/master` both point to `c22197f`.
 
-**Week 6 status:** Days 36–39 completed. Day 39 frontend workflow tests are committed and pushed.
+**Week 6 status:** Days 36–40 completed. Day 40 PDF document preview API tests are committed and pushed.
 
-**Current roadmap progress:** Week 6 — Day 39 frontend workflow testing.
+**Current roadmap progress:** Week 6 — Day 40 invalid-input and upload API testing.
 
-**Next roadmap task:** Day 40 — Invalid-input, missing-field, upload, and permission tests.
+**Next roadmap task:** Day 41 — Dependency checks and OWASP guidance.
 
-**Git state:** No pending tracked changes after the Day 39 commit. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Git state:** No pending tracked changes. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
