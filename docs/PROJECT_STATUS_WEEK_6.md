@@ -181,3 +181,30 @@ _Last updated: Friday, 6 November 2026_
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Next roadmap task:** Day 40 — Invalid-input, missing-field, upload, and permission tests.
+
+## Week 6 — Day 40: Invalid-Input, Missing-Field, Upload, and Permission Tests
+
+**Status: COMPLETED, VERIFIED, COMMITTED, AND PUSHED (`c22197f`).**
+
+### Implementation
+- [x] Created `backend/tests/test_document_api.py`.
+- [x] Added seven tests for the PDF document preview endpoint.
+- [x] Covered missing uploads, invalid extensions, empty files, invalid PDF signatures, oversized files, PDFs without extractable text, and successful previews.
+
+### Verification
+- [x] Dedicated document API tests: **7 passed**.
+- [x] Full backend pytest suite: **129 passed**.
+- [x] `git diff --check` and `git diff --cached --check`: PASSED.
+- [x] Reviewed the staged changes and confirmed only the intended test file was committed.
+
+### Files changed
+- `backend/tests/test_document_api.py`
+
+### Git state
+- Committed as `c22197f` — `test: add PDF document preview API tests`.
+- Successfully pushed to `origin/master`.
+- Verified local `HEAD` and `origin/master` are synchronized at `c22197f`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next roadmap task:** Day 41 — Dependency checks and OWASP guidance.
+
