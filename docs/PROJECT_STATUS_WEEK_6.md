@@ -210,53 +210,52 @@ _Last updated: Friday, 6 November 2026_
 
 ## Week 6 — Day 41: Dependency Checks and OWASP Guidance (7 November 2026)
 
-**Status: IN PROGRESS — DEPENDENCY AUDIT AND OLLAMA RESPONSE-SIZE PROTECTION COMPLETED, VERIFIED, COMMITTED, AND PUSHED (90e90be). The broader OWASP review remains unfinished.**
+**Status: COMPLETED AND VERIFIED.**
 
 ### Dependency security review
 
 #### Backend Python dependencies
-- [x] Installed pip-audit in the local backend virtual environment for the audit; it was not added to backend/requirements.txt.
-- [x] Ran the initial audit and identified 12 vulnerability findings associated with the old pip 24.2 installation.
-- [x] Upgraded pip in the local virtual environment to **26.3**; no application dependencies were upgraded.
+- [x] Installed pip-audit in the local backend virtual environment only; it was not added to backend/requirements.txt.
+- [x] Upgraded the local pip installation to 26.3 after the initial audit identified findings associated with pip 24.2.
 - [x] Reran pip-audit: **No known vulnerabilities found**.
 - [x] Ran pip check: **No broken requirements found**.
 
 #### Frontend npm dependencies
-- [x] Ran npm audit; it reported four moderate findings in the ESLint development dependency chain, involving minimatch and advisory GHSA-g3hv-75wg-m249.
-- [x] Inspected the dependency tree with npm ls minimatch, npm explain minimatch, and npm ls eslint @eslint/config-array @eslint/js.
-- [x] Ran npm audit fix --dry-run to inspect the proposed changes without modifying dependencies.
-- [x] Ran npm audit --omit=dev: **0 vulnerabilities** in the production dependency set.
-- [x] Avoided npm audit fix --force because it proposed a breaking downgrade to ESLint 9. No npm dependency changes were applied.
+- [x] Ran npm audit and inspected the four moderate findings in the ESLint development dependency chain (minimatch / GHSA-g3hv-75wg-m249).
+- [x] Ran npm audit --omit=dev: **0 vulnerabilities** in production dependencies.
+- [x] Avoided npm audit fix --force because it proposed a breaking ESLint major-version downgrade. No dependency changes were applied.
 
 ### Application security review
-
-- [x] Reviewed the PDF preview route and confirmed the existing 10 MB file-read limit, file-extension/signature checks, empty-file handling, and file closure.
-- [x] Reviewed PDF text extraction and noted that page-count, extracted-text-size, and processing-resource limits still warrant consideration.
-- [x] Reviewed request schemas and confirmed AI document text is limited to 100,000 characters.
-- [x] Reviewed the AI extraction service and identified that the Ollama response body was previously read without an explicit byte limit.
-- [x] Added MAX_OLLAMA_RESPONSE_SIZE = 1 * 1024 * 1024 (1 MB) in backend/app/services/ai_extraction_service.py.
-- [x] Limited the response read to the configured maximum plus one byte; oversized responses now raise RuntimeError, which the API maps to HTTP 503 as an upstream service failure.
-- [x] Added test_ollama_response_exceeding_size_limit in backend/tests/test_ai_extraction.py, verifying rejection and the bounded read.
-- [ ] Complete review of CORS configuration and the actual backend/frontend launch and deployment exposure before drawing conclusions about network access.
-- [ ] Decide whether additional PDF page-count or extracted-text limits are justified; do not add limits without reviewing the existing workflow and tests.
+- [x] Confirmed the PDF preview route enforces the existing **10 MB upload limit**, validates the extension and PDF signature, handles empty files, and closes the upload.
+- [x] Confirmed AI document text is limited to **100,000 characters** by the request schema.
+- [x] Added a **1 MB maximum Ollama response size** in backend/app/services/ai_extraction_service.py and a regression test for oversized responses.
+- [x] Added **MAX_PDF_PAGES = 100** and **MAX_EXTRACTED_TEXT_CHARS = 200_000** in backend/app/services/pdf_service.py.
+- [x] Added PDF service tests rejecting documents above the page-count and extracted-text limits.
+- [x] Confirmed the user-facing AI extraction flow still requires confirmation before saving extracted assignment details.
+- [x] Reviewed the actual backend launch command: uvicorn app.main:app --reload. Uvicorn reported http://127.0.0.1:8000, confirming localhost-only binding for the current development run.
+- [x] Reviewed the Vite /api development proxy and backend configuration. The current same-origin local proxy does not require CORS middleware.
+- [x] No production deployment configuration was identified in the reviewed project files. Reassess CORS, host binding, and deployment security when a production deployment or cross-origin frontend is introduced.
 
 ### Verification evidence
-- [x] Focused AI extraction test suite: **22 passed**.
-- [x] Full backend pytest suite: **130 passed**.
+- [x] Focused AI extraction tests: **22 passed**.
+- [x] Focused PDF service and upload tests: **15 passed**.
+- [x] Final full backend pytest suite: **132 passed**.
 - [x] git diff --check: PASSED.
-- [x] git diff --cached --check: PASSED.
-- [x] Reviewed the final staged diff; only the intended service and test files were staged.
-- [x] Confirmed the security change did not break the full backend suite.
+- [x] Pytest emitted one non-fatal cache warning because Windows denied access when creating the root .pytest_cache; all 132 tests passed.
 
 ### Files changed
 - backend/app/services/ai_extraction_service.py
 - backend/tests/test_ai_extraction.py
+- backend/app/services/pdf_service.py
+- backend/tests/test_pdf_service.py
 
-### Git state
-- Committed as 90e90be — security: limit Ollama response size.
-- Successfully pushed to origin/master.
-- Final local Git verification confirmed HEAD, origin/master, and local master synchronized at 90e90be.
+### Git and workspace notes
+- The Ollama response-size safeguard was previously committed as 90e90be and pushed.
+- PDF extraction safeguards and their tests were applied directly to origin/master in two commits:
+  - 09aaa58 — security: limit PDF extraction resources
+  - 4cf737a — test: cover PDF extraction resource limits
+- The final local test run verified **132 passed** before the status-file update.
 - backend/oop_practice.py remains untracked, untouched, and intentionally excluded.
-- No frontend npm dependency changes were made. pip-audit remains a local virtual-environment tool and was not added to project requirements.
+- The local VS Code working tree must be synchronized with the remote commits before further development.
 
-**Next task:** Continue Day 41 with CORS and deployment-exposure review. Read the actual current configuration and launch commands before deciding whether CORS or other protections are missing. Keep the single-student MVP scope unchanged.
+**Next roadmap task:** Week 7 — Day 42: Dockerfiles for backend and frontend. Verify the synchronized repository and current roadmap/status files before starting.
