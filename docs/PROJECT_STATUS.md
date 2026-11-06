@@ -2,30 +2,28 @@
 
 _Last updated: Saturday, 7 November 2026_
 
-**Latest development commit:** 90e90be — security: limit Ollama response size.
+**Latest development commit:** 4cf737a — test: cover PDF extraction resource limits.
 
-**Latest verified progress:** Week 6 Day 41 — Dependency checks and OWASP guidance — IN PROGRESS. Dependency auditing and an Ollama response-size safeguard have been completed, tested, committed, and pushed. The broader security review is not yet complete.
+**Latest verified progress:** Week 6 Day 41 — Dependency checks and OWASP guidance — COMPLETED AND VERIFIED. Dependency auditing, bounded Ollama responses, PDF extraction limits, and local network-exposure review are complete.
 
 **Day 41 verified progress:**
-- Installed pip-audit in the local backend virtual environment only; it was not added to backend/requirements.txt.
-- Initial pip audit reported 12 vulnerability findings associated with the old pip 24.2 installation. Upgraded pip to 26.3; the subsequent pip-audit scan reported **No known vulnerabilities found**.
-- pip check: **No broken requirements found**.
-- Frontend npm audit reported four moderate findings in the ESLint development dependency chain, involving minimatch and advisory GHSA-g3hv-75wg-m249. npm audit --omit=dev reported **0 vulnerabilities**. No forced ESLint downgrade or dependency fix was applied because the suggested --force fix would introduce a breaking ESLint major-version downgrade.
-- Added a **1 MB maximum Ollama response size** in backend/app/services/ai_extraction_service.py. The service reads at most the configured limit plus one byte and raises RuntimeError when the response is oversized.
-- Added a regression test in backend/tests/test_ai_extraction.py for oversized Ollama responses.
-- Focused AI extraction tests: **22 passed**.
-- Full backend pytest suite: **130 passed**.
-- git diff --check and git diff --cached --check: PASSED.
-- Committed the two intended files as 90e90be and successfully pushed to origin/master.
-- Final local Git verification confirmed HEAD, origin/master, and master synchronized at 90e90be.
+- Backend pip-audit: **No known vulnerabilities found** after upgrading the local pip installation to 26.3; pip check reported **No broken requirements found**.
+- Frontend npm audit reported four moderate findings in the ESLint development dependency chain (minimatch / GHSA-g3hv-75wg-m249). Production dependencies had **0 vulnerabilities**. No breaking forced downgrade was applied.
+- Added a **1 MB maximum Ollama response size** and a regression test; focused AI extraction tests: **22 passed**.
+- PDF uploads already have a **10 MB file-size limit**. Added PDF extraction safeguards: maximum **100 pages** and **200,000 extracted characters**.
+- Added tests for both PDF extraction limits. Focused PDF service/upload tests: **15 passed**.
+- Final full backend pytest suite: **132 passed**. Pytest emitted one non-fatal cache warning because Windows denied access when creating .pytest_cache; all tests passed.
+- Confirmed the actual backend launch command is uvicorn app.main:app --reload; Uvicorn reported http://127.0.0.1:8000, so the current development backend binds to localhost rather than all network interfaces.
+- Reviewed the current Vite /api development proxy and backend configuration. The local same-origin proxy does not require CORS middleware. No production deployment configuration was identified in the reviewed project files; cross-origin CORS and deployment binding must be configured and reviewed when a production deployment is introduced.
+- git diff --check: PASSED. Only the intended PDF service and test files were modified locally; backend/oop_practice.py remained untracked and untouched.
 
-**Week 6 status:** Days 36–40 completed. Day 41 is in progress; dependency audit and Ollama response-size protection are verified and pushed. CORS configuration and deployment exposure review remain outstanding.
+**Week 6 status:** Days 36–40 completed. Day 41 security review completed and verified. The four moderate npm development-dependency findings remain documented; production dependencies had zero reported vulnerabilities.
 
-**Current roadmap progress:** Week 6 — Day 41 security review.
+**Current roadmap progress:** Week 6 — Day 41 security review completed.
 
-**Next task:** Continue Day 41 by reviewing CORS configuration and the actual backend/frontend deployment and network exposure. Do not start Day 42 until the remaining Day 41 review is completed and verified.
+**Next task:** Week 7 — Day 42: Dockerfiles for backend and frontend. Before starting, synchronize the local repository and verify the latest status files and Git state.
 
-**Git state:** Local master and origin/master are synchronized at 90e90be. backend/oop_practice.py remains untracked, untouched, and intentionally excluded.
+**Git state:** PDF service and PDF test updates were applied directly to origin/master; status-file updates are being synchronized. backend/oop_practice.py remains untracked, untouched, and intentionally excluded.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
