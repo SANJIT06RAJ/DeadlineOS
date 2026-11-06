@@ -1,4 +1,3 @@
-
 from io import BytesIO
 
 import pytest
@@ -9,6 +8,7 @@ from pypdf.generic import (
     NameObject,
 )
 
+import app.services.pdf_service as pdf_service
 from app.services.pdf_service import extract_pdf_text
 
 
@@ -88,3 +88,35 @@ def test_rejects_encrypted_pdf():
 
     with pytest.raises(ValueError, match="Encrypted PDF"):
         extract_pdf_text(output.getvalue())
+
+
+def test_rejects_pdf_exceeding_page_limit():
+    writer = PdfWriter()
+
+    for _ in range(pdf_service.MAX_PDF_PAGES + 1):
+        writer.add_blank_page(width=612, height=792)
+
+    output = BytesIO()
+    writer.write(output)
+
+    with pytest.raises(ValueError, match="page limit"):
+        extract_pdf_text(output.getvalue())
+
+
+def test_rejects_pdf_exceeding_extracted_text_limit(monkeypatch):
+    class FakePage:
+        def extract_text(self):
+            return "A" * (pdf_service.MAX_EXTRACTED_TEXT_CHARS + 1)
+
+    class FakeReader:
+        is_encrypted = False
+        pages = [FakePage()]
+
+    monkeypatch.setattr(
+        pdf_service,
+        "PdfReader",
+        lambda *args, **kwargs: FakeReader(),
+    )
+
+    with pytest.raises(ValueError, match="character limit"):
+        extract_pdf_text(b"%PDF-test")
