@@ -2,28 +2,27 @@
 
 _Last updated: Saturday, 7 November 2026_
 
-**Latest development commit:** 4cf737a — test: cover PDF extraction resource limits.
+**Latest application/development commit:** 4cf737a — test: cover PDF extraction resource limits.
 
-**Latest verified progress:** Week 6 Day 41 — Dependency checks and OWASP guidance — COMPLETED AND VERIFIED. Dependency auditing, bounded Ollama responses, PDF extraction limits, and local network-exposure review are complete.
+**Latest verified progress:** Week 6 Day 42 — Final regression verification — COMPLETED AND VERIFIED.
 
-**Day 41 verified progress:**
-- Backend pip-audit: **No known vulnerabilities found** after upgrading the local pip installation to 26.3; pip check reported **No broken requirements found**.
-- Frontend npm audit reported four moderate findings in the ESLint development dependency chain (minimatch / GHSA-g3hv-75wg-m249). Production dependencies had **0 vulnerabilities**. No breaking forced downgrade was applied.
-- Added a **1 MB maximum Ollama response size** and a regression test; focused AI extraction tests: **22 passed**.
-- PDF uploads already have a **10 MB file-size limit**. Added PDF extraction safeguards: maximum **100 pages** and **200,000 extracted characters**.
-- Added tests for both PDF extraction limits. Focused PDF service/upload tests: **15 passed**.
-- Final full backend pytest suite: **132 passed**. Pytest emitted one non-fatal cache warning because Windows denied access when creating .pytest_cache; all tests passed.
-- Confirmed the actual backend launch command is uvicorn app.main:app --reload; Uvicorn reported http://127.0.0.1:8000, so the current development backend binds to localhost rather than all network interfaces.
-- Reviewed the current Vite /api development proxy and backend configuration. The local same-origin proxy does not require CORS middleware. No production deployment configuration was identified in the reviewed project files; cross-origin CORS and deployment binding must be configured and reviewed when a production deployment is introduced.
-- git diff --check: PASSED. Only the intended PDF service and test files were modified locally; backend/oop_practice.py remained untracked and untouched.
+**Day 42 verified progress:**
+- Full backend pytest suite: **132 passed**.
+- Frontend Vitest suite: **13 passed across 2 test files**.
+- Frontend ESLint: **PASSED**.
+- Vite production build: **PASSED**; 2,105 modules transformed.
+- `git diff --check`: **PASSED**.
+- Final Git verification: local `master` and `origin/master` synchronized at `b97ed8b` before these documentation updates; no tracked changes pending.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- No additional high-priority code issue was identified during this final verification. The four moderate npm audit findings in the ESLint development dependency chain remain documented; production dependencies previously reported zero vulnerabilities.
 
-**Week 6 status:** Days 36–40 completed. Day 41 security review completed and verified. The four moderate npm development-dependency findings remain documented; production dependencies had zero reported vulnerabilities.
+**Week 6 status:** Days 36–42 completed. Day 42 final regression verification passed. Week 6 is complete.
 
-**Current roadmap progress:** Week 6 — Day 41 security review completed.
+**Current roadmap progress:** Week 6 — Day 42 final verification completed.
 
-**Next task:** Week 7 — Day 42: Dockerfiles for backend and frontend. Before starting, synchronize the local repository and verify the latest status files and Git state.
+**Next task:** Week 7 — Day 43: Create Dockerfiles for the backend and frontend.
 
-**Git state:** PDF service and PDF test updates were applied directly to origin/master; status-file updates are being synchronized. backend/oop_practice.py remains untracked, untouched, and intentionally excluded.
+**Git state:** Day 42 verification found no pending tracked code changes. Documentation updates are being applied directly to `origin/master`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
