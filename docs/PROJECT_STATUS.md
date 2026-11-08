@@ -2,37 +2,30 @@
 
 _Last updated: Sunday, 8 November 2026_
 
-**Latest application/development commit:** ce71cbd — feat: add Docker Compose configuration.
+**Latest project commit:** 312733d — fix: declare Argon2 password hashing dependency.
 
-**Latest verified progress:** Week 7 Day 45 — Docker Compose integration — COMPLETED, VERIFIED, COMMITTED, AND PUSHED (`ce71cbd`).
+**Latest verified progress:** Week 7 Day 46 — GitHub Actions CI workflow — COMPLETED, VERIFIED, COMMITTED, AND PUSHED.
 
-**Day 45 verified progress:**
-- Created the root-level `docker-compose.yml` with FastAPI backend and Nginx frontend services.
-- Reused the existing external Docker volume `deadlineos-data`; SQLite remains at `/data/deadlineos.db`.
-- Configured the frontend at host port `5173`; the backend is reachable internally through the Compose network and Nginx reverse proxy.
-- Configured the backend to reach host-installed Ollama using `host.docker.internal`, with `qwen2.5:3b` as the default model.
-- `docker compose config` completed successfully.
-- Both backend and frontend Docker images built successfully.
-- Both Compose services started successfully and remained running.
-- Frontend production response verified with HTTP **200 OK**; the served HTML references the compiled, hashed JavaScript and CSS assets.
-- Nginx proxy request to `/api/health` returned `healthy`.
-- Retrieved **27 existing assignments** from the reused SQLite database.
-- Restarted both Compose services and retrieved all **27 assignments** again, confirming data persistence.
-- Verified container-to-host Ollama connectivity: `/api/tags` returned HTTP **200**.
-- Confirmed the configured `qwen2.5:3b` model is available.
-- Reviewed backend and frontend container logs; application startup was successful and no application errors were observed.
-- `git diff --check` passed.
-- Committed the root-level `docker-compose.yml` as `ce71cbd` — `feat: add Docker Compose configuration` — and successfully pushed it to `origin/master`.
+**Day 46 verified progress:**
+- Created `.github/workflows/ci.yml` for automated backend and frontend checks.
+- Configured Python 3.13 and Node.js 24 environments.
+- Backend CI installs `backend/requirements.txt` and runs pytest.
+- Frontend CI uses `npm ci`, runs Vitest, ESLint, and the Vite production build.
+- Added `argon2-cffi==25.1.0` to backend requirements after CI exposed the missing dependency.
+- GitHub Actions Run #3 succeeded: backend **132 passed**, frontend **13 passed across 2 test files**.
+- Frontend lint and production build passed.
+- Both GitHub Actions jobs reported success.
+- Local repository synchronized with `origin/master` at `312733d`.
 
 **Week 6 status:** Days 36–42 completed. Day 42 final regression verification passed. Week 6 is complete.
 
-**Week 7 status:** Days 43, 44, and 45 are completed, verified, committed, and pushed. Day 45 application commit: `ce71cbd`.
+**Week 7 status:** Days 43–46 completed and verified. Day 46 CI workflow and dependency fix are committed and pushed; latest commit: `312733d`.
 
-**Current roadmap progress:** Week 7 — Day 45 completed, verified, committed, and pushed.
+**Current roadmap progress:** Week 7 — Day 46 completed, verified, committed, and pushed.
 
-**Next task:** Check `ROADMAP.md` for the exact Day 46 objective before planning the next session.
+**Next task:** Day 47 — Linting, formatting, and dependency checks.
 
-**Git state:** The latest application commit is `ce71cbd` — `feat: add Docker Compose configuration`. Local `master` and `origin/master` were verified synchronized at `ce71cbd`. The only remaining untracked file is the pre-existing `backend/oop_practice.py`, which remains untouched and intentionally excluded.
+**Git state:** Local `master` and `origin/master` were verified synchronized at `312733d`. The only remaining untracked file is the pre-existing `backend/oop_practice.py`, which remains untouched and intentionally excluded.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
