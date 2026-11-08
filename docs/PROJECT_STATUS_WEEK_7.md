@@ -322,7 +322,7 @@
 
 **Date:** 8 November 2026
 
-**Status: REGRESSION TESTS AND DOCKER RECOVERY VERIFIED; RELEASE TAG PENDING.**
+**Status: COMPLETED, VERIFIED, AND RELEASED (`v1.0.0`).**
 
 ### Verification
 
@@ -348,6 +348,9 @@
 - Day 48 Nginx fix is committed and pushed as `72b8351`.
 - Day 49 verification did not modify application files.
 - `backend/oop_practice.py` remains untouched and intentionally excluded.
-- No release tag has been created yet.
+- Created annotated tag `v1.0.0` with message `DeadlineOS v1.0.0 - Initial stable release`.
+- Pushed `v1.0.0` successfully to `origin`; remote tag object: `f103c95b9bbe158b644c69127f287a03a1affd87`.
+- Verified the annotated tag targets release commit `b3a4b67` (the reviewed Day 49 overall-status commit).
+- Final local Git status: `master...origin/master`; only `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
-**Next task:** Complete release documentation, then create and verify the annotated `v1.0.0` tag against the reviewed release commit.
+**Next task:** Check `ROADMAP.md` for the next scheduled objective and verify the current project state before planning further work.
