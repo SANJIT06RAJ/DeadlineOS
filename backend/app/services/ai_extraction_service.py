@@ -1,5 +1,4 @@
 import json
-import os
 import re
 from datetime import date, datetime
 from urllib.error import HTTPError, URLError
@@ -7,16 +6,7 @@ from urllib.request import Request, urlopen
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
-
-OLLAMA_URL = os.getenv(
-    "OLLAMA_URL",
-    "http://localhost:11434/api/generate",
-)
-
-OLLAMA_MODEL = os.getenv(
-    "OLLAMA_MODEL",
-    "qwen2.5:3b",
-)
+from app.config import OLLAMA_URL, OLLAMA_MODEL
 
 MAX_OLLAMA_RESPONSE_SIZE = 1 * 1024 * 1024  # 1 MB
 

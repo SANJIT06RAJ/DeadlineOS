@@ -1,7 +1,7 @@
 import sqlite3
-from pathlib import Path
+from contextlib import closing
 
-DATABASE_PATH = Path(__file__).resolve().parent.parent / "deadlineos.db"
+from app.config import DATABASE_PATH
 
 
 def get_connection() -> sqlite3.Connection:
