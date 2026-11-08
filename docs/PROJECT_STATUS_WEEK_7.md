@@ -123,7 +123,7 @@
 
 **Date:** 8 November 2026
 
-**Status: IMPLEMENTED AND VERIFIED LOCALLY — `docker-compose.yml` NOT YET COMMITTED OR PUSHED.**
+**Status: COMPLETED, VERIFIED, COMMITTED, AND PUSHED (`ce71cbd`).**
 
 ### Implementation
 
@@ -133,7 +133,7 @@
 - [x] Configured the frontend host mapping as `5173:80`.
 - [x] Kept the backend on the internal Compose network; Nginx forwards `/api/` requests to the `backend` service.
 - [x] Reused the existing external named volume `deadlineos-data`.
-- [x] Configured SQLite at `/data/deadlineos.db).
+- [x] Configured SQLite at `/data/deadlineos.db`.
 - [x] Configured Ollama access through `host.docker.internal:11434`, with `qwen2.5:3b` as the default model.
 - [x] Kept the existing architecture and application code unchanged.
 
@@ -157,11 +157,13 @@
 
 ### Files created
 
-- `docker-compose.yml` (new, currently untracked locally)
+- `docker-compose.yml` (new)
 
 ### Git state
 
-- The new `docker-compose.yml` is not yet committed or pushed.
+- Committed `docker-compose.yml` as `ce71cbd` — `feat: add Docker Compose configuration` — and successfully pushed it to `origin/master`.
+- Final Git verification confirmed local `master` and `origin/master` synchronized at `ce71cbd`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 - The pre-existing `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 - The previous manually started `deadlineos-api` container was stopped, not removed.
 - The existing `deadlineos-data` volume was reused and preserved.
