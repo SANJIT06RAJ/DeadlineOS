@@ -274,3 +274,45 @@
 
 **Next task:** Day 48 — Clean-install and failed-startup recovery testing.
 
+
+## Day 48 — Clean-Install and Failed-Startup Recovery Testing
+
+**Date:** 8 November 2026
+
+**Status: IMPLEMENTATION AND TESTING COMPLETED; APPLICATION COMMIT PENDING.**
+
+### Implementation and verification
+
+- [x] Validated Docker Compose configuration.
+- [x] Built the frontend image successfully without relying on cached layers; recreated the frontend container.
+- [x] Verified the production frontend returned HTTP 200 and the health endpoint returned a healthy status.
+- [x] Stopped the Compose backend and confirmed the frontend remained running and continued serving the application.
+- [x] Confirmed API requests returned HTTP 502 while the backend was unavailable, without causing Nginx to crash or restart.
+- [x] Fixed Nginx backend startup dependency by configuring Docker's embedded DNS resolver and dynamic backend hostname resolution.
+- [x] Corrected API path forwarding with an explicit rewrite before proxying to FastAPI.
+- [x] Rebuilt and recreated the frontend after the Nginx changes.
+- [x] Restarted the backend without restarting the frontend and confirmed API health recovered.
+- [x] Verified the assignment summary endpoint returned the expected counts: **27 total, 24 pending, 2 in progress, 1 completed, 6 overdue, 0 due today, 19 upcoming, and 1 without a due date**.
+- [x] Confirmed the Compose named volume remained mounted at `/data`.
+- [x] `git diff --check` passed and the Nginx diff was reviewed.
+
+### Database recovery notes
+
+- The initial 27-assignment baseline came from the local development database; the Docker Compose database initially contained zero assignments.
+- Created and integrity-checked a SQLite snapshot of the local database.
+- Backed up the original Docker database before restoring the verified local snapshot into the Compose volume.
+- Confirmed the restored database contained 27 assignments and retained them through container restarts.
+- Temporary recovery backups were retained.
+
+### Files changed
+
+- `frontend/nginx.conf`
+
+### Git state
+
+- The Nginx configuration change is present locally and has been reviewed.
+- The Day 48 application change has not yet been committed or pushed.
+- This Day 48 status entry is being recorded separately from the application change.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+**Next task:** Day 49 — Release tagging, Git history review, and final bug fixes.
