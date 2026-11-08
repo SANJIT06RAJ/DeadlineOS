@@ -272,7 +272,7 @@
 - Pytest completed with **132 passed** and one non-blocking Windows cache-permission warning when creating `.pytest_cache`.
 - Ruff is configured in the repository, but the Ruff package itself is currently installed only in the local virtual environment. A future development-dependency setup can make installation reproducible.
 
-**Next task:** Day 48 — Clean-install and failed-startup recovery testing.
+**Next task:** Day 49 — Release tagging, Git history review, and final bug fixes.
 
 
 ## Day 48 — Clean-Install and Failed-Startup Recovery Testing
