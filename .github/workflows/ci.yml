@@ -19,7 +19,7 @@ jobs:
         working-directory: backend
 
     env:
-      DATABASE_PATH: ${{ runner.temp }}/deadlineos-ci.db
+      DATABASE_PATH: ./deadlineos-ci.db
 
     steps:
       - name: Checkout repository
