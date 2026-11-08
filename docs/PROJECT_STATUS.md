@@ -33,7 +33,7 @@ _Last updated: Sunday, 8 November 2026_
 
 **Next task:** Day 48 — Clean-install and failed-startup recovery testing.
 
-**Git state:** The Day 47 application commit `06492bc` was pushed to `origin/master`. The status documentation updates are being committed directly to GitHub. In the local working copy, `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Git state:** The Day 47 application commit `06492bc` and both status documentation updates have been committed to `origin/master`. The local working copy must be fast-forwarded to include the documentation commits. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
