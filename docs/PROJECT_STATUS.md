@@ -2,9 +2,19 @@
 
 _Last updated: Sunday, 8 November 2026_
 
-**Latest project commit:** 312733d — fix: declare Argon2 password hashing dependency.
+**Latest application commit:** 06492bc — chore: add Python linting and formatting checks.
 
-**Latest verified progress:** Week 7 Day 46 — GitHub Actions CI workflow — COMPLETED, VERIFIED, COMMITTED, AND PUSHED.
+**Latest verified progress:** Week 7 Day 47 — Linting, formatting, and dependency checks — COMPLETED, VERIFIED, COMMITTED, AND PUSHED.
+
+**Day 47 verified progress:**
+- Added root-level `pyproject.toml` with Ruff configuration for Python 3.13 and an 88-character line length.
+- Excluded the pre-existing local-only `backend/oop_practice.py` from Ruff and scoped the FastAPI `B008` exception to `backend/app/main.py`.
+- Ruff lint passed; all 20 backend Python files passed the formatting check.
+- Backend pytest suite: **132 passed**.
+- `pip check` passed; `pip-audit` reported no known vulnerabilities.
+- Frontend ESLint passed; Vitest reported **13 passed across 2 test files**; production build passed.
+- Frontend production dependency audit reported **0 vulnerabilities**.
+- Committed as `06492bc` and pushed successfully to `origin/master`.
 
 **Day 46 verified progress:**
 - Created `.github/workflows/ci.yml` for automated backend and frontend checks.
@@ -13,19 +23,17 @@ _Last updated: Sunday, 8 November 2026_
 - Frontend CI uses `npm ci`, runs Vitest, ESLint, and the Vite production build.
 - Added `argon2-cffi==25.1.0` to backend requirements after CI exposed the missing dependency.
 - GitHub Actions Run #3 succeeded: backend **132 passed**, frontend **13 passed across 2 test files**.
-- Frontend lint and production build passed.
 - Both GitHub Actions jobs reported success.
-- Local repository synchronized with `origin/master` at `312733d`.
 
 **Week 6 status:** Days 36–42 completed. Day 42 final regression verification passed. Week 6 is complete.
 
-**Week 7 status:** Days 43–46 completed and verified. Day 46 CI workflow and dependency fix are committed and pushed; latest commit: `312733d`.
+**Week 7 status:** Days 43–47 completed and verified. Day 47 linting, formatting, dependency checks, and regression tests are committed and pushed.
 
-**Current roadmap progress:** Week 7 — Day 46 completed, verified, committed, and pushed.
+**Current roadmap progress:** Week 7 — Day 47 completed, verified, committed, and pushed.
 
-**Next task:** Day 47 — Linting, formatting, and dependency checks.
+**Next task:** Day 48 — Clean-install and failed-startup recovery testing.
 
-**Git state:** Local `master` and `origin/master` were verified synchronized at `312733d`. The only remaining untracked file is the pre-existing `backend/oop_practice.py`, which remains untouched and intentionally excluded.
+**Git state:** The Day 47 application commit `06492bc` was pushed to `origin/master`. The status documentation updates are being committed directly to GitHub. In the local working copy, `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
