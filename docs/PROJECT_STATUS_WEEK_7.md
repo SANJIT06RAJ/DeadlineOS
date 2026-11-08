@@ -175,3 +175,54 @@
 - Ollama remains installed on the host machine and is not run as a Compose service.
 
 **Next task:** Check `ROADMAP.md` for the exact Day 46 objective before planning the next session.
+
+## Day 46 — GitHub Actions Automated Test Workflow
+
+**Date:** 8 November 2026
+
+**Status: COMPLETED, VERIFIED, COMMITTED, AND PUSHED (`312733d`).**
+
+### Implementation
+
+- [x] Created `.github/workflows/ci.yml`.
+- [x] Configured the workflow to run on pushes and pull requests targeting `master`.
+- [x] Added a backend job using Python 3.13.
+- [x] Added backend dependency installation and automated pytest execution.
+- [x] Added a frontend job using Node.js 24.
+- [x] Added frontend dependency installation using `npm ci`.
+- [x] Added Vitest, ESLint, and production-build checks.
+- [x] Added `argon2-cffi==25.1.0` to `backend/requirements.txt` after the initial CI run exposed the missing dependency.
+
+### Verification
+
+- [x] Initial CI run identified the missing Argon2 dependency.
+- [x] Corrected the workflow database environment configuration.
+- [x] Added the missing Argon2 dependency.
+- [x] GitHub Actions Run #3 completed successfully: https://github.com/SANJIT06RAJ/DeadlineOS/actions/runs/42468602211
+- [x] Backend pytest suite: **132 passed**.
+- [x] Frontend Vitest suite: **13 passed across 2 test files**.
+- [x] Frontend ESLint — PASSED.
+- [x] Frontend production build — PASSED.
+- [x] Both GitHub Actions jobs reported success.
+
+### Files changed
+
+- `.github/workflows/ci.yml` (new)
+- `backend/requirements.txt`
+
+### Git state
+
+- Workflow created in commit `b709f7b`.
+- Workflow database-path correction committed as `3bf85a3`.
+- Argon2 dependency correction committed as `312733d`.
+- All commits successfully pushed to `origin/master`.
+- Local `master` synchronized with `origin/master` at `312733d`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+### Notes
+
+- GitHub Actions reported Node.js 20 deprecation warnings for the current action versions.
+- The `ubuntu-latest` runner migration notice is informational.
+- These notices did not affect the successful CI result.
+
+**Next task:** Day 47 — Linting, formatting, and dependency checks.
