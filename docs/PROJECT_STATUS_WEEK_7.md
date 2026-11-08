@@ -56,3 +56,63 @@
 - Persistent SQLite configuration and environment variables are deferred to Day 44.
 
 **Next task:** Day 44 — Environment variables and local database configuration.
+
+## Day 44 — Environment Variables and Persistent SQLite Configuration
+
+**Date:** 8 November 2026
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — APPLICATION CHANGES NOT YET COMMITTED OR PUSHED.**
+
+### Implementation
+
+- [x] Created `backend/app/config.py` for centralized application configuration.
+- [x] Added configurable `DATABASE_PATH` with the existing SQLite location as its default.
+- [x] Added configurable `OLLAMA_URL` and `OLLAMA_MODEL` with existing defaults preserved.
+- [x] Updated `backend/app/database.py` to import `DATABASE_PATH` from the centralized configuration.
+- [x] Updated `backend/app/services/ai_extraction_service.py` to import Ollama settings from centralized configuration.
+- [x] Added `backend/.env.example` documenting the environment variables.
+- [x] Preserved the existing database schema and AI extraction behaviour.
+
+### Verification
+
+- [x] Database test suite: **8 passed**.
+- [x] Full backend pytest suite: **132 passed**.
+- [x] `git diff --check` passed.
+- [x] Backend Docker image built successfully.
+- [x] Backend container started with `DATABASE_PATH=/data/deadlineos.db`.
+- [x] Backend `/health` returned `healthy`.
+- [x] Verified the `assignments` and `subtasks` tables exist.
+- [x] Verified the `deadlineos-data` named volume is mounted at `/data`.
+- [x] Removed and recreated the backend container using the same volume.
+- [x] Verified the database tables remained present after container recreation.
+- [x] Backend `/health` returned `healthy` after recreation.
+
+### Files changed
+
+- `backend/app/config.py` (new)
+- `backend/app/database.py`
+- `backend/app/services/ai_extraction_service.py`
+- `backend/.env.example` (new)
+
+### Docker verification details
+
+- Image: `deadlineos-backend`
+- Container: `deadlineos-api`
+- Host port: `8000`
+- Container port: `8000`
+- Named volume: `deadlineos-data`
+- Database path inside container: `/data/deadlineos.db`
+
+### Git state
+
+- Day 44 application changes remain local and uncommitted.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- No Day 44 application commit or push has been verified.
+
+### Notes
+
+- `.env.example` is a configuration template; it is not automatically loaded by Python.
+- Environment variables were explicitly passed when starting the Docker container.
+- Docker Compose integration remains planned for Day 45.
+
+**Next task:** Day 45 — Docker Compose integration.
