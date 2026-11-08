@@ -43,10 +43,9 @@
 
 ### Git state
 
-- Five intended Docker files remain untracked locally.
-- No Day 43 commit or push has been performed.
-- `backend/oop_practice.py` remains untracked, untouched, and excluded.
-- The Week 7 status file was empty locally before this update.
+- The five Docker implementation files are included in the Day 43 changes.
+- `docs/PROJECT_STATUS_WEEK_7.md` records the verified Day 43 progress.
+- `backend/oop_practice.py` remains local-only, untouched, and excluded from the changes.
 
 ### Notes
 
