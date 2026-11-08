@@ -4,30 +4,36 @@ _Last updated: Sunday, 8 November 2026_
 
 **Latest application/development commit:** 5f26c7c — build: add Docker support for frontend and backend.
 
-**Latest verified progress:** Week 7 Day 43 — Dockerfiles for backend and frontend — COMPLETED, VERIFIED, COMMITTED, AND PUSHED.
+**Latest verified progress:** Week 7 Day 44 — Environment variables and persistent SQLite configuration — IMPLEMENTED AND VERIFIED LOCALLY; NOT YET COMMITTED OR PUSHED.
 
-**Day 43 verified progress:**
-- Backend Docker image built successfully using Python 3.13 slim.
-- Frontend Docker image built successfully using a multi-stage Node.js and Nginx build.
-- Backend container started successfully; `/health` returned `healthy`.
-- Frontend container served the application with HTTP 200.
-- Nginx successfully proxied `/api/health` to FastAPI and returned `healthy`.
-- Rebuilt both images after adding the Docker ignore files and recreated the containers using the rebuilt images.
-- Backend Docker build context reduced to **930 bytes**; frontend build context reduced to **2.17 KB**.
+**Day 44 verified progress:**
+- Centralized application configuration in `backend/app/config.py`.
+- Added configurable `DATABASE_PATH`, `OLLAMA_URL`, and `OLLAMA_MODEL` settings while preserving existing defaults.
+- Updated `backend/app/database.py` to use the centralized database configuration.
+- Updated `backend/app/services/ai_extraction_service.py` to use centralized Ollama settings.
+- Added `backend/.env.example` documenting the configuration variables.
+- Database test suite: **8 passed**.
+- Full backend pytest suite: **132 passed**.
+- Backend Docker image built successfully.
+- Created the named Docker volume `deadlineos-data`.
+- Started the backend container with SQLite stored at `/data/deadlineos.db`.
+- Verified `/health` returned `healthy`.
+- Verified the database contains the `assignments` and `subtasks` tables.
+- Verified the named volume is mounted at `/data`.
+- Removed and recreated the temporary backend container using the same volume; the database tables remained present.
 - `git diff --check` passed.
-- Docker implementation and Week 7 progress were committed as `5f26c7c` and pushed to `origin/master`.
-- The Week 7 Git-state correction was pushed in `478df4a`; the Week 7 completion metadata was subsequently aligned with the verified commit and push.
+- Day 44 application changes remain local and uncommitted.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Week 6 status:** Days 36–42 completed. Day 42 final regression verification passed. Week 6 is complete.
 
-**Week 7 status:** Day 43 completed and pushed. Docker frontend/backend containers were verified communicating over the temporary `deadlineos-day43` network. Docker Compose integration remains planned for Day 45.
+**Week 7 status:** Day 43 completed and pushed. Day 44 configuration and persistent SQLite work verified locally. Docker Compose integration remains planned for Day 45.
 
-**Current roadmap progress:** Week 7 — Day 43 Dockerfiles completed.
+**Current roadmap progress:** Week 7 — Day 44 environment variables and persistent SQLite configuration completed locally.
 
-**Next task:** Week 7 — Day 44: Environment variables and local database configuration.
+**Next task:** Week 7 — Day 45: Docker Compose integration.
 
-**Git state:** GitHub `master` includes the Day 43 implementation and documentation commits. Pull the latest `origin/master` into the local repository to sync this overall status update. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Git state:** GitHub `master` contains the Day 43 application implementation. Day 44 application changes are local and uncommitted; the Day 44 status documentation is being recorded separately. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
