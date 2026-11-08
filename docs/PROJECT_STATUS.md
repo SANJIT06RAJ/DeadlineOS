@@ -2,9 +2,26 @@
 
 _Last updated: Sunday, 8 November 2026_
 
-**Latest application commit:** 06492bc — chore: add Python linting and formatting checks.
+**Latest application commit:** 72b8351 — fix: keep frontend available when backend is down.
 
-**Latest verified progress:** Week 7 Day 48 — Clean-install and failed-startup recovery testing — IMPLEMENTATION AND TESTING COMPLETED; APPLICATION COMMIT PENDING.
+**Latest verified progress:** Week 7 Day 49 — Release preparation and regression verification — TESTS AND DOCKER RECOVERY VERIFIED; RELEASE TAG PENDING.
+
+
+**Day 49 verified progress:**
+- Reviewed Git history and confirmed local `master` was synchronized with `origin/master` at `72b8351`.
+- Confirmed the Day 48 Nginx fix is committed and pushed.
+- Backend pytest: **132 passed** (run from the `backend` directory).
+- Frontend Vitest: **13 passed across 2 test files**.
+- ESLint and Vite production build passed (2,105 modules transformed).
+- Ruff lint passed; 20 files already formatted.
+- `pip check` found no broken requirements; `pip-audit` found no known vulnerabilities.
+- npm production audit found **0 vulnerabilities**.
+- Docker Compose configuration validated; Docker Engine **29.9.2**.
+- Frontend returned HTTP 200; API health and assignment summary worked through Nginx.
+- Backend failure test: frontend remained HTTP 200 and API returned HTTP 502.
+- Backend recovery test: API health recovered without restarting frontend; all 27 assignments remained available.
+- Final Git review found no tracked or staged changes; only `backend/oop_practice.py` remained untracked and excluded.
+- Release tag remains pending verification.
 
 **Day 48 verified progress:**
 - Built and recreated the frontend Docker image successfully after the Nginx configuration change.
@@ -18,7 +35,7 @@ _Last updated: Sunday, 8 November 2026_
 - Confirmed the persistent Compose volume remained mounted at `/data`.
 - Created and integrity-checked a local SQLite snapshot, backed up the original empty Docker database, and restored the 27-record snapshot into the Compose volume. Temporary backups were retained.
 - `git diff --check` passed and the Nginx diff was reviewed.
-- The application change in `frontend/nginx.conf` remains local and uncommitted.
+- The Nginx application change in `frontend/nginx.conf` was committed as `72b8351` and pushed to `origin/master`.
 
 **Day 47 verified progress:**
 - Added root-level `pyproject.toml` with Ruff configuration for Python 3.13 and an 88-character line length.
@@ -41,13 +58,13 @@ _Last updated: Sunday, 8 November 2026_
 
 **Week 6 status:** Days 36–42 completed. Day 42 final regression verification passed. Week 6 is complete.
 
-**Week 7 status:** Days 43–48 technically completed and verified. Day 48 status documentation is pushed; the Day 48 application change remains local and uncommitted.
+**Week 7 status:** Days 43–49 completed and verified. Day 48 Nginx recovery fix is committed and pushed as `72b8351`; Day 49 regression and Docker recovery checks passed.
 
-**Current roadmap progress:** Week 7 — Day 48 implementation and recovery testing completed and verified; application commit pending.
+**Current roadmap progress:** Week 7 — Day 49 release preparation and regression verification completed; annotated release tag pending.
 
-**Next task:** Day 49 — Release tagging, Git history review, and final bug fixes.
+**Next task:** Verify and publish the annotated `v1.0.0` release tag against the reviewed release commit.
 
-**Git state:** The Day 48 status documentation updates have been committed to `origin/master`. The local working copy must be fast-forwarded to include the documentation commits and then retain the local `frontend/nginx.conf` change. That application change has not yet been committed. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Git state:** `master` and `origin/master` were synchronized at `72b8351` before the Day 49 documentation updates. Day 48 Nginx fix is committed and pushed. Day 49 documentation updates are being committed separately. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
