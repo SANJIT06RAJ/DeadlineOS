@@ -1,30 +1,36 @@
 # PROJECT_STATUS — DeadlineOS
 
-_Last updated: Saturday, 7 November 2026_
+_Last updated: Sunday, 8 November 2026_
 
-**Latest application/development commit:** 4cf737a — test: cover PDF extraction resource limits.
+**Latest application/development commit:** 5f26c7c — build: add Docker support for frontend and backend.
 
-**Latest verified progress:** Week 6 Day 42 — Final regression verification — COMPLETED AND VERIFIED.
+**Latest verified progress:** Week 7 Day 43 — Dockerfiles for backend and frontend — COMPLETED, VERIFIED, COMMITTED, AND PUSHED.
 
-**Day 42 verified progress:**
-- Full backend pytest suite: **132 passed**.
-- Frontend Vitest suite: **13 passed across 2 test files**.
-- Frontend ESLint: **PASSED**.
-- Vite production build: **PASSED**; 2,105 modules transformed.
-- `git diff --check`: **PASSED**.
-- Final Git verification: local `master` and `origin/master` synchronized at `b97ed8b` before these documentation updates; no tracked changes pending.
+**Day 43 verified progress:**
+- Backend Docker image built successfully using Python 3.13 slim.
+- Frontend Docker image built successfully using a multi-stage Node.js and Nginx build.
+- Backend container started successfully; `/health` returned `healthy`.
+- Frontend container served the application with HTTP 200.
+- Nginx successfully proxied `/api/health` to FastAPI and returned `healthy`.
+- Rebuilt both images after adding the Docker ignore files and recreated the containers using the rebuilt images.
+- Backend Docker build context reduced to **930 bytes**; frontend build context reduced to **2.17 KB**.
+- `git diff --check` passed.
+- Docker implementation and Week 7 progress were committed as `5f26c7c` and pushed to `origin/master`.
+- The Week 7 Git-state correction was pushed in `478df4a`; the Week 7 completion metadata was subsequently aligned with the verified commit and push.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
-- No additional high-priority code issue was identified during this final verification. The four moderate npm audit findings in the ESLint development dependency chain remain documented; production dependencies previously reported zero vulnerabilities.
 
 **Week 6 status:** Days 36–42 completed. Day 42 final regression verification passed. Week 6 is complete.
 
-**Current roadmap progress:** Week 6 — Day 42 final verification completed.
+**Week 7 status:** Day 43 completed and pushed. Docker frontend/backend containers were verified communicating over the temporary `deadlineos-day43` network. Docker Compose integration remains planned for Day 45.
 
-**Next task:** Week 7 — Day 43: Create Dockerfiles for the backend and frontend.
+**Current roadmap progress:** Week 7 — Day 43 Dockerfiles completed.
 
-**Git state:** Day 42 verification found no pending tracked code changes. Documentation updates are being applied directly to `origin/master`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Next task:** Week 7 — Day 44: Environment variables and local database configuration.
+
+**Git state:** GitHub `master` includes the Day 43 implementation and documentation commits. Pull the latest `origin/master` into the local repository to sync this overall status update. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
+
 
 Day 28 verification:
 - Backend baseline: **71 passed**.
@@ -1971,3 +1977,49 @@ No backend or database changes were required; reminders use the existing assignm
 - The Day 33 application changes have not been pushed.
 
 **Next roadmap task:** Day 34 — File validation, error handling, and upload limits.
+
+
+## Week 7 — Day 43: Dockerfiles for Backend and Frontend (8 November 2026)
+
+**Status: COMPLETED, VERIFIED, COMMITTED, AND PUSHED (`5f26c7c`).**
+
+### Implementation
+- [x] Created `backend/Dockerfile` using Python 3.13 slim.
+- [x] Created `frontend/Dockerfile` using a multi-stage Node.js and Nginx build.
+- [x] Created `frontend/nginx.conf` for React routing and FastAPI reverse proxying.
+- [x] Created `backend/.dockerignore`.
+- [x] Created `frontend/.dockerignore`.
+
+### Docker images
+- `deadlineos-backend:day43`
+- `deadlineos-frontend:day43`
+
+### Verification evidence
+- [x] Backend and frontend Docker image builds succeeded.
+- [x] Backend container started and `/health` returned `healthy`.
+- [x] Frontend container returned HTTP 200.
+- [x] Nginx successfully proxied `/api/health` to the backend and returned `healthy`.
+- [x] Rebuilt both images after adding `.dockerignore` files and recreated the containers using the rebuilt images.
+- [x] Repeated frontend and backend proxy checks passed.
+- [x] Backend build context reduced to 930 bytes; frontend build context reduced to 2.17 KB.
+- [x] `git diff --check` passed.
+
+### Files added
+- `backend/Dockerfile`
+- `backend/.dockerignore`
+- `frontend/Dockerfile`
+- `frontend/.dockerignore`
+- `frontend/nginx.conf`
+
+### Git state
+- Six intended files (the five Docker files and this Week 7 history record) were committed as `5f26c7c` — `build: add Docker support for frontend and backend`.
+- The commit was successfully pushed to `origin/master`.
+- The Week 7 Git-state wording correction was committed and pushed as `478df4a`.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+### Notes
+- Frontend and backend communicated through the temporary Docker network `deadlineos-day43`.
+- Nginx expects the backend hostname `backend`, which will be configured through Docker Compose on Day 45.
+- Persistent SQLite configuration and environment variables are deferred to Day 44.
+
+**Next task:** Day 44 — Environment variables and local database configuration.
