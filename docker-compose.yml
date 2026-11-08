@@ -1,0 +1,28 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_PATH: /data/deadlineos.db
+      OLLAMA_URL: ${OLLAMA_URL:-http://host.docker.internal:11434/api/generate}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5:3b}
+    volumes:
+      - deadlineos-data:/data
+    expose:
+      - "8000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  deadlineos-data:
+    external: true
