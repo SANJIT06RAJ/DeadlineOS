@@ -226,3 +226,51 @@
 - These notices did not affect the successful CI result.
 
 **Next task:** Day 47 — Linting, formatting, and dependency checks.
+
+## Day 47 — Linting, Formatting, and Dependency Checks
+
+**Date:** 8 November 2026
+
+**Status: COMPLETED, VERIFIED, COMMITTED, AND PUSHED.**
+
+### Implementation
+
+- [x] Reviewed the existing Python and frontend quality-check configuration.
+- [x] Added root-level `pyproject.toml` with Ruff configuration: line length 88 and Python 3.13 target.
+- [x] Excluded the pre-existing local-only `backend/oop_practice.py` from Ruff.
+- [x] Scoped Ruff's `B008` exception to `backend/app/main.py` for FastAPI parameter declarations.
+- [x] Fixed lint findings and applied Ruff formatting to the backend Python files.
+- [x] Kept Ruff installed in the local backend virtual environment; it was not added to the runtime requirements or CI workflow.
+
+### Verification
+
+- [x] `python -m ruff check backend`: all checks passed.
+- [x] `python -m ruff format --check backend`: **20 files already formatted**.
+- [x] `python -m pip check`: no broken requirements found.
+- [x] `python -m pip_audit -r backend/requirements.txt`: no known vulnerabilities found.
+- [x] Backend pytest suite: **132 passed**.
+- [x] Frontend ESLint: passed.
+- [x] Frontend Vitest suite: **13 passed across 2 test files**.
+- [x] Frontend production build: passed with Vite 8.3.5.
+- [x] `npm --prefix frontend audit --omit=dev`: **0 vulnerabilities**.
+- [x] `git diff --check` and `git diff --cached --check`: passed.
+- [x] Reviewed the changed Python files and staged diff before committing.
+
+### Files changed
+
+- Added `pyproject.toml`.
+- Applied lint and formatting fixes to 17 existing backend Python files.
+
+### Git state
+
+- Committed as `06492bc` — `chore: add Python linting and formatting checks`.
+- Successfully pushed to `origin/master` on 8 November 2026.
+- `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+
+### Notes
+
+- Pytest completed with **132 passed** and one non-blocking Windows cache-permission warning when creating `.pytest_cache`.
+- Ruff is configured in the repository, but the Ruff package itself is currently installed only in the local virtual environment. A future development-dependency setup can make installation reproducible.
+
+**Next task:** Day 48 — Clean-install and failed-startup recovery testing.
+
