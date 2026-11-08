@@ -4,7 +4,7 @@ _Last updated: Sunday, 8 November 2026_
 
 **Latest application commit:** 72b8351 — fix: keep frontend available when backend is down.
 
-**Latest verified progress:** Week 7 Day 49 — Release preparation and regression verification — TESTS AND DOCKER RECOVERY VERIFIED; RELEASE TAG PENDING.
+**Latest verified progress:** Week 7 Day 49 — Release preparation, regression verification, and `v1.0.0` release tagging — COMPLETED, VERIFIED, AND PUBLISHED.
 
 
 **Day 49 verified progress:**
@@ -21,7 +21,7 @@ _Last updated: Sunday, 8 November 2026_
 - Backend failure test: frontend remained HTTP 200 and API returned HTTP 502.
 - Backend recovery test: API health recovered without restarting frontend; all 27 assignments remained available.
 - Final Git review found no tracked or staged changes; only `backend/oop_practice.py` remained untracked and excluded.
-- Release tag remains pending verification.
+- Created and pushed annotated release tag `v1.0.0`, targeting commit `b3a4b67` (`docs: update overall status with day 49 verification`).
 
 **Day 48 verified progress:**
 - Built and recreated the frontend Docker image successfully after the Nginx configuration change.
@@ -60,11 +60,11 @@ _Last updated: Sunday, 8 November 2026_
 
 **Week 7 status:** Days 43–49 completed and verified. Day 48 Nginx recovery fix is committed and pushed as `72b8351`; Day 49 regression and Docker recovery checks passed.
 
-**Current roadmap progress:** Week 7 — Day 49 release preparation and regression verification completed; annotated release tag pending.
+**Current roadmap progress:** Week 7 — Day 49 release preparation, regression verification, and annotated `v1.0.0` tag completed and verified on GitHub.
 
-**Next task:** Verify and publish the annotated `v1.0.0` release tag against the reviewed release commit.
+**Next task:** Check `ROADMAP.md` for the next scheduled objective and verify the current project state before planning further work.
 
-**Git state:** `master` and `origin/master` were synchronized at `72b8351` before the Day 49 documentation updates. Day 48 Nginx fix is committed and pushed. Day 49 documentation updates are being committed separately. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Git state:** Local `master` and `origin/master` are synchronized at `b3a4b67`. Annotated tag `v1.0.0` is pushed to GitHub and targets `b3a4b67`. Remote tag object: `f103c95b9bbe158b644c69127f287a03a1affd87`. `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
