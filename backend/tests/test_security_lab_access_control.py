@@ -1,6 +1,5 @@
 import pytest
 from fastapi import HTTPException
-
 from scripts.security_lab_access_control import (
     Resource,
     get_owned_resource,

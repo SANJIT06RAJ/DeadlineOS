@@ -1,5 +1,4 @@
 import pytest
-
 from scripts.security_lab_passwords import hash_password, verify_password
 
 

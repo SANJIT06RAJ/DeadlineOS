@@ -1,16 +1,15 @@
-
 from datetime import date, timedelta
-import pytest
-from fastapi.testclient import TestClient
 
-from app.database import create_tables, get_connection
+import pytest
+from app.database import create_tables
 from app.main import app
+from fastapi.testclient import TestClient
 
 
 @pytest.fixture
 def client(tmp_path, monkeypatch):
     # Give each test its own temporary SQLite database.
-    import app.database as database
+    from app import database
 
     test_db = tmp_path / "test_deadlineos.db"
     monkeypatch.setattr(database, "DATABASE_PATH", test_db)
@@ -40,9 +39,7 @@ def test_create_assignment(client):
     assert isinstance(data["id"], int)
     assert "days_remaining" in data
     assert "is_overdue" in data
-    assert data["days_remaining"] is None or isinstance(
-    data["days_remaining"], int
-    )
+    assert data["days_remaining"] is None or isinstance(data["days_remaining"], int)
     assert isinstance(data["is_overdue"], bool)
 
 
@@ -191,9 +188,7 @@ def test_list_subtasks(client):
         json={"title": "Task B"},
     )
 
-    response = client.get(
-        f"/assignments/{assignment['id']}/subtasks"
-    )
+    response = client.get(f"/assignments/{assignment['id']}/subtasks")
 
     assert response.status_code == 200
     assert len(response.json()) == 2
@@ -244,9 +239,7 @@ def test_delete_subtask(client):
 
     assert response.status_code == 204
 
-    remaining = client.get(
-        f"/assignments/{assignment['id']}/subtasks"
-    )
+    remaining = client.get(f"/assignments/{assignment['id']}/subtasks")
     assert remaining.json() == []
 
 
@@ -262,6 +255,7 @@ def test_reject_empty_subtask_title(client):
     )
 
     assert response.status_code == 422
+
 
 def test_assignment_response_includes_deadline_fields(client):
     response = client.post(
@@ -337,7 +331,6 @@ def test_assignment_summary_counts_overdue_tasks(client):
     assert data["completed_assignments"] == 1
 
 
-
 def test_list_assignments_sorts_by_due_date(client):
     client.post(
         "/assignments",
@@ -357,9 +350,11 @@ def test_list_assignments_sorts_by_due_date(client):
     assert response.status_code == 200
     assignments = response.json()
 
-    assert [
-        assignment["title"] for assignment in assignments
-    ] == ["Earlier task", "Later task", "No deadline"]
+    assert [assignment["title"] for assignment in assignments] == [
+        "Earlier task",
+        "Later task",
+        "No deadline",
+    ]
 
 
 def test_assignment_summary_counts_due_today_and_upcoming(client):
@@ -537,9 +532,7 @@ def test_update_subtask_rejects_mixed_valid_and_null_fields(client):
 
     assert response.status_code == 422
 
-    subtasks = client.get(
-        f"/assignments/{assignment['id']}/subtasks"
-    ).json()
+    subtasks = client.get(f"/assignments/{assignment['id']}/subtasks").json()
 
     assert len(subtasks) == 1
     assert subtasks[0]["title"] == "Original task"
@@ -670,12 +663,11 @@ def test_update_subtask_rejects_overlong_title_without_partial_update(client):
 
     assert response.status_code == 422
 
-    subtasks = client.get(
-        f"/assignments/{assignment['id']}/subtasks"
-    ).json()
+    subtasks = client.get(f"/assignments/{assignment['id']}/subtasks").json()
 
     assert len(subtasks) == 1
     assert subtasks[0]["title"] == "Original subtask"
+
 
 def test_update_assignment_can_clear_due_date(client):
     created = client.post(
@@ -820,10 +812,9 @@ def test_assignment_response_handles_deadline_boundaries(
     assert data["days_remaining"] == days_offset
     assert data["is_overdue"] is expected_overdue
 
+
 @pytest.mark.parametrize("invalid_estimate", [0, -5, 2.5, "30"])
-def test_create_subtask_rejects_invalid_estimated_minutes(
-    client, invalid_estimate
-):
+def test_create_subtask_rejects_invalid_estimated_minutes(client, invalid_estimate):
     assignment = client.post(
         "/assignments",
         json={"title": "Workload Assignment"},
@@ -866,9 +857,7 @@ def test_update_subtask_rejects_invalid_estimate_without_partial_update(
 
     assert response.status_code == 422
 
-    unchanged = client.get(
-        f"/assignments/{assignment['id']}/subtasks"
-    ).json()
+    unchanged = client.get(f"/assignments/{assignment['id']}/subtasks").json()
 
     assert unchanged[0]["title"] == "Original task"
     assert unchanged[0]["estimated_minutes"] == 30

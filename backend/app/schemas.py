@@ -1,9 +1,7 @@
-
 from datetime import date
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
-
 
 AssignmentStatus = Literal["pending", "in_progress", "completed"]
 AssignmentPriority = Literal["low", "medium", "high"]
@@ -58,7 +56,6 @@ class AssignmentResponse(BaseModel):
     is_overdue: bool = False
 
 
-
 class SubtaskCreate(BaseModel):
     title: str = Field(min_length=1, max_length=200)
     estimated_minutes: int | None = Field(
@@ -103,7 +100,6 @@ class SubtaskResponse(BaseModel):
     title: str
     is_completed: bool
     estimated_minutes: int | None = None
-
 
 
 class AssignmentSummary(BaseModel):

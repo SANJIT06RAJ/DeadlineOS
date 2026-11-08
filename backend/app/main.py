@@ -23,13 +23,13 @@ from app.schemas import (
     SubtaskResponse,
     SubtaskUpdate,
 )
+from app.services.ai_extraction_service import extract_assignment_details
 from app.services.assignment_service import (
     calculate_days_remaining,
     is_overdue,
 )
-
-from app.services.ai_extraction_service import extract_assignment_details
 from app.services.pdf_service import extract_pdf_text
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -48,11 +48,7 @@ app = FastAPI(
 def serialize_assignment(row):
     data = dict(row)
 
-    due_date_value = (
-        date.fromisoformat(data["due_date"])
-        if data["due_date"]
-        else None
-    )
+    due_date_value = date.fromisoformat(data["due_date"]) if data["due_date"] else None
     today = date.today()
 
     data["days_remaining"] = (
@@ -80,6 +76,7 @@ def home():
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
+
 
 MAX_PDF_SIZE = 10 * 1024 * 1024  # 10 MB
 
@@ -136,6 +133,7 @@ async def preview_document(file: UploadFile = File(...)):
     finally:
         await file.close()
 
+
 @app.post("/documents/extract")
 def extract_document_details(
     request: AssignmentExtractionRequest,
@@ -151,11 +149,7 @@ def extract_document_details(
 
         return {
             "title": result.title,
-            "due_date": (
-                result.due_date.isoformat()
-                if result.due_date
-                else None
-            ),
+            "due_date": (result.due_date.isoformat() if result.due_date else None),
             "requirements": result.requirements,
         }
 
@@ -170,6 +164,7 @@ def extract_document_details(
             status_code=503,
             detail=str(exc),
         ) from exc
+
 
 @app.get("/assignments", response_model=list[AssignmentResponse])
 def list_assignments(
@@ -241,9 +236,7 @@ def create_assignment(assignment: AssignmentCreate):
 @app.get("/assignments/summary", response_model=AssignmentSummary)
 def get_assignment_summary():
     with get_connection() as connection:
-        rows = connection.execute(
-            "SELECT due_date, status FROM assignments"
-        ).fetchall()
+        rows = connection.execute("SELECT due_date, status FROM assignments").fetchall()
 
     today = date.today()
 
@@ -259,9 +252,7 @@ def get_assignment_summary():
 
     for row in rows:
         due_date_value = (
-            date.fromisoformat(row["due_date"])
-            if row["due_date"]
-            else None
+            date.fromisoformat(row["due_date"]) if row["due_date"] else None
         )
 
         if due_date_value is None:
@@ -342,9 +333,7 @@ def update_assignment(assignment_id: int, assignment: AssignmentUpdate):
         "priority": "priority",
     }
 
-    assignments_sql = ", ".join(
-        f"{columns[key]} = ?" for key in changes
-    )
+    assignments_sql = ", ".join(f"{columns[key]} = ?" for key in changes)
     values = list(changes.values())
 
     with get_connection() as connection:
@@ -407,11 +396,7 @@ def list_subtasks(assignment_id: int):
             (assignment_id,),
         ).fetchall()
 
-    return [
-        {**dict(row), "is_completed": bool(row["is_completed"])}
-        for row in rows
-    ]
-
+    return [{**dict(row), "is_completed": bool(row["is_completed"])} for row in rows]
 
 
 @app.post(
@@ -454,8 +439,6 @@ def create_subtask(assignment_id: int, subtask: SubtaskCreate):
     return {**dict(row), "is_completed": bool(row["is_completed"])}
 
 
-
-
 @app.patch(
     "/subtasks/{subtask_id}",
     response_model=SubtaskResponse,
@@ -471,8 +454,7 @@ def update_subtask(subtask_id: int, subtask: SubtaskUpdate):
         )
 
     if any(
-        value is None and key != "estimated_minutes"
-        for key, value in changes.items()
+        value is None and key != "estimated_minutes" for key, value in changes.items()
     ):
         raise HTTPException(
             status_code=422,
@@ -488,9 +470,7 @@ def update_subtask(subtask_id: int, subtask: SubtaskUpdate):
         "estimated_minutes": "estimated_minutes",
     }
 
-    assignments_sql = ", ".join(
-        f"{columns[key]} = ?" for key in changes
-    )
+    assignments_sql = ", ".join(f"{columns[key]} = ?" for key in changes)
 
     with get_connection() as connection:
         existing = connection.execute(
@@ -512,7 +492,6 @@ def update_subtask(subtask_id: int, subtask: SubtaskUpdate):
         ).fetchone()
 
     return {**dict(row), "is_completed": bool(row["is_completed"])}
-
 
 
 @app.delete(

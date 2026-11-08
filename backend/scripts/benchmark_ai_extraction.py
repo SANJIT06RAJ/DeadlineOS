@@ -8,11 +8,10 @@ from pathlib import Path
 BACKEND_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND_DIR))
 
-from app.services.ai_extraction_service import (  # noqa: E402
+from app.services.ai_extraction_service import (
     OLLAMA_MODEL,
     extract_assignment_details,
 )
-
 
 BENCHMARK_CASES = [
     {
@@ -123,26 +122,18 @@ def compare_result(actual, expected):
     )
 
     actual_due_date = (
-        actual.due_date.isoformat()
-        if actual.due_date is not None
-        else None
+        actual.due_date.isoformat() if actual.due_date is not None else None
     )
 
     due_date_correct = actual_due_date == expected["due_date"]
 
-    actual_requirements = [
-        normalize_requirement(item)
-        for item in actual.requirements
-    ]
+    actual_requirements = [normalize_requirement(item) for item in actual.requirements]
 
     expected_requirements = [
-        normalize_requirement(item)
-        for item in expected["requirements"]
+        normalize_requirement(item) for item in expected["requirements"]
     ]
 
-    requirements_correct = (
-        actual_requirements == expected_requirements
-    )
+    requirements_correct = actual_requirements == expected_requirements
 
     return {
         "title": title_correct,
@@ -154,14 +145,10 @@ def compare_result(actual, expected):
 def print_requirement_comparison(actual, expected):
     """Display actual and expected requirements."""
 
-    actual_requirements = [
-        normalize_requirement(item)
-        for item in actual.requirements
-    ]
+    actual_requirements = [normalize_requirement(item) for item in actual.requirements]
 
     expected_requirements = [
-        normalize_requirement(item)
-        for item in expected["requirements"]
+        normalize_requirement(item) for item in expected["requirements"]
     ]
 
     print("\n  Actual requirements:")
@@ -175,9 +162,7 @@ def print_requirement_comparison(actual, expected):
     print("\n  Expected requirements:")
 
     if expected["requirements"]:
-        for index, item in enumerate(
-            expected["requirements"], start=1
-        ):
+        for index, item in enumerate(expected["requirements"], start=1):
             print(f"    {index}. {item}")
     else:
         print("    None")
@@ -185,15 +170,11 @@ def print_requirement_comparison(actual, expected):
     print("\n  Requirement diagnosis:")
 
     missing = [
-        item
-        for item in expected_requirements
-        if item not in actual_requirements
+        item for item in expected_requirements if item not in actual_requirements
     ]
 
     unexpected = [
-        item
-        for item in actual_requirements
-        if item not in expected_requirements
+        item for item in actual_requirements if item not in expected_requirements
     ]
 
     if not missing and not unexpected:
@@ -220,9 +201,7 @@ def print_evidence(actual):
     if actual.requirement_evidence:
         print("    Requirement evidence:")
 
-        for index, evidence in enumerate(
-            actual.requirement_evidence, start=1
-        ):
+        for index, evidence in enumerate(actual.requirement_evidence, start=1):
             print(f"      {index}. {evidence}")
     else:
         print("    Requirement evidence: None")
@@ -263,10 +242,7 @@ def main():
             print(f"  Result: {'PASS' if passed else 'FAIL'}")
             print(f"  Title correct: {checks['title']}")
             print(f"  Due date correct: {checks['due_date']}")
-            print(
-                f"  Requirements correct: "
-                f"{checks['requirements']}"
-            )
+            print(f"  Requirements correct: {checks['requirements']}")
 
             if not checks["requirements"]:
                 print_requirement_comparison(
@@ -276,7 +252,8 @@ def main():
 
             print_evidence(actual)
 
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001
+            # Record failures and continue running the remaining benchmark cases.
             elapsed = time.perf_counter() - start
             latencies.append(elapsed)
 
@@ -303,16 +280,12 @@ def main():
 
     total = len(results)
     passed_count = sum(result["passed"] for result in results)
-    error_count = sum(
-        result["error"] is not None for result in results
-    )
+    error_count = sum(result["error"] is not None for result in results)
 
     field_names = ("title", "due_date", "requirements")
 
     field_totals = {
-        field: sum(
-            result["checks"][field] for result in results
-        )
+        field: sum(result["checks"][field] for result in results)
         for field in field_names
     }
 
@@ -329,10 +302,7 @@ def main():
     print("\nField accuracy:")
 
     for field, correct in field_totals.items():
-        print(
-            f"  {field}: {correct}/{total} "
-            f"({correct / total * 100:.1f}%)"
-        )
+        print(f"  {field}: {correct}/{total} ({correct / total * 100:.1f}%)")
 
     if latencies:
         print("\nResponse time:")
@@ -346,10 +316,7 @@ def main():
     for result in results:
         status = "PASS" if result["passed"] else "FAIL"
 
-        print(
-            f"  {status} | {result['name']} "
-            f"| {result['latency']:.2f}s"
-        )
+        print(f"  {status} | {result['name']} | {result['latency']:.2f}s")
 
     print("\nBenchmark completed.")
 

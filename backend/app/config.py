@@ -1,18 +1,21 @@
 import os
 from pathlib import Path
 
-
 # Backend directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SQLite database configuration
-DATABASE_PATH = Path(
-    os.getenv(
-        "DATABASE_PATH",
-        str(BASE_DIR / "deadlineos.db"),
+DATABASE_PATH = (
+    Path(
+        os.getenv(
+            "DATABASE_PATH",
+            str(BASE_DIR / "deadlineos.db"),
+        )
     )
-).expanduser().resolve()
+    .expanduser()
+    .resolve()
+)
 
 
 # Local Ollama configuration

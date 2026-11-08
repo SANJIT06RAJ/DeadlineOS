@@ -1,9 +1,7 @@
-
 import sqlite3
 
 import pytest
-
-import app.database as database
+from app import database
 
 
 @pytest.fixture
@@ -51,12 +49,11 @@ def test_subtask_can_reference_assignment(test_db):
 
 
 def test_invalid_assignment_id_is_rejected(test_db):
-    with database.get_connection() as connection:
-        with pytest.raises(sqlite3.IntegrityError):
-            connection.execute(
-                "INSERT INTO subtasks (assignment_id, title) VALUES (?, ?)",
-                (-1, "Invalid Subtask"),
-            )
+    with database.get_connection() as connection, pytest.raises(sqlite3.IntegrityError):
+        connection.execute(
+            "INSERT INTO subtasks (assignment_id, title) VALUES(?, ?)",
+            (-1, "Invalid Subtask"),
+        )
 
 
 def test_deleting_assignment_deletes_subtasks(test_db):
@@ -88,22 +85,14 @@ def test_deleting_assignment_deletes_subtasks(test_db):
 def test_database_schema_and_foreign_keys(test_db):
     with database.get_connection() as connection:
         assignment_columns = {
-            row["name"]
-            for row in connection.execute(
-                "PRAGMA table_info(assignments)"
-            )
+            row["name"] for row in connection.execute("PRAGMA table_info(assignments)")
         }
 
         subtask_columns = {
-            row["name"]
-            for row in connection.execute(
-                "PRAGMA table_info(subtasks)"
-            )
+            row["name"] for row in connection.execute("PRAGMA table_info(subtasks)")
         }
 
-        foreign_keys_enabled = connection.execute(
-            "PRAGMA foreign_keys"
-        ).fetchone()[0]
+        foreign_keys_enabled = connection.execute("PRAGMA foreign_keys").fetchone()[0]
 
         subtask_foreign_keys = connection.execute(
             "PRAGMA foreign_key_list(subtasks)"
@@ -137,18 +126,13 @@ def test_database_schema_and_foreign_keys(test_db):
 def test_subtask_estimated_minutes_column_is_created(test_db):
     with database.get_connection() as connection:
         columns = {
-            row["name"]
-            for row in connection.execute(
-                "PRAGMA table_info(subtasks)"
-            )
+            row["name"] for row in connection.execute("PRAGMA table_info(subtasks)")
         }
 
     assert "estimated_minutes" in columns
 
 
-def test_existing_subtasks_survive_estimated_minutes_migration(
-    tmp_path, monkeypatch
-):
+def test_existing_subtasks_survive_estimated_minutes_migration(tmp_path, monkeypatch):
     db_path = tmp_path / "legacy_deadlineos.db"
     monkeypatch.setattr(database, "DATABASE_PATH", db_path)
 

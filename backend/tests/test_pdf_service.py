@@ -1,6 +1,8 @@
 from io import BytesIO
 
 import pytest
+from app.services import pdf_service
+from app.services.pdf_service import extract_pdf_text
 from pypdf import PdfWriter
 from pypdf.generic import (
     DecodedStreamObject,
@@ -8,31 +10,32 @@ from pypdf.generic import (
     NameObject,
 )
 
-import app.services.pdf_service as pdf_service
-from app.services.pdf_service import extract_pdf_text
-
 
 def create_text_pdf():
     """Generate a small PDF containing extractable text."""
     writer = PdfWriter()
     page = writer.add_blank_page(width=612, height=792)
 
-    font = DictionaryObject({
-        NameObject("/Type"): NameObject("/Font"),
-        NameObject("/Subtype"): NameObject("/Type1"),
-        NameObject("/BaseFont"): NameObject("/Helvetica"),
-    })
+    font = DictionaryObject(
+        {
+            NameObject("/Type"): NameObject("/Font"),
+            NameObject("/Subtype"): NameObject("/Type1"),
+            NameObject("/BaseFont"): NameObject("/Helvetica"),
+        }
+    )
 
-    page[NameObject("/Resources")] = DictionaryObject({
-        NameObject("/Font"): DictionaryObject({
-            NameObject("/F1"): font,
-        }),
-    })
+    page[NameObject("/Resources")] = DictionaryObject(
+        {
+            NameObject("/Font"): DictionaryObject(
+                {
+                    NameObject("/F1"): font,
+                }
+            ),
+        }
+    )
 
     content = DecodedStreamObject()
-    content.set_data(
-        b"BT /F1 12 Tf 72 720 Td (DeadlineOS PDF test) Tj ET"
-    )
+    content.set_data(b"BT /F1 12 Tf 72 720 Td (DeadlineOS PDF test) Tj ET")
 
     page[NameObject("/Contents")] = content
 
@@ -109,8 +112,9 @@ def test_rejects_pdf_exceeding_extracted_text_limit(monkeypatch):
             return "A" * (pdf_service.MAX_EXTRACTED_TEXT_CHARS + 1)
 
     class FakeReader:
-        is_encrypted = False
-        pages = [FakePage()]
+        def __init__(self):
+            self.is_encrypted = False
+            self.pages = [FakePage()]
 
     monkeypatch.setattr(
         pdf_service,

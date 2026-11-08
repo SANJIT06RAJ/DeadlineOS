@@ -12,11 +12,9 @@ def get_connection() -> sqlite3.Connection:
 
 
 def create_tables() -> None:
-    from contextlib import closing
 
-    with closing(get_connection()) as connection:
-        with connection:
-            connection.execute("""
+    with closing(get_connection()) as connection, connection:
+        connection.execute("""
                 CREATE TABLE IF NOT EXISTS assignments (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     title TEXT NOT NULL,
@@ -30,22 +28,20 @@ def create_tables() -> None:
                 )
             """)
 
-            # Safely migrate existing assignment databases.
-            columns = {
-                row["name"]
-                for row in connection.execute(
-                    "PRAGMA table_info(assignments)"
-                ).fetchall()
-            }
+        # Safely migrate existing assignment databases.
+        columns = {
+            row["name"]
+            for row in connection.execute("PRAGMA table_info(assignments)").fetchall()
+        }
 
-            if "priority" not in columns:
-                connection.execute("""
+        if "priority" not in columns:
+            connection.execute("""
                     ALTER TABLE assignments
                     ADD COLUMN priority TEXT NOT NULL DEFAULT 'medium'
                     CHECK (priority IN ('low', 'medium', 'high'))
                 """)
 
-            connection.execute("""
+        connection.execute("""
                 CREATE TABLE IF NOT EXISTS subtasks (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     assignment_id INTEGER NOT NULL,
@@ -63,16 +59,14 @@ def create_tables() -> None:
                 )
             """)
 
-            # Safely migrate existing subtask databases.
-            subtask_columns = {
-                row["name"]
-                for row in connection.execute(
-                    "PRAGMA table_info(subtasks)"
-                ).fetchall()
-            }
+        # Safely migrate existing subtask databases.
+        subtask_columns = {
+            row["name"]
+            for row in connection.execute("PRAGMA table_info(subtasks)").fetchall()
+        }
 
-            if "estimated_minutes" not in subtask_columns:
-                connection.execute("""
+        if "estimated_minutes" not in subtask_columns:
+            connection.execute("""
                     ALTER TABLE subtasks
                     ADD COLUMN estimated_minutes INTEGER
                     CHECK (

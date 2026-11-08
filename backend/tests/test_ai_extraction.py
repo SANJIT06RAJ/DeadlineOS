@@ -4,24 +4,23 @@ from unittest.mock import MagicMock, patch
 from urllib.error import URLError
 
 import pytest
-from fastapi.testclient import TestClient
-
 from app.database import create_tables
 from app.main import app
 from app.services.ai_extraction_service import (
-    AssignmentExtraction,
     MAX_OLLAMA_RESPONSE_SIZE,
+    AssignmentExtraction,
     extract_assignment_details,
 )
+from fastapi.testclient import TestClient
 
 
 def mock_ollama_response(response_data):
     """Create a mocked Ollama HTTP response."""
     mock_response = MagicMock()
     mock_response.__enter__.return_value = mock_response
-    mock_response.read.return_value = json.dumps({
-        "response": json.dumps(response_data)
-    }).encode("utf-8")
+    mock_response.read.return_value = json.dumps(
+        {"response": json.dumps(response_data)}
+    ).encode("utf-8")
 
     return mock_response
 
@@ -203,12 +202,14 @@ def test_invalid_json_response():
     mock_response.__enter__.return_value = mock_response
     mock_response.read.return_value = b'{"response": "not valid json"}'
 
-    with patch(
-        "app.services.ai_extraction_service.urlopen",
-        return_value=mock_response,
+    with (
+        patch(
+            "app.services.ai_extraction_service.urlopen",
+            return_value=mock_response,
+        ),
+        pytest.raises(ValueError, match="invalid JSON"),
     ):
-        with pytest.raises(ValueError, match="invalid JSON"):
-            extract_assignment_details("Some assignment text")
+        extract_assignment_details("Some assignment text")
 
 
 def test_invalid_extracted_data():
@@ -218,42 +219,46 @@ def test_invalid_extracted_data():
         "requirements": [],
     }
 
-    with patch(
-        "app.services.ai_extraction_service.urlopen",
-        return_value=mock_ollama_response(response_data),
+    with (
+        patch(
+            "app.services.ai_extraction_service.urlopen",
+            return_value=mock_ollama_response(response_data),
+        ),
+        pytest.raises(ValueError, match="failed validation"),
     ):
-        with pytest.raises(ValueError, match="failed validation"):
-            extract_assignment_details("Some assignment text")
+        extract_assignment_details("Some assignment text")
 
 
 def test_ollama_connection_failure():
-    with patch(
-        "app.services.ai_extraction_service.urlopen",
-        side_effect=URLError("Connection refused"),
+    with (
+        patch(
+            "app.services.ai_extraction_service.urlopen",
+            side_effect=URLError("Connection refused"),
+        ),
+        pytest.raises(RuntimeError, match="communicate with Ollama"),
     ):
-        with pytest.raises(RuntimeError, match="communicate with Ollama"):
-            extract_assignment_details("Some assignment text")
+        extract_assignment_details("Some assignment text")
+
 
 def test_ollama_response_exceeding_size_limit():
     mock_response = MagicMock()
     mock_response.__enter__.return_value = mock_response
-    mock_response.read.return_value = (
-        b"x" * (MAX_OLLAMA_RESPONSE_SIZE + 1)
-    )
+    mock_response.read.return_value = b"x" * (MAX_OLLAMA_RESPONSE_SIZE + 1)
 
-    with patch(
-        "app.services.ai_extraction_service.urlopen",
-        return_value=mock_response,
-    ):
-        with pytest.raises(
+    with (
+        patch(
+            "app.services.ai_extraction_service.urlopen",
+            return_value=mock_response,
+        ),
+        pytest.raises(
             RuntimeError,
             match="exceeded the 1 MB size limit",
-        ):
-            extract_assignment_details("Some assignment text")
+        ),
+    ):
+        extract_assignment_details("Some assignment text")
 
-    mock_response.read.assert_called_once_with(
-        MAX_OLLAMA_RESPONSE_SIZE + 1
-    )
+    mock_response.read.assert_called_once_with(MAX_OLLAMA_RESPONSE_SIZE + 1)
+
 
 def test_invalid_response_structure():
     response_data = {
@@ -263,17 +268,19 @@ def test_invalid_response_structure():
         "unexpected_field": "unexpected",
     }
 
-    with patch(
-        "app.services.ai_extraction_service.urlopen",
-        return_value=mock_ollama_response(response_data),
+    with (
+        patch(
+            "app.services.ai_extraction_service.urlopen",
+            return_value=mock_ollama_response(response_data),
+        ),
+        pytest.raises(ValueError, match="failed validation"),
     ):
-        with pytest.raises(ValueError, match="failed validation"):
-            extract_assignment_details("Some assignment text")
+        extract_assignment_details("Some assignment text")
 
 
 @pytest.fixture
 def api_client(tmp_path, monkeypatch):
-    import app.database as database
+    from app import database
 
     test_db = tmp_path / "test_deadlineos.db"
     monkeypatch.setattr(database, "DATABASE_PATH", test_db)
@@ -427,9 +434,7 @@ def test_unsupported_title_evidence_is_discarded():
         "app.services.ai_extraction_service.urlopen",
         return_value=mock_ollama_response(response_data),
     ):
-        result = extract_assignment_details(
-            "Assignment: Database Management Systems"
-        )
+        result = extract_assignment_details("Assignment: Database Management Systems")
 
     assert result.title is None
 
@@ -490,8 +495,7 @@ def test_event_date_is_rejected_when_evidence_contains_multiple_dates():
         "requirements": [],
         "title_evidence": "Assignment: Database Assignment",
         "due_date_evidence": (
-            "EVENT DATE: 25 December 2025.\n"
-            "SUBMISSION DEADLINE: 31 December 2025."
+            "EVENT DATE: 25 December 2025.\nSUBMISSION DEADLINE: 31 December 2025."
         ),
         "requirement_evidence": [],
     }

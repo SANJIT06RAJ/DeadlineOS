@@ -1,7 +1,8 @@
-
 from io import BytesIO
 
 import pytest
+from app.database import create_tables
+from app.main import app
 from fastapi.testclient import TestClient
 from pypdf import PdfWriter
 from pypdf.generic import (
@@ -10,16 +11,12 @@ from pypdf.generic import (
     NameObject,
 )
 
-from app.database import create_tables
-from app.main import app
-
-
 MAX_PDF_SIZE = 10 * 1024 * 1024
 
 
 @pytest.fixture
 def client(tmp_path, monkeypatch):
-    import app.database as database
+    from app import database
 
     test_db = tmp_path / "test_deadlineos.db"
     monkeypatch.setattr(database, "DATABASE_PATH", test_db)
@@ -35,22 +32,26 @@ def create_text_pdf():
     writer = PdfWriter()
     page = writer.add_blank_page(width=612, height=792)
 
-    font = DictionaryObject({
-        NameObject("/Type"): NameObject("/Font"),
-        NameObject("/Subtype"): NameObject("/Type1"),
-        NameObject("/BaseFont"): NameObject("/Helvetica"),
-    })
+    font = DictionaryObject(
+        {
+            NameObject("/Type"): NameObject("/Font"),
+            NameObject("/Subtype"): NameObject("/Type1"),
+            NameObject("/BaseFont"): NameObject("/Helvetica"),
+        }
+    )
 
-    page[NameObject("/Resources")] = DictionaryObject({
-        NameObject("/Font"): DictionaryObject({
-            NameObject("/F1"): font,
-        }),
-    })
+    page[NameObject("/Resources")] = DictionaryObject(
+        {
+            NameObject("/Font"): DictionaryObject(
+                {
+                    NameObject("/F1"): font,
+                }
+            ),
+        }
+    )
 
     content = DecodedStreamObject()
-    content.set_data(
-        b"BT /F1 12 Tf 72 720 Td (DeadlineOS PDF test) Tj ET"
-    )
+    content.set_data(b"BT /F1 12 Tf 72 720 Td (DeadlineOS PDF test) Tj ET")
     page[NameObject("/Contents")] = content
 
     output = BytesIO()
@@ -113,9 +114,7 @@ def test_reject_invalid_pdf_signature(client):
     )
 
     assert response.status_code == 415
-    assert response.json()["detail"] == (
-        "The uploaded file is not a valid PDF."
-    )
+    assert response.json()["detail"] == ("The uploaded file is not a valid PDF.")
 
 
 def test_reject_empty_upload(client):
@@ -149,9 +148,7 @@ def test_reject_oversized_pdf(client):
     )
 
     assert response.status_code == 413
-    assert response.json()["detail"] == (
-        "PDF file exceeds the 10 MB size limit."
-    )
+    assert response.json()["detail"] == ("PDF file exceeds the 10 MB size limit.")
 
 
 def test_reject_malformed_pdf(client):

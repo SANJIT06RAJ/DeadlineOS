@@ -1,9 +1,8 @@
 from io import BytesIO
 
+from app.main import app
 from fastapi.testclient import TestClient
 from pypdf import PdfWriter
-
-from app.main import app
 
 
 def create_text_pdf():
@@ -61,9 +60,7 @@ def test_preview_rejects_invalid_pdf_signature():
 
 
 def test_preview_rejects_oversized_pdf():
-    oversized_content = b"%PDF-" + (
-        b"A" * (10 * 1024 * 1024)
-    )
+    oversized_content = b"%PDF-" + (b"A" * (10 * 1024 * 1024))
 
     with TestClient(app) as client:
         response = client.post(
@@ -127,6 +124,4 @@ def test_preview_returns_extracted_text(monkeypatch):
 
     assert data["filename"] == "assignment.pdf"
     assert data["text"] == "Database assignment requirements"
-    assert data["character_count"] == len(
-        "Database assignment requirements"
-    )
+    assert data["character_count"] == len("Database assignment requirements")

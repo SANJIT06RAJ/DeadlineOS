@@ -25,9 +25,7 @@ def extract_pdf_text(pdf_bytes: bytes) -> str:
             raise ValueError("Encrypted PDF files are not supported.")
 
         if len(reader.pages) > MAX_PDF_PAGES:
-            raise ValueError(
-                f"PDF exceeds the {MAX_PDF_PAGES}-page limit."
-            )
+            raise ValueError(f"PDF exceeds the {MAX_PDF_PAGES}-page limit.")
 
         extracted_pages = []
         total_chars = 0

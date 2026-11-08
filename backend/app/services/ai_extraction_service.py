@@ -4,11 +4,11 @@ from datetime import date, datetime
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+from app.config import OLLAMA_MODEL, OLLAMA_URL
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
-from app.config import OLLAMA_URL, OLLAMA_MODEL
-
 MAX_OLLAMA_RESPONSE_SIZE = 1 * 1024 * 1024  # 1 MB
+
 
 class AssignmentExtraction(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -91,10 +91,7 @@ def _due_date_is_supported(
     for line in evidence.splitlines():
         normalized_line = _normalize_text(line)
 
-        if not any(
-            indicator in normalized_line
-            for indicator in deadline_indicators
-        ):
+        if not any(indicator in normalized_line for indicator in deadline_indicators):
             continue
 
         for match in date_pattern.finditer(line):
@@ -301,16 +298,10 @@ Document:
         )
 
     except (HTTPError, URLError, TimeoutError) as exc:
-        raise RuntimeError(
-            f"Could not communicate with Ollama: {exc}"
-        ) from exc
+        raise RuntimeError(f"Could not communicate with Ollama: {exc}") from exc
 
     except (KeyError, json.JSONDecodeError) as exc:
-        raise ValueError(
-            "Ollama returned an invalid JSON response."
-        ) from exc
+        raise ValueError("Ollama returned an invalid JSON response.") from exc
 
     except ValidationError as exc:
-        raise ValueError(
-            f"Extracted assignment data failed validation: {exc}"
-        ) from exc
+        raise ValueError(f"Extracted assignment data failed validation: {exc}") from exc
