@@ -4,35 +4,35 @@ _Last updated: Sunday, 8 November 2026_
 
 **Latest application/development commit:** c8f0c31 — feat: centralize environment configuration.
 
-**Latest verified progress:** Week 7 Day 44 — Environment variables and persistent SQLite configuration — IMPLEMENTED, VERIFIED, COMMITTED, AND PUSHED (`c8f0c31`).
+**Latest verified progress:** Week 7 Day 45 — Docker Compose integration — IMPLEMENTED AND VERIFIED LOCALLY. The new root-level `docker-compose.yml` has not yet been committed or pushed.
 
-**Day 44 verified progress:**
-- Centralized application configuration in `backend/app/config.py`.
-- Added configurable `DATABASE_PATH`, `OLLAMA_URL`, and `OLLAMA_MODEL` settings while preserving existing defaults.
-- Updated `backend/app/database.py` to use the centralized database configuration.
-- Updated `backend/app/services/ai_extraction_service.py` to use centralized Ollama settings.
-- Added `backend/.env.example` documenting the configuration variables.
-- Database test suite: **8 passed**.
-- Full backend pytest suite: **132 passed**.
-- Backend Docker image built successfully.
-- Created the named Docker volume `deadlineos-data`.
-- Verified the backend health endpoint returned `healthy`.
-- Verified the database contains the `assignments` and `subtasks` tables.
-- Verified the named volume is mounted at `/data`.
-- Removed and recreated the backend container using the same volume; the database tables remained present.
+**Day 45 verified progress:**
+- Created the root-level `docker-compose.yml` with FastAPI backend and Nginx frontend services.
+- Reused the existing external Docker volume `deadlineos-data`; SQLite remains at `/data/deadlineos.db`.
+- Configured the frontend at host port `5173`; the backend is reachable internally through the Compose network and Nginx reverse proxy.
+- Configured the backend to reach host-installed Ollama using `host.docker.internal`, with `qwen2.5:3b` as the default model.
+- `docker compose config` completed successfully.
+- Both backend and frontend Docker images built successfully.
+- Both Compose services started successfully and remained running.
+- Frontend production response verified with HTTP **200 OK**; the served HTML references the compiled, hashed JavaScript and CSS assets.
+- Nginx proxy request to `/api/health` returned `healthy`.
+- Retrieved **27 existing assignments** from the reused SQLite database.
+- Restarted both Compose services and retrieved all **27 assignments** again, confirming data persistence.
+- Verified container-to-host Ollama connectivity: `/api/tags` returned HTTP **200**.
+- Confirmed the configured `qwen2.5:3b` model is available.
+- Reviewed backend and frontend container logs; application startup was successful and no application errors were observed.
 - `git diff --check` passed.
-- Committed as `c8f0c31` — `feat: centralize environment configuration`.
-- Successfully pushed the Day 44 application commit to `origin/master`.
+- The Compose file is currently untracked locally and has not yet been committed or pushed.
 
 **Week 6 status:** Days 36–42 completed. Day 42 final regression verification passed. Week 6 is complete.
 
-**Week 7 status:** Day 43 Dockerfiles and Day 44 centralized configuration/persistent SQLite are completed, verified, committed, and pushed. Docker Compose integration is next.
+**Week 7 status:** Days 43 and 44 are completed, verified, committed, and pushed. Day 45 Docker Compose integration is implemented and verified locally; `docker-compose.yml` remains uncommitted and unpushed.
 
-**Current roadmap progress:** Week 7 — Day 44 completed and pushed.
+**Current roadmap progress:** Week 7 — Day 45 completed and verified locally.
 
-**Next task:** Week 7 — Day 45: Docker Compose integration.
+**Next task:** Check `ROADMAP.md` for the exact Day 46 objective before planning the next session.
 
-**Git state:** Day 44 application commit `c8f0c31` is pushed to GitHub `master`. The local repository was previously verified synchronized after the push; `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+**Git state:** The latest application commit remains `c8f0c31` — `feat: centralize environment configuration`. The local working tree has the new untracked `docker-compose.yml` and the pre-existing untracked `backend/oop_practice.py`. The latter remains untouched and intentionally excluded. Day 45 application changes have not yet been committed or pushed.
 
 **Scope reminder:** DeadlineOS remains a single-student MVP. Authentication and multiple-user accounts remain outside the initial application scope.
 
