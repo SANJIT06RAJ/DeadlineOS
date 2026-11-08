@@ -279,7 +279,7 @@
 
 **Date:** 8 November 2026
 
-**Status: IMPLEMENTATION AND TESTING COMPLETED; APPLICATION COMMIT PENDING.**
+**Status: COMPLETED, VERIFIED, COMMITTED, AND PUSHED (`72b8351`).**
 
 ### Implementation and verification
 
@@ -310,9 +310,44 @@
 
 ### Git state
 
-- The Nginx configuration change is present locally and has been reviewed.
-- The Day 48 application change has not yet been committed or pushed.
-- This Day 48 status entry is being recorded separately from the application change.
+- The Nginx configuration change was committed as `72b8351` — `fix: keep frontend available when backend is down` — and pushed to `origin/master`.
+- The commit includes dynamic Docker DNS resolution and explicit `/api/` path rewriting.
+- Day 49 regression verification reconfirmed frontend availability and API recovery.
 - `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
 
 **Next task:** Day 49 — Release tagging, Git history review, and final bug fixes.
+
+
+## Day 49 — Release Preparation and Regression Verification
+
+**Date:** 8 November 2026
+
+**Status: REGRESSION TESTS AND DOCKER RECOVERY VERIFIED; RELEASE TAG PENDING.**
+
+### Verification
+
+- [x] Confirmed local `master` was synchronized with `origin/master` at `72b8351`.
+- [x] Reviewed the Day 48 Nginx fix and recent linear Git history.
+- [x] Backend pytest suite: **132 passed** (run from the `backend` directory; root invocation alone did not resolve backend imports).
+- [x] Frontend Vitest suite: **13 passed across 2 test files**.
+- [x] Frontend ESLint passed.
+- [x] Vite production build passed; 2,105 modules transformed.
+- [x] Ruff lint passed; 20 Python files already formatted.
+- [x] `pip check` reported no broken requirements.
+- [x] `pip-audit` reported no known vulnerabilities.
+- [x] npm production dependency audit reported **0 vulnerabilities**.
+- [x] Docker Compose configuration validated; Docker Engine version **29.9.2**.
+- [x] Both Compose services were running; frontend returned HTTP 200 and API health returned healthy through Nginx.
+- [x] Assignment summary endpoint returned **27 assignments** (24 pending, 2 in progress, 1 completed).
+- [x] Stopped backend: frontend remained HTTP 200 and API returned HTTP 502 as expected.
+- [x] Restarted backend: API health recovered without restarting frontend; all 27 assignments remained available.
+- [x] Final Git review: no tracked or staged changes; only `backend/oop_practice.py` remained untracked and excluded.
+
+### Git state
+
+- Day 48 Nginx fix is committed and pushed as `72b8351`.
+- Day 49 verification did not modify application files.
+- `backend/oop_practice.py` remains untouched and intentionally excluded.
+- No release tag has been created yet.
+
+**Next task:** Complete release documentation, then create and verify the annotated `v1.0.0` tag against the reviewed release commit.
