@@ -3,7 +3,7 @@
 ## Day 43 — Dockerfiles for Backend and Frontend
 
 **Date:** 8 November 2026
-**Status:** COMPLETED AND VERIFIED LOCALLY — NOT YET COMMITTED OR PUSHED.
+**Status:** COMPLETED, VERIFIED, COMMITTED, AND PUSHED (`5f26c7c`).
 
 ### Implementation
 
@@ -46,6 +46,8 @@
 - The five Docker implementation files are included in the Day 43 changes.
 - `docs/PROJECT_STATUS_WEEK_7.md` records the verified Day 43 progress.
 - `backend/oop_practice.py` remains local-only, untouched, and excluded from the changes.
+- The five Docker implementation files and this Week 7 record were committed as `5f26c7c` — `build: add Docker support for frontend and backend` — and pushed to `origin/master`.
+- The Week 7 Git-state wording was corrected in commit `478df4a` and pushed to `origin/master`.
 
 ### Notes
 
