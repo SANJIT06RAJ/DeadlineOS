@@ -117,3 +117,59 @@
 - Docker Compose integration remains planned for Day 45.
 
 **Next task:** Day 45 — Docker Compose integration.
+
+
+## Day 45 — Docker Compose Integration
+
+**Date:** 8 November 2026
+
+**Status: IMPLEMENTED AND VERIFIED LOCALLY — `docker-compose.yml` NOT YET COMMITTED OR PUSHED.**
+
+### Implementation
+
+- [x] Created the root-level `docker-compose.yml`.
+- [x] Configured the FastAPI backend service using `backend/Dockerfile`.
+- [x] Configured the Nginx frontend service using `frontend/Dockerfile`.
+- [x] Configured the frontend host mapping as `5173:80`.
+- [x] Kept the backend on the internal Compose network; Nginx forwards `/api/` requests to the `backend` service.
+- [x] Reused the existing external named volume `deadlineos-data`.
+- [x] Configured SQLite at `/data/deadlineos.db).
+- [x] Configured Ollama access through `host.docker.internal:11434`, with `qwen2.5:3b` as the default model.
+- [x] Kept the existing architecture and application code unchanged.
+
+### Verification
+
+- [x] `docker compose config` completed successfully.
+- [x] Backend Docker image built successfully.
+- [x] Frontend Docker image built successfully.
+- [x] `docker compose up -d` started both services successfully.
+- [x] `docker compose ps` confirmed both services were running.
+- [x] Frontend production HTML returned HTTP **200 OK** through Nginx.
+- [x] Inspected the frontend container and confirmed the compiled production HTML and hashed assets are present.
+- [x] Nginx reverse proxy request to `/api/health` returned `healthy`.
+- [x] Retrieved **27 existing assignments** through the Compose frontend/API route.
+- [x] Restarted both Compose services and retrieved all **27 assignments** again.
+- [x] Confirmed the existing `deadlineos-data` volume is mounted at `/data`.
+- [x] Confirmed the backend container can reach host Ollama; `/api/tags` returned HTTP **200**.
+- [x] Confirmed the configured `qwen2.5:3b` model is available.
+- [x] Reviewed backend and frontend logs; startup succeeded and no application errors were observed.
+- [x] `git diff --check` passed.
+
+### Files created
+
+- `docker-compose.yml` (new, currently untracked locally)
+
+### Git state
+
+- The new `docker-compose.yml` is not yet committed or pushed.
+- The pre-existing `backend/oop_practice.py` remains untracked, untouched, and intentionally excluded.
+- The previous manually started `deadlineos-api` container was stopped, not removed.
+- The existing `deadlineos-data` volume was reused and preserved.
+
+### Notes
+
+- The Compose volume is declared external. On another machine, create it before starting the application with `docker volume create deadlineos-data`.
+- The backend is intentionally not published on a host port; access it through the frontend's Nginx `/api/` proxy.
+- Ollama remains installed on the host machine and is not run as a Compose service.
+
+**Next task:** Check `ROADMAP.md` for the exact Day 46 objective before planning the next session.
